@@ -1,0 +1,347 @@
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<meta name="ad.frame" content="child">
+<title>ACE - Ad Building Framework</title>
+<style>
+  /* include your CSS styles like this */
+  /* if you want to use separate CSS files, include into main CSS like this */
+*,
+*::after,
+*::before,
+html {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+  text-rendering: optimizeLegibility;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+#container {
+  width: 970px;
+  height: 250px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+#background {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-image: url("assets/spark_970x250_BG_img.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  animation: "bg-scale" 1.5s ease-out forwards;
+}
+
+#logo-container {
+  width: 102px;
+  height: 253px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+#logo-wave {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: url("assets/wave_970x250.png") top left no-repeat;
+  background-size: contain;
+}
+
+#logo {
+  width: 25px;
+  height: 231px;
+  position: absolute;
+  background: url("assets/seadoo_logo_970x250.png") top left no-repeat;
+  background-size: contain;
+  left: 10px;
+  top: 10px;
+  animation: "fade-in" 2s ease-out forwards;
+}
+
+#brp-tag {
+  width: 32px;
+  height: 38px;
+  background: url("assets/BRP-Tag-Top_Logo-K-RGB copy 4.png") top left no-repeat;
+  background-size: contain;
+  position: absolute;
+  top: 0;
+  left: 926px;
+}
+
+#headline {
+  width: 211px;
+  height: 156px;
+  background: url("assets/switch_970x250_headline.png") top left no-repeat;
+  background-size: contain;
+  position: absolute;
+  top: 15px;
+  left: 114px;
+  animation: "fade-in" 1s ease-out forwards, "slide-up" 1s ease-out forwards;
+}
+
+.touchpoint {
+  width: 26px;
+  height: 26px;
+  background: transparent url("assets/pin.png") top left no-repeat;
+  background-size: contain;
+  position: absolute;
+  opacity: 0;
+  transition: transform 0.3s ease-out !important;
+}
+
+.touchpoint:hover {
+  animation-play-state: paused !important;
+  transform: scale(1.25) !important;
+}
+
+#touchpoint-1 {
+  top: 107px;
+  left: 489px;
+  animation: "fade-in" 0.5s ease-out 1s forwards, "pulse" 2s ease-out 10;
+}
+
+#touchpoint-2 {
+  top: 178px;
+  left: 507px;
+  animation: "fade-in" 0.5s ease-out 1.25s forwards, "pulse" 2s ease-out 10;
+}
+
+#touchpoint-3 {
+  top: 141px;
+  left: 429px;
+  animation: "fade-in" 0.5s ease-out 1.5s forwards, "pulse" 2s ease-out 10;
+}
+
+#popups {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.popup {
+  width: 640px;
+  height: 250px;
+  display: none;
+  background-color: black;
+  position: absolute;
+  right: 0;
+  animation: slide-left 0.5s ease-out forwards;
+}
+
+.popup.closing {
+  animation: slide-right 0.5s ease-out forwards;
+}
+
+.close-btn {
+  width: 30px;
+  height: 30px;
+  background: url("assets/close.png") center center no-repeat;
+  background-size: contain;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease-out;
+}
+
+.close-btn:hover {
+  transform: scale(1.1);
+}
+
+.popup-photo {
+  width: 250px;
+  height: 250px;
+  position: absolute;
+  left: 0;
+  opacity: 0;
+  animation: fade-in 0.5s ease-out 0.5s forwards;
+  object-fit: contain;
+  display: block;
+}
+
+.popup-photo img {
+  width: 250px;
+  height: 250px;
+}
+
+.popup-content {
+  width: 360px;
+  height: 210px;
+  position: absolute;
+  right: 10px;
+  bottom: 20px;
+}
+
+.popup-headline, .popup-description {
+  width: auto;
+  height: auto;
+  position: absolute;
+  opacity: 0;
+  transform: scale(0.5) !important;
+}
+
+.popup-headline {
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  animation: fade-in 0.5s ease-out 0.75s forwards, slide-up 0.5s ease-out 0.75s forwards;
+}
+
+.popup-description {
+  bottom: 0;
+  left: 0;
+  transform-origin: bottom left;
+  animation: fade-in 0.5s ease-out 1s forwards, slide-up 0.5s ease-out 1s forwards;
+}
+
+@keyframes bg-scale {
+  0% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes slide-up {
+  0% {
+    transform: translateY(25%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes slide-left {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@keyframes slide-right {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes scale-up {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.15);
+  }
+};
+</style>
+<script src="/assets/libraries/AD.js"></script>
+</head>
+
+<body>
+  <div id="container">
+    <div id="background"></div>
+    <div id="logo-container">
+      <div id="logo-wave"></div>
+      <div id="logo"></div>
+    </div>
+    <div id="headline"></div>
+    <div id="brp-tag"></div>
+    <div id="touchpoints">
+      <div id="touchpoint-1" class="touchpoint"></div>
+      <div id="touchpoint-2" class="touchpoint"></div>
+      <div id="touchpoint-3" class="touchpoint"></div>
+    </div>
+    <div id="popups">
+      <div id="popup-1" class="popup">
+        <div class="popup-photo">
+          <img src="assets/spark_970x250_pop_img_iBR.jpg" alt="Spark iBR photo" loading="lazy">
+        </div>
+        <div class="popup-content">
+          <div class="popup-headline">
+            <img src="assets/spark_970x250_pop_headline_iBR.png" alt="iBR headline" loading="lazy">
+          </div>
+          <div class="popup-description">
+            <img src="assets/spark_970x250_pop_description_iBR.png" alt="iBR description" loading="lazy">
+          </div>
+        </div>
+        <div class="close-btn"></div>
+      </div>
+      <div id="popup-2" class="popup">
+        <div class="popup-photo">
+          <img src="assets/spark_970x250_pop_img_jet.jpg" alt="Spark jet photo" loading="lazy">
+        </div>
+        <div class="popup-content">
+          <div class="popup-headline">
+            <img src="assets/spark_970x250_pop_headline_jet.png" alt="Jet headline" loading="lazy">
+          </div>
+          <div class="popup-description">
+            <img src="assets/spark_970x250_pop_description_jet.png" alt="Jet description" loading="lazy">
+          </div>
+        </div>
+        <div class="close-btn"></div>
+      </div>
+      <div id="popup-3" class="popup">
+        <div class="popup-photo">
+          <img src="assets/spark_970x250_pop_img_design.jpg" alt="Spark design photo" loading="lazy">
+        </div>
+        <div class="popup-content">
+          <div class="popup-headline">
+            <img src="assets/spark_970x250_pop_headline_design.png" alt="Design headline" loading="lazy">
+          </div>
+          <div class="popup-description">
+            <img src="assets/spark_970x250_pop_description_design.png" alt="Design description" loading="lazy">
+          </div>
+        </div>
+        <div class="close-btn"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- include your external scripts like this -->
+  <!-- #[[ -->
+  <script>
+    function openPopup(touchpointId){var idNumber=touchpointId.split("-")[1],touchpointId=touchpointId.replace("touchpoint","popup"),popupsContainer=document.getElementById("popups");popupsContainer&&(popupsContainer.style.display="block");document.querySelectorAll(".popup").forEach(popup=>{popup.style.display="none"});popupsContainer=document.getElementById(touchpointId);popupsContainer&&(popupsContainer.style.display="block"),$AD.event("other.view."+idNumber)}function closePopup(){var allPopups=document.querySelectorAll(".popup");let visiblePopup=null;allPopups.forEach(popup=>{"block"===popup.style.display&&(visiblePopup=popup)}),visiblePopup&&(visiblePopup.classList.add("closing"),setTimeout(()=>{visiblePopup.classList.remove("closing"),visiblePopup.style.display="none";var popupsContainer=document.getElementById("popups");popupsContainer&&(popupsContainer.style.display="none")},500)),$AD.event("other.close")}function handleClick(event){event=event.target;event.classList.contains("touchpoint")?openPopup(event.id):event.classList.contains("close-btn")?closePopup():$AD.click("clickthrough")}function init(){$AD.Utilities.byId("container").onclick=handleClick}$AD.ready(init);</script>
+  <!-- ]]# -->
+
+
+
+</body></html>

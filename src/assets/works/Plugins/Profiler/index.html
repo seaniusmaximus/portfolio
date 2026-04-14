@@ -1,0 +1,357 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="ad.frame" content="child" />
+    <title>Profiler Plugin Examples</title>
+    <style>
+
+      .quiz-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+      }
+
+      .quiz {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+      }
+
+      .question {
+          font-size: 24px;
+          font-weight: bold;
+          margin-bottom: 20px;
+          animation: fadeIn 0.6s ease-in-out;
+      }
+
+      .option {
+          font-size: 18px;
+          margin-bottom: 10px;
+          padding: 10px 20px;
+          border-radius: 5px;
+          background-color: #f0f0f0;
+          cursor: pointer;
+      }
+
+      .results {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          font-size: 24px;
+          font-weight: bold;
+          margin-bottom: 20px;
+          height: 100vh;
+          animation: fadeIn 0.6s ease-in-out;
+          animation-fill-mode: both;
+      }
+
+      .results img {
+          max-width: 5%;
+      }
+
+      .results img, .results p, .results h2 {
+          animation: fadeIn 0.6s ease-in-out;
+          animation-fill-mode: both;
+      }
+      .results h2 {
+          animation-delay: 0.1s;
+      }
+      .results img {
+          animation-delay: 0.2s;
+      }
+      .results p {
+          animation-delay: 0.3s;
+      }
+
+      @keyframes fadeIn {
+          from {
+              opacity: 0;
+              transform: translateY(20px);
+          }
+          to {
+              opacity: 1;
+              transform: translateY(0);
+          }
+      }
+
+      .option {
+          animation: fadeIn 0.6s ease-in-out;
+          animation-fill-mode: both;
+      }
+
+      .option:nth-child(1) { animation-delay: 0.1s; }
+      .option:nth-child(2) { animation-delay: 0.2s; }
+      .option:nth-child(3) { animation-delay: 0.3s; }
+      .option:nth-child(4) { animation-delay: 0.4s; }
+      .option:nth-child(5) { animation-delay: 0.5s; }
+      .option:nth-child(6) { animation-delay: 0.6s; }
+      .submit-button {
+          animation: fadeIn 0.6s ease-in-out;
+          animation-fill-mode: both;
+          animation-delay: 0.7s;
+      }
+    </style>
+    <script src="/assets/libraries/AD.js"></script>
+    <script src="Profiler.js" language="javascript" type="module"></script>
+  </head>
+
+  <body>
+    <div id="container"></div>
+
+    <script type="module">
+      import Profiler from './Profiler.js'
+      const quizData = {
+      container: $AD.Utilities.byId('container'),
+      multiSelect: false,
+      shuffle: false,
+      showNextButton: true,
+      showPreviousButton: true,
+      questions: [
+          {
+              question: "Dream Vacation?",
+              options: [
+                  {
+                      text: "Tropical beach escape",
+                      weight: ['Green Turtle', 'Blue Footed Booby', 'Sea Otter', 'Orca', 'Koala']
+                  },
+                  {
+                      text: "Camping in the woods",
+                      weight: ['Three-toed sloth', 'Red Fox', 'Bald Eagle', 'Grizzly Bear']
+                  },
+                  {
+                      text: "Going on safari",
+                      weight: ['Zebra', 'African Elephant']
+                  },
+                  {
+                      text: "Hiking a glacier",
+                      weight: ['Snowy Owl', 'Emperor Penguin Chick', 'Arctic Wolf']
+                  }
+              ],
+          },
+          {
+              question: "Personality?",
+              options: [
+                  {
+                      text: "Curious and cautious",
+                      weight: ['Green Turtle', 'Three-toed sloth', 'Zebra', 'Snowy Owl']
+                  },
+                  {
+                      text: "Friendly and outgoing",
+                      weight: ['Blue Footed Booby', 'Sea Otter', 'Red Fox', 'Zebra', 'Emperor Penguin Chick']
+                  },
+                  {
+                      text: "Leader of the pack",
+                      weight: ['Orca','Bald Eagle', 'African Elephant', 'Arctic Wolf']
+                  },
+                  {
+                      text: "Quiet and strong",
+                      weight: ['Koala', 'Grizzly Bear', 'African Elephant', 'Arctic Wolf']
+                  }
+              ]
+          },
+          {
+              question: "Cause",
+              options: [
+                  {
+                      text: "Climate change & sustainability",
+                      weight: [
+                          'Green Turtle',
+                          'Blue Footed Booby',
+                          'Sea Otter',
+                          'Orca',
+                          'Koala',
+                          'Three-toed sloth',
+                          'Red Fox',
+                          'Bald Eagle',
+                          'Grizzly Bear',
+                          'Zebra',
+                          'African Elephant',
+                          'Snowy Owl',
+                          'Emperor Penguin Chick',
+                          'Arctic Wolf'
+                      ]
+                  },
+                  {
+                      text: "Protecting endangered species",
+                      weight: [
+                          'Green Turtle',
+                          'Blue Footed Booby',
+                          'Sea Otter',
+                          'Orca',
+                          'Koala',
+                          'Three-toed sloth',
+                          'Red Fox',
+                          'Bald Eagle',
+                          'Grizzly Bear',
+                          'Zebra',
+                          'African Elephant',
+                          'Snowy Owl',
+                          'Emperor Penguin Chick',
+                          'Arctic Wolf'
+                      ]
+                  },
+                  {
+                      text: "Nature conservation",
+                      weight: [
+                          'Green Turtle',
+                          'Blue Footed Booby',
+                          'Sea Otter',
+                          'Orca',
+                          'Koala',
+                          'Three-toed sloth',
+                          'Red Fox',
+                          'Bald Eagle',
+                          'Grizzly Bear',
+                          'Zebra',
+                          'African Elephant',
+                          'Snowy Owl',
+                          'Emperor Penguin Chick',
+                          'Arctic Wolf'
+                      ]
+                  },
+                  {
+                      text: "Community work & social policies",
+                      weight: [
+                          'Green Turtle',
+                          'Blue Footed Booby',
+                          'Sea Otter',
+                          'Orca',
+                          'Koala',
+                          'Three-toed sloth',
+                          'Red Fox',
+                          'Bald Eagle',
+                          'Grizzly Bear',
+                          'Zebra',
+                          'African Elephant',
+                          'Snowy Owl',
+                          'Emperor Penguin Chick',
+                          'Arctic Wolf'
+                      ]
+                  }
+              ]
+          }
+      ],
+        results: [
+          {
+            name: "Green Turtle",
+            headline: "Your Match: Green Turtle",
+            image: "/WWF Quiz - 300x600/assets/green-turtle.png", // optional
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.", // optional
+            cta: "Adopt a Green Turtle", // optional
+            clickID: "clickthrough.panel.1", // optional
+            url: "http://www.yahoo.com" // optional
+          },
+          {
+            name: "Blue Footed Booby",
+            headline: "Your Match: Blue Footed Booby",
+            image: "/WWF Quiz - 300x600/assets/Blue-footed-booby.png",
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.",
+            cta: "Adopt a Blue Footed Booby",
+          },
+          {
+            name: "Sea Otter",
+            headline: "Your Match: Sea Otter",
+            image: "/WWF Quiz - 300x600/assets/Sea-otter.png",
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.",
+            cta: "Adopt a Sea Otter",
+          },
+          {
+            name: "Orca",
+            headline: "Your Match: Orca",
+            image: "/WWF Quiz - 300x600/assets/Orca.png",
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.",
+            cta: "Adopt an Orca",
+          },
+          {
+            name: "Koala",
+            headline: "Your Match: Koala",
+            image: "/WWF Quiz - 300x600/assets/Koala.png",
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.",
+            cta: "Adopt a Koala",
+          },
+          {
+            name: "Three-toed sloth",
+            headline: "Your Match: Three-toed Sloth",
+            image: "/WWF Quiz - 300x600/assets/three-toed-sloth.png",
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.",
+            cta: "Adopt a Three-toed Sloth",
+          },
+          {
+            name: "Red Fox",
+            headline: "Your Match: Red Fox",
+            image: "/WWF Quiz - 300x600/assets/red-fox.png",
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.",
+            cta: "Adopt a Red Fox",
+          },
+          {
+            name: "Bald Eagle",
+            headline: "Your Match: Bald Eagle",
+            image: "/WWF Quiz - 300x600/assets/bald-eagle.png",
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.",
+            cta: "Adopt a Bald Eagle",
+          },
+          {
+            name: "Grizzly Bear",
+            headline: "Your Match: Grizzly Bear",
+            image: "/WWF Quiz - 300x600/assets/grizzly-bear.png",
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.",
+            cta: "Adopt a Grizzly Bear",
+          },
+          {
+            name: "Zebra",
+            headline: "Your Match: Zebra",
+            image: "/WWF Quiz - 300x600/assets/zebra.png",
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.",
+            cta: "Adopt a Zebra",
+          },
+          {
+            name: "African Elephant",
+            headline: "Your Match: African Elephant",
+            image: "/WWF Quiz - 300x600/assets/african-elephant.png",
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.",
+            cta: "Adopt an African Elephant",
+          },
+          {
+            name: "Snowy Owl",
+            headline: "Your Match: Snowy Owl",
+            image: "/WWF Quiz - 300x600/assets/snowy-owl.png",
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.",
+            cta: "Adopt a Snowy Owl",
+          },
+          {
+            name: "Emperor Penguin Chick",
+            headline: "Your Match: Emperor Penguin Chick",
+            image: "/WWF Quiz - 300x600/assets/emperor-penguin.png",
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.",
+            cta: "Adopt an Emperor Penguin Chick",
+          },
+          {
+            name: "Arctic Wolf",
+            headline: "Your Match: Arctic Wolf",
+            image: "/WWF Quiz - 300x600/assets/arctic-wolf.png",
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.",
+            cta: "Adopt an Arctic Wolf",
+          }
+        ],
+      };
+
+      function init() {
+          const container = document.getElementById('container');
+          const profilerDiv = document.createElement('div');
+          profilerDiv.id = 'profiler-js-demo';
+          profilerDiv.style.marginTop = '40px';
+          container.appendChild(profilerDiv);
+
+          const profiler = new Profiler(quizData);
+          profiler.init();
+      }
+
+      $AD.ready(init);
+    </script>
+  </body>
+</html>

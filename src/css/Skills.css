@@ -1,0 +1,132 @@
+.skills {
+    width: 100%;
+    margin: 20px 0 40px;
+}
+
+.skills-inner {
+    width: 70vw;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.skills-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 120px;
+    align-items: start;
+}
+
+.skills-copy h3 {
+    display: inline;
+    padding: 5px;
+    font-weight: 900;
+    color: white;
+    background-color: black;
+    box-decoration-break: clone;
+    line-height: 1.75em;
+}
+
+.skills-copy p {
+    line-height: 1.5em;
+    padding-top: 1em;
+    font-style: italic;
+}
+
+.skills-grid {
+    --hex-size: 120px;
+    --hex-step: calc(var(--hex-size) * 0.97);
+    --hex-half: calc(var(--hex-step) / 2);
+    --hex-row-overlap: 14px;
+    --grid-cols: 5;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(var(--grid-cols), var(--hex-step));
+    justify-content: center;
+    gap: 0;
+    width: 100%;
+}
+
+.skills-item {
+    width: var(--hex-size);
+    margin: 0;
+}
+
+.skills-hex-border {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 0.8660254 / 1;
+    background-color: #111111;
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    overflow: hidden;
+    filter: drop-shadow(0 6px 10px rgba(25, 35, 45, 1));
+}
+
+.skills-hex-inner {
+    position: absolute;
+    inset: 2px;
+    background-color: #f4faff;
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 10px;
+    font-weight: 700;
+    color: #111111;
+    transition: box-shadow 0.2s ease;
+}
+
+.skills-item:hover .skills-hex-inner,
+.skills-item.is-active .skills-hex-inner {
+    box-shadow: 0 10px 18px rgba(25, 35, 45, 0.08);
+}
+
+.skills-hex-inner svg {
+    color: #111111;
+    transition: color 0.2s ease;
+}
+
+.skills-item:hover .skills-hex-inner svg,
+.skills-item.is-active .skills-hex-inner svg {
+    color: var(--skill-color, #111111);
+}
+
+.skills-hex-inner span {
+    font-size: 0.82rem;
+}
+
+@media screen and (max-width: 1200px) {
+    .skills-layout {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .skills-copy {
+        order: 1;
+    }
+
+    .skills-grid {
+        order: 2;
+    }
+}
+
+@media screen and (max-width: 800px) {
+}
+
+@media screen and (max-width: 600px) {
+    .skills-inner {
+        width: 90vw;
+        text-align: center;
+    }
+
+    .skills-hex-inner {
+        gap: 0;
+        padding: 12px 8px;
+    }
+
+    .skills-hex-inner span {
+        display: none;
+    }
+
+}

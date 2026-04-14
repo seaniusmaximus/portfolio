@@ -1,0 +1,94 @@
+.about {
+    width: 70vw;
+    display: flex;
+    flex-direction: row;
+    gap: 5%;
+    margin: 20px auto;
+    padding: 20px;
+    align-items: center;
+}
+
+.copy {
+    min-width: 60%;
+}
+.copy h3 {
+    display: inline;
+    padding: 5px;
+    font-weight: 900;
+    color: white;
+    background-color: black;
+    box-decoration-break: clone;
+    line-height: 1.75em;
+}
+.copy p {
+    line-height: 1.5em;
+    padding-top: 1em;
+    font-style: italic;
+}
+
+.about-contact-links {
+    list-style: none;
+    margin: 1.25em 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 18px;
+}
+
+.about-contact-links li {
+    display: flex;
+}
+
+.about-contact-link {
+    text-decoration: none;
+    color: #111111;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    margin: -6px;
+    border-bottom: 3px solid transparent;
+}
+
+.about-contact-link:hover {
+    border-bottom-color: #111111;
+}
+
+.about-contact-icon {
+    flex-shrink: 0;
+    width: 1.5em;
+    height: 1.5em;
+    color: #000000;
+}
+
+.headshot {
+    min-width: 30%;
+    margin-left: auto;
+    position: relative;
+    overflow: visible;
+}
+
+.headshot-bg {
+    width: 100%;
+}
+
+.headshot-hex {
+    width: 130%!important;
+    position: absolute;
+    right: -14%;
+    bottom: -10%;
+    opacity: 1;
+    background-color: #f4faff;
+    mask-image: url('../assets/hex.png');
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: bottom;
+    filter: blur(5px);
+}
+
+@media screen and (max-width: 600px) {
+  .about { width: 90vw; flex-direction: column; text-align: center; }
+  .about-contact-links { justify-content: center; }
+}

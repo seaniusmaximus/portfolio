@@ -1,0 +1,104 @@
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<meta name="ad.frame" content="child">
+<title>ACE - Ad Building Framework</title>
+<style>
+  /* include your CSS styles like this */
+  /* if you want to use separate CSS files, include into main CSS like this */
+*,
+*::after,
+*::before,
+html {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+  text-rendering: optimizeLegibility;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+#container {
+  width: 300px;
+  height: 600px;
+  position: relative;
+  overflow: hidden;
+  background: white url("assets/WWF_MovewithNature_300x600.jpg") top left no-repeat;
+  background-size: contain;
+  cursor: pointer;
+}
+
+#initialStart {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  user-select: none;
+  pointer-events: none;
+}
+
+.butterfly {
+  user-select: none;
+  pointer-events: none;
+  width: 146px;
+  height: 84px;
+  position: absolute;
+  perspective: 300px;
+  transform-origin: center center;
+  pointer-events: none;
+  user-select: none;
+}
+
+.wing {
+  width: 63px;
+  height: 84px;
+  position: absolute;
+  background: transparent url("assets/wing.png") no-repeat center right;
+  background-size: contain;
+  transform-origin: center right;
+}
+
+.wing.left {
+  left: 0;
+}
+
+.wing.right {
+  right: 80px;
+  transform: scaleX(-1);
+}
+
+.body {
+  width: 20px;
+  height: 84px;
+  position: absolute;
+  left: 55px;
+  background: transparent url("assets/body.png") no-repeat center center;
+  background-size: contain;
+};
+</style>
+<script src="https://s.yimg.com/cv/apiv2/apiv2/libs/gsap/3.11.5/gsap.min.js"></script>
+<script src="https://cdn.yahoomedia.net/libraries/AD-2.0.22.js"></script>
+</head>
+
+<body>
+  <div id="container">
+    <div id="butterflies"></div>
+    <div id="initialStart"></div>
+  </div>
+
+  <!-- include your external scripts like this -->
+  <!-- #[[ -->
+  <script>
+    let butterflies=[],mousePos={x:0,y:0},firstMove=!0,fifteenTimer,canAnimate=!1,stopperFired=!1,quickFlapDuration;function randomInRange(min,max){return Math.random()*(max-min)+min}function debounce(func,wait){let timeout;return function(...args){clearTimeout(timeout),timeout=setTimeout(()=>{clearTimeout(timeout),func.apply(this,args)},wait)}}function createButterfly(){var flapDuration=randomInRange(1,2),initialStartDiv=$AD.Utilities.byId("initialStart"),butterfly=document.createElement("div"),leftWing=(butterfly.classList.add("butterfly"),document.createElement("div")),leftWing=(leftWing.classList.add("wing","left"),butterfly.appendChild(leftWing),document.createElement("div")),leftWing=(leftWing.classList.add("wing","right"),butterfly.appendChild(leftWing),document.createElement("div"));return leftWing.classList.add("body"),butterfly.appendChild(leftWing),butterfly.timeline=gsap.timeline({repeat:-1,yoyo:!0,paused:!0}),butterfly.moveTimeline=gsap.timeline(),gsap.set(butterfly,{scale:randomInRange(.5,1.5),x:randomInRange(-70,initialStartDiv.offsetWidth+70),y:randomInRange(-40,initialStartDiv.offsetHeight+40)}),startFlap(butterfly,flapDuration,randomInRange(0,5)),butterfly}function setupButterflies(amount){var butterflyContainer=$AD.Utilities.byId("butterflies"),initialStartDiv=$AD.Utilities.byId("initialStart");mousePos={x:randomInRange(0,initialStartDiv.offsetWidth),y:initialStartDiv.offsetTop};for(let i=0;i<amount;i++){var butterfly=createButterfly();butterflyContainer.appendChild(butterfly),butterflies.push(butterfly)}}function moveButterfly(target,position){var prevX=gsap.getProperty(target,"x")||0,prevY=gsap.getProperty(target,"y")||0,posX=position.x+randomInRange(-20,20)-target.offsetWidth/2,position=position.y+randomInRange(-20,20)-target.offsetHeight/2,duration=randomInRange(1,2),delay=randomInRange(0,.5);Math.atan2(position-prevY,posX-prevX),Math.PI;gsap.killTweensOf(target),gsap.to(target,{x:posX,y:position,duration:duration,delay:delay,overwrite:!1,ease:"power1.inOut",onComplete:()=>{moveButterfly(target,mousePos)}})}function startFlap(butterfly,duration,delayTime){butterfly.timeline.clear(),0<delayTime?butterfly.timeline.to(butterfly.querySelectorAll(".wing"),{delay:delayTime,duration:duration/2,rotationY:-80,ease:"power1.inOut"}).to(butterfly.querySelectorAll(".wing"),{rotationY:80,duration:duration/2,ease:"power1.inOut"}):(butterfly.timeline,butterfly.timeline.fromTo(butterfly.querySelectorAll(".wing"),{rotationY:80},{rotationY:-80,duration:duration,ease:"power1.inOut"})),butterfly.timeline.play()}function removeExcessButterflies(){var toRemove=butterflies.slice(7);let removeDelay=0;toRemove.forEach(butterfly=>{butterfly.timeline.pause(),gsap.set(butterfly.children,{rotationY:0}),gsap.to(butterfly,{duration:1,opacity:0,delay:removeDelay,onComplete:()=>{butterfly.remove()}}),removeDelay+=.005}),(butterflies=butterflies.slice(0,7)).forEach(butterfly=>{var direction=Math.random()<.5?-200:document.getElementById("container").offsetWidth;gsap.set(butterfly,{x:direction}),gsap.set(butterfly,{scale:randomInRange(.5,.75)})})}function followMouse(e){canAnimate=!0,mousePos={x:e.clientX,y:e.clientY},firstMove&&(removeExcessButterflies(),firstMove=!1,butterflies.forEach(butterfly=>{moveButterfly(butterfly,mousePos)}))}function stopBanner(){canAnimate||butterflies.forEach(butterfly=>{butterfly.timeline.clear(),butterfly.moveTimeline.clear(),gsap.killTweensOf(butterfly)})}function onContainerOver(){quickFlapDuration=randomInRange(1,2),butterflies.forEach(butterfly=>{butterfly.timeline.clear(),gsap.set(butterfly.children,{rotationY:0})}),stopperFired&&(canAnimate=!0,butterflies.forEach(butterfly=>{butterfly.timeline.clear(),gsap.set(butterfly.children,{rotationY:0}),moveButterfly(butterfly,mousePos)}))}function onContainerOut(){stopperFired&&(canAnimate=!1,stopBanner())}function onFifteenSeconds(){stopperFired=!0,removeExcessButterflies(),stopBanner()}function init(){var container=$AD.Utilities.byId("container");fifteenTimer=setTimeout(onFifteenSeconds,1e4),setupButterflies(200),container.onclick=function(){$AD.click("clickthrough")},container.onmousemove=followMouse,container.onmouseout=onContainerOut,container.onmouseover=onContainerOver}$AD.ready(init);</script>
+  <!-- ]]# -->
+
+
+
+</body></html>

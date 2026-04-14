@@ -1,0 +1,264 @@
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<meta name="ad.frame" content="child">
+<title>ACE - Ad Building Framework</title>
+<style>
+  /* include your CSS styles like this */
+  /* if you want to use separate CSS files, include into main CSS like this */
+*,
+*::after,
+*::before,
+html {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+  text-rendering: optimizeLegibility;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+#container {
+  width: 640px;
+  height: 960px;
+  position: relative;
+  cursor: pointer;
+  transform-origin: top left;
+  transform: scale(0.5);
+  overflow: hidden;
+}
+
+.frame {
+  position: absolute;
+}
+
+.left {
+  top: 0;
+  width: 100%;
+  height: 347px;
+}
+
+#logo-lockup {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: transparent url("assets-320x480/logo-lockup.png") top left no-repeat;
+  background-size: contain !important;
+}
+
+#text, #text-1, #text-2 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+#text-1 {
+  background: transparent url("assets-320x480/text-frame-1.png") top left no-repeat;
+}
+
+#text-2 {
+  background: transparent url("assets-320x480/text-frame-2.png") top left no-repeat;
+  opacity: 0;
+}
+
+.right {
+  bottom: 0;
+  width: 640px;
+  height: 613px;
+}
+
+#icons {
+  opacity: 0;
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+}
+
+.icon {
+  width: 110px;
+  height: 100px;
+}
+
+.icon .pulse {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+#icon-1 {
+  background: transparent url("assets-320x480/icon-1-largeTub.jpg") top left no-repeat;
+}
+
+#icon-2 {
+  background: transparent url("assets-320x480/icon-2-smallTub.jpg") top left no-repeat;
+}
+
+#icon-3 {
+  background: transparent url("assets-320x480/icon-3-shelves.jpg") top left no-repeat;
+}
+
+#bar {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 30px;
+  background-color: #fff;
+}
+
+#room {
+  width: 100%;
+  height: 100%;
+  background: transparent url("assets-320x480/room-frame.png") top left no-repeat;
+  bottom: 0;
+}
+
+#closet {
+  width: 100%;
+  height: 100%;
+  background: transparent url("assets-320x480/closet-empty.png") top left no-repeat;
+  bottom: 0;
+}
+
+.closet {
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+}
+
+#messy {
+  opacity: 1;
+  background: transparent url("assets-320x480/closet-messy.png") top left no-repeat;
+}
+
+#finished {
+  background: transparent url("assets-320x480/closet-finished.png") top left no-repeat;
+}
+
+#shelves {
+  background: transparent url("assets-320x480/closet-shelves.png") top left no-repeat;
+}
+
+#totes-big {
+  background: transparent url("assets-320x480/closet-totes-big.png") top left no-repeat;
+}
+
+#totes-small {
+  background: transparent url("assets-320x480/closet-totes-small.png") top left no-repeat;
+}
+
+#instructions {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  background: transparent url("assets-320x480/instructions.png") top left no-repeat;
+}
+
+#error {
+  opacity: 0;
+  background-color: #f96302;
+  color: #fff;
+  width: 40%;
+  height: 10%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -20%;
+  margin-top: -5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  text-align: center;
+  font-weight: bold;
+  user-select: none;
+  pointer-events: none;
+}
+
+.pulse {
+  border: 2px solid #f96302;
+  pointer-events: none;
+}
+
+#play-pulse {
+  width: 198px;
+  height: 60px;
+  position: absolute;
+  left: 221px;
+  top: 325px;
+}
+
+#replay {
+  width: 198px;
+  height: 60px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent url("assets-320x480/btn-replay.jpg") top left no-repeat;
+  opacity: 0;
+  pointer-events: none;
+};
+</style>
+<script src="/assets/libraries/gsap.min.js"></script>
+<script src="/assets/libraries/Draggable.min.js"></script>
+<script src="/assets/libraries/AD.js"></script>
+</head>
+
+<body>
+  <div id="container">
+    <div class="frame left">
+      <div id="text">
+        <div id="text-1" class="text"></div>
+        <div id="text-2" class="text"></div>
+      </div>
+    </div>
+    <div class="frame right">
+      <div id="closet">
+        <div id="messy" class="closet"></div>
+        <div id="finished" class="closet"></div>
+        <div id="shelves" class="closet"></div>
+        <div id="totes-big" class="closet"></div>
+        <div id="totes-small" class="closet"></div>
+      </div>
+      <div id="room" class="frame"></div>
+      <div id="bar"></div>
+      <div id="icons">
+        <div id="icon-1" class="icon"><div class="pulse"></div></div>
+        <div id="icon-2" class="icon"><div class="pulse"></div></div>
+        <div id="icon-3" class="icon"><div class="pulse"></div></div>
+      </div>
+      <div id="instructions" class="frame">
+        <div id="play-pulse" class="pulse"></div>
+      </div>
+      <div id="error">
+        <div id="error-text">You need shelves first</div>
+      </div>
+      <div id="replay"></div>
+    </div>
+  </div>
+
+  <!-- include your external scripts like this -->
+  <!-- #[[ -->
+  <script>
+    var autoTimer,shelvesPlaced=!1,itemsPlaced=0;function activateElement(element){gsap.to(element,{duration:.5,opacity:1}),element.style.pointerEvents="all"}function deactivateElement(element){gsap.to(element,{duration:.5,opacity:0}),element.style.pointerEvents="none"}function handleDragEnd(e){e=e.target;gsap.set(".pulse",{opacity:0,display:"none"}),"icon-3"===e.id?(shelvesPlaced=!0,activateElement(document.getElementById("shelves")),gsap.to(e,{duration:.25,opacity:0}),itemsPlaced++,$AD.event("interaction.custom.3")):shelvesPlaced?"icon-1"===e.id?(activateElement(document.getElementById("totes-big")),itemsPlaced++,gsap.to(e,{duration:.25,opacity:0}),$AD.event("interaction.custom.1")):"icon-2"===e.id&&(activateElement(document.getElementById("totes-small")),itemsPlaced++,gsap.to(e,{duration:.25,opacity:0}),$AD.event("interaction.custom.2")):(gsap.to(e,{duration:.25,x:0,y:0}),gsap.fromTo("#error",{opacity:0},{duration:.25,opacity:1,yoyo:!0}),gsap.fromTo("#error",{opacity:1},{delay:.5,duration:.25,opacity:0,yoyo:!0})),3===itemsPlaced&&(activateElement(document.getElementById("finished")),deactivateElement(document.getElementById("totes-small")),deactivateElement(document.getElementById("totes-big")),deactivateElement(document.getElementById("shelves")),activateElement(document.getElementById("replay")),activateElement(document.getElementById("text-2")),deactivateElement(document.getElementById("text-1")))}function startGame(e){itemsPlaced=0,shelvesPlaced=!1,gsap.set(".icon",{x:0,y:0}),activateElement(document.getElementById("icons")),activateElement(document.getElementById("text-1")),deactivateElement(document.getElementById("instructions")),deactivateElement(document.getElementById("messy")),deactivateElement(document.getElementById("replay")),deactivateElement(document.getElementById("finished")),deactivateElement(document.getElementById("totes-big")),deactivateElement(document.getElementById("totes-small")),deactivateElement(document.getElementById("shelves")),deactivateElement(document.getElementById("text-2")),Draggable.create(".icon",{onDragEnd:handleDragEnd}),clearTimeout(autoTimer),gsap.killTweensOf("#play-pulse"),gsap.fromTo(".icon",.5,{y:20,opacity:0},{y:0,opacity:1,stagger:.2}),gsap.fromTo(".icon .pulse",1,{opacity:1},{delay:2,duration:1,opacity:0,scale:1.5,repeat:-1,stagger:1}),"replay"===e.target.id&&$AD.event("other.restart"),"instructions"===e.target.id&&$AD.event("other.start")}function handleClick(){$AD.click("clickthrough")}function init(){gsap.registerPlugin(Draggable),document.getElementById("instructions").addEventListener("click",startGame),document.getElementById("replay").addEventListener("click",startGame),document.getElementById("text").addEventListener("click",handleClick),autoTimer=setTimeout(startGame,3e3),gsap.fromTo("#play-pulse",{opacity:1},{duration:1,opacity:0,scale:1.5,repeat:-1})}$AD.ready(init);</script>
+  <!-- ]]# -->
+
+
+
+</body></html>

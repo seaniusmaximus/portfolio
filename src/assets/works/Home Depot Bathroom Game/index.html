@@ -1,0 +1,197 @@
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<meta name="ad.frame" content="child">
+<title>ACE - Ad Building Framework</title>
+<style>
+  /* include your CSS styles like this */
+  /* if you want to use separate CSS files, include into main CSS like this */
+*,
+*::after,
+*::before,
+html {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+  text-rendering: optimizeLegibility;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+#container {
+  width: 970px;
+  height: 250px;
+  position: relative;
+  cursor: pointer;
+}
+
+.frame {
+  background-repeat: no-repeat;
+}
+
+#lockup {
+  width: 448px;
+  height: 250px;
+  position: absolute;
+  left: 0;
+}
+
+#lockup .frame {
+  width: 448px;
+  height: 250px;
+  position: absolute;
+  top: 0;
+  background-position-y: bottom;
+}
+
+#frame-1 {
+  background-image: url("assets/game-start.png");
+}
+
+#frame-2 {
+  background-image: url("assets/game-running.png");
+}
+
+#frame-3 {
+  background-image: url("assets/game-end.png");
+}
+
+#image {
+  position: absolute;
+  width: 522px;
+  right: 0;
+}
+
+#image .frame {
+  height: 250px;
+  position: absolute;
+}
+
+#image-start {
+  width: 100%;
+  background-image: url("assets/bathroom-1.jpg");
+}
+
+#image-1 {
+  width: 168px;
+  background-image: url("assets/bathroom-2.jpg");
+}
+
+#image-2 {
+  left: 168px;
+  width: 199px;
+  background-image: url("assets/bathroom-2.jpg");
+  background-position-x: -168px;
+}
+
+#image-3 {
+  left: 367px;
+  width: 156px;
+  background-image: url("assets/bathroom-2.jpg");
+  background-position-x: -367px;
+}
+
+#image-end {
+  width: 100%;
+  background-image: url("assets/bathroom-1.jpg");
+}
+
+#timer {
+  width: 93px;
+  height: 37px;
+  position: absolute;
+  top: 179px;
+  left: 178px;
+  line-height: 37px;
+  font-weight: bold;
+  font-size: 20px;
+  color: #ffffff;
+  text-align: center;
+  user-select: none;
+  pointer-events: none;
+}
+
+.active {
+  pointer-events: all;
+  opacity: 1;
+}
+
+.inactive {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#cta-btn, #replay-btn {
+  position: absolute;
+  left: 833px;
+  top: 5px;
+  width: 127px;
+  height: 40px;
+  cursor: pointer;
+}
+
+#cta-btn {
+  background: url("assets/btn-shop.png") top left no-repeat;
+}
+
+#replay-btn {
+  background: url("assets/btn-replay.png") top left no-repeat;
+}
+
+#start-btn {
+  position: absolute;
+  left: 209px;
+  margin-left: -100px;
+  bottom: 12px;
+  width: 230px;
+  height: 51px;
+}
+
+.replay-btn {
+  opacity: 0;
+};
+</style>
+<script src="/assets/libraries/AD.js"></script>
+</head>
+
+<body>
+  <div id="container">
+    <div id="lockup">
+      <div id="frame-1" class="frame active">
+        <div id="start-btn"></div>
+      </div>
+      <div id="frame-2" class="frame inactive">
+        <div id="timer">
+          :15
+        </div>
+      </div>
+      <div id="frame-3" class="frame inactive"></div>
+    </div>
+    <div id="image">
+      <div id="image-start" class="frame active"></div>
+      <div id="image-1" class="frame inactive"></div>
+      <div id="image-2" class="frame inactive"></div>
+      <div id="image-3" class="frame inactive"></div>
+      <div id="image-end" class="frame inactive"></div>
+    </div>
+    <div id="cta-btn" class="active"></div>
+    <div id="replay-btn" class="inactive"></div>
+  </div>
+
+  <!-- include your external scripts like this -->
+  <!-- #[[ -->
+  <script>
+    var timer,time=15,clickCount=0;function handleClick(e){switch(console.log(e.target.id),e.target.id){case"image-1":clickCount++,deActivateFrame("image-1");break;case"image-2":clickCount++,deActivateFrame("image-2");break;case"image-3":clickCount++,deActivateFrame("image-3");break;case"frame-3":case"image-4":$AD.click("clickthrough.panel.3");break;case"start-btn":case"replay-btn":clickCount=0,switchGameState("start");break;default:$AD.click("clickthrough")}3===clickCount&&switchGameState("end")}function activateFrame(id){$AD.Utilities.byId(id).style.opacity=1,$AD.Utilities.byId(id).classList.remove("inactive"),$AD.Utilities.byId(id).classList.add("active")}function deActivateFrame(id){$AD.Utilities.byId(id).style.opacity=0,$AD.Utilities.byId(id).classList.add("inactive"),$AD.Utilities.byId(id).classList.remove("active")}function stopTimer(){clearInterval(timer),time=15,$AD.Utilities.byId("timer").innerText=":"+time}function startTimer(){timer=setInterval(function(){0===time?(stopTimer(),switchGameState("end")):(time-=1,$AD.Utilities.byId("timer").innerText=time<10?":0"+time:":"+time)},1e3)}function switchGameState(state){switch(state){case"start":deActivateFrame("frame-1"),deActivateFrame("frame-3"),activateFrame("frame-2"),activateFrame("image-1"),activateFrame("image-2"),activateFrame("image-3"),deActivateFrame("image-end"),deActivateFrame("replay-btn"),activateFrame("cta-btn"),startTimer();break;case"end":stopTimer(),deActivateFrame("frame-1"),deActivateFrame("frame-2"),activateFrame("frame-3"),deActivateFrame("image-1"),deActivateFrame("image-2"),deActivateFrame("image-3"),activateFrame("image-end"),activateFrame("replay-btn"),deActivateFrame("cta-btn")}}function init(){$AD.Utilities.byId("image-start").onclick=handleClick,$AD.Utilities.byId("image-end").onclick=handleClick,$AD.Utilities.byId("image-1").onclick=handleClick,$AD.Utilities.byId("image-2").onclick=handleClick,$AD.Utilities.byId("image-3").onclick=handleClick,$AD.Utilities.byId("cta-btn").onclick=handleClick,$AD.Utilities.byId("replay-btn").onclick=handleClick,$AD.Utilities.byId("frame-1").onclick=handleClick,$AD.Utilities.byId("frame-2").onclick=handleClick,$AD.Utilities.byId("frame-3").onclick=handleClick}$AD.ready(init);</script>
+  <!-- ]]# -->
+
+
+
+</body></html>

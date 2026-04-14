@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="ad.size" content="width=320,height=568" />
+    <meta name="ad.frame" content="child" />
+    <title>Particle Plugin Examples</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      .ad-box {
+        position: relative;
+        width: 300px;
+        height: 600px;
+        border: 1px solid black;
+        overflow: hidden;
+        display: inline-block;
+      }
+
+
+      .emitter {
+        background-color: lightgray;
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        color: darkgray;
+        font-size: 0.75em;
+        user-select: none;
+      }
+
+      #emitter1 {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+      }
+
+      #emitter2 {
+        width: 100%;
+        height: 20px;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      #emitter3 {
+        width: 120%;
+        height: 20px;
+        position: absolute;
+        bottom: 0;
+        left: -20px;
+      }
+
+      .particle:before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        transition: all .3s linear;
+      }
+
+      .particle1 {
+        filter: hue-rotate(-90deg);
+      }
+      .particle2 {
+        filter: hue-rotate(-20deg);
+      }
+      .particle3 {
+        filter: hue-rotate(360deg);
+      }
+      .particle4 {
+        filter: hue-rotate(90deg);
+      }
+    </style>
+    <script src="/assets/libraries/AD.js"></script>
+  </head>
+
+  <body>
+    <div id="example1" class="ad-box ad-size">
+      <div id="emitter1" class="emitter">click to shoot particles</div>
+    </div>
+
+    <div id="example2" class="ad-box ad-size">
+      <div id="emitter2" class="emitter">rain/snow effect</div>
+    </div>
+
+    <div id="example3" class="ad-box ad-size">
+      <div id="emitter3" class="emitter">bubble effect</div>
+    </div>
+    <script type="module">
+
+      import Particle from './Particle.js';
+
+      let particle;
+      let particleEmitter1, particleEmitter2, particleEmitter3;
+
+      const baseConfig = {
+        container: '#emitter1',
+        count: 50,
+        images: [
+          'images/flower-4ms.png',
+        ],
+        classes: ['particle1', 'particle2', 'particle3', 'particle4'],
+        size: [20],
+        physics: {
+          velocity: [400, 500],
+          angle: [-45, -120],
+          gravity: 600,
+          friction: 0.05,
+        },
+        delay: 0,
+        duration: 5,
+        totalDuration: 15,
+        repeat: 0,
+        readyCallback: ready1,
+      }
+
+      function init() {
+
+        let config = baseConfig;
+
+        particleEmitter1 = new Particle(config)
+        particleEmitter1.init();
+
+        let config2 = baseConfig;
+        config2.physics = {
+          velocity: 0,
+          gravity: 100,
+          angle: 0
+        }
+        config2.size = [10, 20];
+        config2.container = '#emitter2';
+        config2.delay = [0, 5];
+        config2.repeat = -1;
+        config2.readyCallback = ready2;
+        particleEmitter2 = new Particle(config2);
+        particleEmitter2.init();
+
+        let config3 = baseConfig;
+        config3.physics = {
+          velocity: 0,
+          gravity: -200,
+          angle: 0
+        }
+        config3.size = [10, 20];
+        config3.container = '#emitter3';
+        config3.delay = [0, 5];
+        config3.repeat = -1;
+        config3.classes = ['bubble'];
+        config2.totalDuration = 15;
+        config3.readyCallback = ready3;
+        config3.completeCallback = complete3;
+        config3.additionalAnimation =
+        {
+          x: () => gsap.utils.random(-300, 300),
+          repeat: -1,
+          yoyo: true,
+          duration: 5,
+          ease: "sine.inOut",
+        };
+        particleEmitter3 = new Particle(config3);
+        particleEmitter3.init();
+
+      }
+
+      function ready1() {
+        document.getElementById('emitter1').onclick = () => {
+          particleEmitter1.createParticles();
+          particleEmitter1.animateParticles();
+        }
+      }
+
+      function ready2() {
+        particleEmitter2.createParticles();
+        particleEmitter2.animateParticles();
+      }
+
+      function ready3() {
+        particleEmitter3.createParticles();
+        particleEmitter3.animateParticles();
+      }
+
+      function complete3() {
+        console.log('total duration complete');
+        document.getElementById('example3').onmouseover = () => {
+          particleEmitter3.resume();
+        }
+        document.getElementById('example3').onmouseout = () => {
+          particleEmitter3.pause();
+        }
+      }
+
+      $AD.ready(init);
+    </script>
+  </body>
+</html>

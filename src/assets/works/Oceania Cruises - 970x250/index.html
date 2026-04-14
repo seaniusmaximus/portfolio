@@ -1,0 +1,399 @@
+<!DOCTYPE html><html style="height:100%;"><head>
+
+<meta charset="UTF-8"><style>
+  /* include your CSS styles like this */
+  /* if you want to use separate CSS files, include into main CSS like this */
+*,
+*::after,
+*::before,
+html {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+  text-rendering: optimizeLegibility;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+  cursor: pointer;
+}
+
+*, *::after, *::before, html {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+  text-rendering: optimizeLegibility;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+#container {
+  width: 970px;
+  height: 250px;
+  position: relative;
+  overflow: hidden;
+  background: url("assets/background.jpg") center no-repeat;
+  background-size: contain;
+}
+
+#overlay {
+  width: 970px;
+  height: 250px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  display: none;
+}
+
+#pins {
+  position: absolute;
+  width: 945px;
+  height: 85px;
+  top: 135px;
+  left: 25px;
+  font-size: 0;
+}
+
+.pin {
+  width: 183px;
+  height: 85px;
+  z-index: 2;
+  cursor: pointer;
+  display: inline-block;
+  margin: 0 1px 0 0;
+}
+
+.pin:hover {
+  border: 4px solid white;
+}
+
+#pin1 {
+  animation-delay: 0s;
+}
+#pin2 {
+  animation-delay: 1s;
+}
+#pin3 {
+  animation-delay: 2s;
+}
+#pin4 {
+  animation-delay: 3s;
+}
+#pin5 {
+  animation-delay: 4s;
+}
+
+#galleryBox {
+  display: block;
+  width: 343px;
+  height: 178px;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  z-index: 11;
+  margin-left: -171px;
+  margin-top: -89px;
+}
+
+#gallery-container {
+  width: 343px;
+  height: 178px;
+  position: absolute;
+  z-index: 1;
+  border: 4px solid white;
+}
+
+#close {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 23px;
+  height: 23px;
+  z-index: 2;
+  background: url("assets/close.png") center no-repeat;
+  background-size: cover;
+  cursor: pointer;
+}
+
+/* nav arrows container*/
+.arrow {
+  position: absolute;
+  z-index: 3;
+  height: 15px;
+  width: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-image: url("assets/arrow.png");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.gallery-arrow-left {
+  left: 10px;
+}
+
+.gallery-arrow-right {
+  right: 10px;
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* gallery bullets container */
+.gallery-bullets-container {
+  position: absolute;
+  bottom: 10px;
+  left: 12px;
+  z-index: 3;
+  width: 50px;
+}
+
+#gallery-bullets-container ul {
+  padding-left: 0px !important;
+}
+
+#gallery-bullets-container li {
+  background: #b7b3ad !important;
+  border-color: #b7b3ad !important;
+}
+
+#gallery-bullets-container .show-panel-1 li.nav-circle-1 {
+  background: #fff !important;
+  border-color: #fff !important;
+}
+
+#gallery-bullets-container .show-panel-2 li.nav-circle-2 {
+  background: #fff !important;
+  border-color: #fff !important;
+}
+
+#gallery-bullets-container .show-panel-3 li.nav-circle-3 {
+  background: #fff !important;
+  border-color: #fff !important;
+}
+
+#gallery-bullets-container .show-panel-4 li.nav-circle-4 {
+  background: #fff !important;
+  border-color: #fff !important;
+}
+
+.label {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+
+.label img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  margin-left: -20px;
+}
+
+@keyframes pulse {
+  50% {
+    border: none;
+  }
+  50% {
+    border: 4px solid white;
+  }
+  100% {
+    border: none;
+  }
+}
+.pulse {
+  animation: pulse 1.5s ease-out 0s 1 alternate;
+};
+</style>
+<script src="/assets/libraries/AD.js"></script>
+<script src="/assets/libraries/Gallery-0.0.6.js"></script>
+
+  </head><body style="margin:0; height: 100%;"><div id="container">
+    <div id="pins">
+      <div id="pin5" class="pin pulse"><!-- Euro-->
+      </div>
+      <div id="pin3" class="pin pulse"><!-- Carribean-->
+      </div>
+      <div id="pin4" class="pin pulse"><!-- Asia -->
+      </div>
+      <div id="pin1" class="pin pulse"><!-- North America-->
+      </div>
+      <div id="pin2" class="pin pulse"><!-- AU NZ-->
+      </div>
+    </div>
+    <div id="overlay">
+      <div id="label-5" class="label"><img src="assets/label-1.png" loading="lazy" /></div>
+      <div id="label-3" class="label"><img src="assets/label-2.png" loading="lazy" /></div>
+      <div id="label-4" class="label"><img src="assets/label-3.png" loading="lazy" /></div>
+      <div id="label-1" class="label"><img src="assets/label-4.png" loading="lazy" /></div>
+      <div id="label-2" class="label"><img src="assets/label-5.png" loading="lazy" /></div>
+    </div>
+  </div>
+  <!-- include your external scripts like this -->
+<!-- #[[ -->
+<script>
+  var autoTimer;
+  var current_id = "",
+    firstClick = !0;
+  function init() {
+    document.querySelectorAll(".pin").forEach((element) => {
+      element.addEventListener("click", function (e) {
+        e.stopPropagation(),
+        firstClick &&
+        document.querySelectorAll(".pin").forEach((element) => {
+          element.classList.remove("pulse");
+        });
+        e = this.id.replace("pin", "");
+        (current_id = e), $AD.event("interaction.custom." + e), createGalleryBox(e);
+        console.log(e, $AD.Utilities.byId('label-' + e));
+        $AD.Utilities.byId('label-' + e).style.display = "block";
+      });
+    }),
+      autoTimer = setTimeout(() => {
+        var randomIndex = Math.floor(5 * Math.random()) + 1;
+        createGalleryBox((current_id = 1)),
+          document.querySelectorAll(".pin").forEach((element) => {
+            element.classList.remove("pulse");
+          });
+      }, 5000),
+      document.getElementById("container").addEventListener("click", handleClick);
+  }
+  function handleClick(e) {
+    $AD.click("clickthrough");
+  }
+  const galleryConfig = [{}, { id: "na" }, { id: "au" }, { id: "caribbean" }, { id: "asia" }, { id: "euro" }];
+  var currentId = 0;
+  function createGalleryBox(id) {
+    (currentId = id),
+      (document.getElementById("overlay").style.display = "block"),
+      (document.getElementById("pin" + id).style.display = "inline-block");
+    var galleryBox = document.createElement("div");
+    return (
+      (galleryBox.id = "galleryBox"),
+        galleryBox.classList.add(galleryConfig[id].id + "-box" || "default"),
+        (galleryBox.innerHTML = `
+    <div class="close" id="close">
+    </div>
+    <div id="gallery-container" class="gallery-container hide">
+            <div id="gallery-slides-container" class="pos-r"></div>
+
+            <div id="gallery-arrow-left" class="arrow gallery-arrow-left"></div>
+            <div id="gallery-arrow-right" class="arrow gallery-arrow-right" ></div>
+
+            <div id="gallery-bullets-container" class="gallery-bullets-container"></div>
+    </div>
+  `),
+        document.getElementById('container').appendChild(galleryBox),
+        document.getElementById("close").addEventListener("click", function (e) {
+          e.stopPropagation(),
+            (document.getElementById("overlay").style.display = "none"),
+            document.getElementById("galleryBox").remove()
+            document.querySelectorAll(".label").forEach((element) => {element.style.display = "none"});
+        }),
+        setupGallery(id),
+        galleryBox
+    );
+  }
+  function byId(id) {
+    return document.getElementById(id);
+  }
+  function removeClass(id, className) {
+    byId(id).classList.remove(className);
+  }
+  function trackMainGalleryEvent(e, galleryConfId) {
+    clearTimeout(autoTimer);
+    switch (e) {
+      case "slide1":
+        $AD.event("other.view." + (4 * (galleryConfId - 1) + 1));
+        break;
+      case "slide2":
+        $AD.event("other.view." + (4 * (galleryConfId - 1) + 2));
+        break;
+      case "slide3":
+        $AD.event("other.view." + (4 * (galleryConfId - 1) + 3));
+        break;
+      case "slide4":
+        $AD.event("other.view." + (4 * (galleryConfId - 1) + 4));
+        break;
+      case "slideNext":
+        $AD.event("interaction.scroll.forward");
+        break;
+      case "slidePrev":
+        $AD.event("interaction.scroll.backward");
+        break;
+      case "swipeNext":
+        $AD.event("interaction.swipe.forward");
+        break;
+      case "swipePrev":
+        $AD.event("interaction.swipe.backward");
+        break;
+      case "bulletClick":
+        $AD.event("interaction.custom.1");
+    }
+  }
+  function trackMainGalleryClick(e, galleryConfId) {
+    switch (e) {
+      case "slide1":
+        $AD.click("clickthrough.panel." + (4 * (galleryConfId - 1) + 1));
+        break;
+      case "slide2":
+        $AD.click("clickthrough.panel." + (4 * (galleryConfId - 1) + 2));
+        break;
+      case "slide3":
+        $AD.click("clickthrough.panel." + (4 * (galleryConfId - 1) + 3));
+        break;
+      case "slide4":
+        $AD.click("clickthrough.panel." + (4 * (galleryConfId - 1) + 4));
+    }
+  }
+  function galleryReady(galleryConfId) {
+    removeClass("gallery-container", "hide");
+  }
+  function setupGallery(id) {
+    (id = {
+      id: id,
+      imgArr: [
+        "assets/" + galleryConfig[id].id + "-1.jpg",
+        "assets/" + galleryConfig[id].id + "-2.jpg",
+        "assets/" + galleryConfig[id].id + "-3.jpg",
+        "assets/" + galleryConfig[id].id + "-4.jpg",
+      ],
+      w: 335,
+      h: 170,
+      autoplay: !0,
+      parentId: "gallery-container",
+      bullets: { parentId: "gallery-bullets-container", activeColor: "fff", radius: 10 },
+      trackingFunc: trackMainGalleryEvent,
+      redirectFunc: trackMainGalleryClick,
+      callbackFunc: galleryReady,
+    }),
+      (id = new ($AD.getPlugin("Gallery"))(id));
+    id.init(),
+      byId("gallery-arrow-left").addEventListener("click", id.goPrevSlide),
+      byId("gallery-arrow-right").addEventListener("click", id.goNextSlide);
+  }
+  $AD.ready(init);
+</script>
+<!-- ]]# -->
+
+
+
+
+</body></html>

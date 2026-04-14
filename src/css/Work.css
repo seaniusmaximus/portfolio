@@ -1,0 +1,487 @@
+.work::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/hex-bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top top;
+    opacity: 0.5;
+    filter: blur(8px);
+    z-index: -1;
+}
+
+.work {
+    width: 100%;
+    margin: 20px 0 40px;
+    position: relative;
+    overflow: visible;
+    background-color: rgba(76, 84, 84, 0.05);
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.15);
+}
+
+.work-inner {
+    width: 70vw;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.work-heading {
+    display: inline;
+    padding: 5px;
+    font-weight: 900;
+    color: white;
+    background-color: black;
+    box-decoration-break: clone;
+    line-height: 1.75em;
+}
+
+.work-intro {
+    line-height: 1.5em;
+    padding-top: 1em;
+    font-style: italic;
+    max-width: 42em;
+}
+
+.work-grid {
+    list-style: none;
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.work-card {
+    margin: 0;
+}
+
+.work-card-trigger {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    overflow: hidden;
+    cursor: pointer;
+    font: inherit;
+    text-align: left;
+    color: inherit;
+    background-color: #ffffff;
+    transition: box-shadow 0.2s ease;
+}
+
+/* Default button focus ring can read as a box border after mouse click */
+.work-card-trigger:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* One corner: three short edges (hex-style nib), stable “random” corner from slug */
+.work-card-trigger--hex-tl {
+    clip-path: polygon(0 11px, 5px 5px, 11px 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.work-card-trigger--hex-tr {
+    clip-path: polygon(0 0, calc(100% - 11px) 0, calc(100% - 5px) 5px, 100% 11px, 100% 100%, 0 100%);
+}
+
+.work-card-trigger--hex-br {
+    clip-path: polygon(
+        0 0,
+        100% 0,
+        100% calc(100% - 11px),
+        calc(100% - 5px) calc(100% - 5px),
+        calc(100% - 11px) 100%,
+        0 100%
+    );
+}
+
+.work-card-trigger--hex-bl {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 11px 100%, 5px calc(100% - 5px), 0 calc(100% - 11px));
+}
+
+.work-card-trigger:hover,
+.work-card-trigger:focus-visible {
+    box-shadow: 0 8px 24px rgba(25, 35, 45, 0.1);
+}
+
+.work-card-trigger:focus-visible {
+    outline: 2px solid #111111;
+    outline-offset: 2px;
+}
+
+
+.work-thumb {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    background-color: #e8eef5;
+    overflow: hidden;
+}
+
+.work-thumb-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    filter: blur(0);
+    transform: scale(1);
+    transition: filter 0.4s ease, transform 0.4s ease;
+}
+
+.work-card-trigger:hover .work-thumb-bg,
+.work-card-trigger:focus-within .work-thumb-bg {
+    filter: blur(6px);
+    transform: scale(1.04);
+}
+
+.work-thumb-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 16px 18px 18px;
+    background: linear-gradient(
+        to top,
+        rgba(15, 20, 28, 0.92) 0%,
+        rgba(15, 20, 28, 0.55) 42%,
+        transparent 72%
+    );
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+}
+
+.work-card-trigger:hover .work-thumb-overlay,
+.work-card-trigger:focus-within .work-thumb-overlay {
+    opacity: 1;
+}
+
+.work-thumb-placeholder {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+        linear-gradient(135deg, #dde6f0 25%, transparent 25%),
+        linear-gradient(225deg, #dde6f0 25%, transparent 25%),
+        linear-gradient(45deg, #dde6f0 25%, transparent 25%),
+        linear-gradient(315deg, #dde6f0 25%, transparent 25%);
+    background-size: 24px 24px;
+    background-color: #eef3f9;
+    opacity: 0.9;
+}
+
+.work-thumb-initial {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(2rem, 8vw, 3rem);
+    font-weight: 900;
+    color: rgba(17, 17, 17, 0.12);
+    text-transform: uppercase;
+    pointer-events: none;
+}
+
+.work-card-title {
+    font-size: 1.05rem;
+    font-weight: 800;
+    margin: 0 0 6px;
+    line-height: 1.25;
+    color: #ffffff;
+}
+
+.work-card-desc {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.88);
+}
+
+.work-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background-color: rgba(15, 20, 28, 0.72);
+    backdrop-filter: blur(6px);
+}
+
+.work-modal {
+    position: relative;
+    width: min(1280px, 100%);
+    height: min(92vh, 980px);
+    max-height: min(92vh, 980px);
+    display: flex;
+    flex-direction: column;
+    background-color: #f4faff;
+    border-radius: 14px;
+    border: 1px solid #dbe8f2;
+    box-shadow: 0 24px 48px rgba(15, 20, 28, 0.25);
+    overflow: hidden;
+}
+
+.work-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.75rem;
+    line-height: 1;
+    color: #111111;
+    background-color: rgba(255, 255, 255, 0.92);
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.work-modal-close:hover {
+    background-color: #111111;
+    color: #ffffff;
+}
+
+.work-modal-close:focus-visible {
+    outline: 2px solid #111111;
+    outline-offset: 2px;
+}
+
+.work-modal-layout {
+    display: grid;
+    grid-template-columns: 1fr minmax(240px, 300px);
+    min-height: 0;
+    flex: 1;
+    overflow: hidden;
+    align-items: stretch;
+}
+
+.work-modal-media {
+    min-height: 0;
+    min-width: 0;
+    height: 100%;
+    background-color: #1a1f26;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.work-modal-media-fill {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.work-modal-gallery {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+}
+
+.work-modal-gallery-main {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+}
+
+.work-modal-gallery-arrow {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: none;
+    border-radius: 10px;
+    color: #f4faff;
+    background-color: rgba(255, 255, 255, 0.12);
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.work-modal-gallery-arrow:hover {
+    background-color: rgba(255, 255, 255, 0.22);
+}
+
+.work-modal-gallery-arrow:active {
+    transform: scale(0.96);
+}
+
+.work-modal-gallery-arrow:focus-visible {
+    outline: 2px solid #f4faff;
+    outline-offset: 2px;
+}
+
+.work-modal-gallery-arrow svg {
+    width: 1.1rem;
+    height: 1.1rem;
+}
+
+.work-modal-gallery-viewport {
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.work-modal-gallery-bullets {
+    flex-shrink: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 8px 4px;
+}
+
+.work-modal-gallery-bullet {
+    width: 10px;
+    height: 10px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.35);
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.work-modal-gallery-bullet:hover {
+    background-color: rgba(255, 255, 255, 0.55);
+}
+
+.work-modal-gallery-bullet.is-active {
+    background-color: rgba(255, 255, 255, 0.95);
+    transform: scale(1.15);
+}
+
+.work-modal-gallery-bullet:focus-visible {
+    outline: 2px solid #f4faff;
+    outline-offset: 2px;
+}
+
+.work-modal-iframe-slot {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.work-modal-iframe-scale-wrap {
+    overflow: hidden;
+    flex-shrink: 0;
+    border-radius: 8px;
+    line-height: 0;
+}
+
+.work-modal-iframe {
+    display: block;
+    border: none;
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+
+.work-modal-iframe--scaled {
+    border: none;
+}
+
+.work-modal-video--scaled,
+.work-modal-image--scaled {
+    display: block;
+    border-radius: 8px;
+    object-fit: contain;
+    background-color: #000000;
+}
+
+.work-modal-image--scaled {
+    background-color: transparent;
+}
+
+.work-modal-aside {
+    padding: 52px 22px 24px 20px;
+    overflow-y: auto;
+    background-color: #f4faff;
+    border-left: 1px solid #dbe8f2;
+}
+
+.work-modal-title {
+    margin: 0 0 12px;
+    font-size: 1.25rem;
+    font-weight: 900;
+    line-height: 1.3;
+    color: #111111;
+}
+
+.work-modal-description {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: #3a4550;
+    font-style: italic;
+}
+
+@media screen and (max-width: 800px) {
+    .work-modal {
+        height: auto;
+        max-height: min(94vh, 980px);
+    }
+
+    .work-modal-layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(240px, 52vh) auto;
+        overflow-y: auto;
+        align-items: stretch;
+    }
+
+    .work-modal-media {
+        height: auto;
+        min-height: min(52vh, 460px);
+        max-height: min(52vh, 460px);
+    }
+
+    .work-modal-media-fill {
+        min-height: inherit;
+    }
+
+    .work-modal-aside {
+        border-left: none;
+        border-top: 1px solid #dbe8f2;
+        padding: 20px 18px 22px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .work-inner {
+        width: 90vw;
+    }
+
+    .work-modal-backdrop {
+        padding: 12px;
+    }
+}

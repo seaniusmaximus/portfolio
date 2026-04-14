@@ -1,0 +1,32 @@
+/* #tmp{ background: no-repeat url("../assets/tmp1.png"); } */
+
+#f1-pack { background: no-repeat url("../assets/f1-pack.jpg"); }
+#f1-stamp { background: no-repeat url("../assets/f1-stamp.png");  transform-origin: 66px 140px; }
+
+#f1-bb1 { background: no-repeat url("../assets/f1-bb1.png"); transform-origin: 230px 52px; } 
+#f1-bb2 { background: no-repeat url("../assets/f1-bb2.png"); left: -38px; transform-origin: 4px 484px; }
+#f1-bb3 { background: no-repeat url("../assets/f1-bb3.png"); transform-origin: 230px 538px; }
+#f1-seed1 { background: no-repeat url("../assets/f1-seed1.png"); transform-origin: 82px 54px; }
+#f1-seed2 { background: no-repeat url("../assets/f1-seed2.png"); transform-origin: 258px 135px; }
+#f1-seed3 { background: no-repeat url("../assets/f1-seed3.png"); transform-origin: 82px 562px; }
+
+#f2-packs { background: no-repeat url("../assets/f2-packs.jpg"); }
+#f2-copy { background: no-repeat url("../assets/f2-copy.png"); }
+
+#f2-bb1 { background: no-repeat url("../assets/f2-bb1.png"); transform-origin: 252px 44px; }
+#f2-bb2 { background: no-repeat url("../assets/f2-bb2.png"); transform-origin: 73px 556px; }
+#f2-seed1 { background: no-repeat url("../assets/f2-seed1.png"); transform-origin: 148px 34px; }
+#f2-seed2 { background: no-repeat url("../assets/f2-seed2.png"); transform-origin: 180px 574px; }
+#f2-bite1 { background: no-repeat url("../assets/f2-bite1.png"); transform-origin: 44px 56px; }
+#f2-bite2 { background: no-repeat url("../assets/f2-bite2.png"); transform-origin: 34px 454px; }
+#f2-bite3 { background: no-repeat url("../assets/f2-bite3.png"); transform-origin: 260px 542px; }
+
+#f3-copy { background: no-repeat url("../assets/f3-copy.png"); }
+
+#ef-copy { background: no-repeat url("../assets/ef-copy.png"); }
+
+#cta { background: no-repeat url("../assets/cta.png"); transform-origin: center 481px;}
+
+
+/* #f2-bb3 { background: no-repeat url("../assets/f2-bb1.png"); transform: scale(0.8); top: 108px; left: -12px; } */
+/* #f2-bite3 { background: no-repeat url("../assets//ef-bite2.png"); transform: scale(0.9) rotate(-10deg); top: 351px; left: 33px;} */

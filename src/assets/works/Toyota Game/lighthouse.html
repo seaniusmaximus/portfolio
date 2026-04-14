@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no">
+    <meta name="ad.frame" content="child">
+    <title>ACE - Ad Building Framework</title>
+    <style>
+        /* include your CSS styles like this */
+        *,*::after,*::before,html{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;box-sizing:border-box;text-rendering:optimizeLegibility}html,body{width:100%;height:100%;margin:0;padding:0;overflow:hidden;box-sizing:border-box;font-family:"Open Sans",sans-serif}.full-size{position:relative !important;width:100% !important;height:auto !important}#revjet_container{width:100% !important;height:auto !important}#revjet_container>div{width:100% !important;height:auto !important}[data-revjet-role^=STAGE]{position:relative !important;width:100% !important;height:auto !important}[data-revjet-role^=STAGE]:not([data-revjet-role*=BACKGROUND]){top:auto !important}#adBox{position:relative;background-color:#000;background-position:top left;background-repeat:no-repeat;background-size:contain}#click{width:100%;height:100%;position:absolute}
+        @font-face{font-family:toyota-red;src:url("assets-lighthouse/ToyotaType-Bold-subset.otf")}#container{display:none}#adBox{width:1080px;height:1920px;background-position:center;background-repeat:no-repeat;background-size:contain;background-image:url("assets-lighthouse/bg.png") !important;user-select:none}#logo{width:100%;height:100%;background:rgba(0,0,0,0) url("assets-lighthouse/logo.png") no-repeat center center;position:absolute;pointer-events:none}#car{width:2080px;height:790px;position:absolute;left:-500px;top:700px;transform:scale(0.9);transform-origin:center center;pointer-events:none}.car-image{width:100%;height:100%;position:absolute;background-size:cover;background-position:center center;opacity:0}#car-0{opacity:1}.text{width:100%;height:100%;position:absolute;opacity:0;pointer-events:none}#text-1{background:rgba(0,0,0,0) url("assets-lighthouse/text-1.png") no-repeat center center}#text-2{background:rgba(0,0,0,0) url("assets-lighthouse/text-2.png") no-repeat center center}#play-button{width:484px;height:117px;position:absolute;top:303px;left:297px;pointer-events:all;cursor:pointer}#text-3.load{background:rgba(0,0,0,0) url("assets-lighthouse/text-3.png") no-repeat center center}#label-1.load{background:rgba(0,0,0,0) url("assets-lighthouse/label-ready.png") no-repeat center center}#label-2.load{background:rgba(0,0,0,0) url("assets-lighthouse/label-set.png") no-repeat center center}#label-3.load{background:rgba(0,0,0,0) url("assets-lighthouse/label-go.png") no-repeat center center}#legal{width:100%;height:100%;position:absolute;background:rgba(0,0,0,0) url("assets-lighthouse/legal-button.png") no-repeat center center;pointer-events:none}#legal-button{width:200px;height:70px;position:absolute;top:0;left:0;pointer-events:all;cursor:pointer}#legal-popup{width:100%;height:100%;position:absolute;background:rgba(0,0,0,0) url("assets-lighthouse/legal-popup.png") no-repeat center center;pointer-events:none;display:none}#legal-close{width:200px;height:70px;position:absolute;top:0;right:0;pointer-events:all;cursor:pointer}#items{width:100%;height:553px;position:absolute;top:254px;pointer-events:none;text-align:center;display:none}.item{pointer-events:none;-webkit-user-drag:none}.draggable-container{display:inline-block;pointer-events:all;overflow:visible}#timer{width:100%;height:100%;position:absolute;bottom:100px;opacity:0;pointer-events:none}#timer.load{background:rgba(0,0,0,0) url("assets-lighthouse/timer-label.png") no-repeat center center}#timer-value.load{font-family:toyota-red,sans-serif;color:#eb0a1e;font-size:120px;position:absolute;top:1695px;left:90px}#cta.load{width:100%;height:100%;position:absolute;background:rgba(0,0,0,0) url("assets-lighthouse/cta.png") no-repeat center center;opacity:0;pointer-events:none}.win-message-1{background:rgba(0,0,0,0) url("assets-lighthouse/win-message-1.png") no-repeat center center}.win-message-2{background:rgba(0,0,0,0) url("assets-lighthouse/win-message-2.png") no-repeat center center}.win-message-3{background:rgba(0,0,0,0) url("assets-lighthouse/win-message-3.png") no-repeat center center}#win-time{width:100%;font-size:48px;font-weight:600;position:absolute;top:663px;text-align:center;font-family:Trebuchet MS,sans-serif;letter-spacing:0px;margin-left:8px}.hit{position:absolute;pointer-events:none}#hit-guitar{width:100px;height:250px;left:300px}#hit-tent{width:200px;height:140px;left:430px}#hit-ball{width:120px;height:150px;left:680px;top:50px}#hit-bike{width:250px;height:120px;left:410px;top:155px}#hit-cooler{width:170px;height:100px;left:280px;bottom:10px}#hit-chair{width:220px;height:105px;left:455px;bottom:10px}#hit-shoes{width:130px;height:175px;right:244px;bottom:0px}#hitArea{position:absolute;width:100%;height:400px;top:800px;z-index:300;pointer-events:none}#replay{width:220px;height:75px;background:rgba(0,0,0,0) url("assets-lighthouse/replay-btn.png") no-repeat center center;position:absolute;top:0;right:0;display:none;opacity:0}#global-cta{width:100%;height:100%;position:absolute;pointer-events:none;background:rgba(0,0,0,0) url("assets-lighthouse/global-cta.png") no-repeat center center}#global-cta-hit{width:450px;height:150px;position:absolute;bottom:30px;left:50px;cursor:pointer}#logo-hit{width:310px;height:310px;position:absolute;bottom:0;right:0;cursor:pointer}
+    </style>
+    <script src="/assets/libraries/AD.js"></script>
+    <script src="/assets/libraries/gsap.min.js"></script>
+    <script src="/assets/libraries/Draggable.min.js"></script>
+</head>
+
+<body>
+<div id="container" class="lighthouse">
+    <div id="adBox">
+        <div id="text">
+            <div id="text-1" class="text"></div>
+            <div id="text-2" class="text"><div id="play-button" class="button"></div></div>
+            <div id="text-3" class="text lazyLoad"></div>
+
+            <div id="label-1" class="text lazyLoad"></div>
+            <div id="label-2" class="text lazyLoad"></div>
+            <div id="label-3" class="text lazyLoad"></div>
+            <div id="win-message" class="text">
+                <div id="win-time">0</div>
+            </div>
+        </div>
+        <div id="timer" class="lazyLoad">
+            <div id="timer-value" class="lazyLoad">00.00</div>
+        </div>
+        <div id="car"></div>
+        <div id="hitArea">
+            <div id="hit-guitar" class="hit" data-index="0"></div>
+            <div id="hit-shoes" class="hit" data-index="1"></div>
+            <div id="hit-cooler" class="hit" data-index="2"></div>
+            <div id="hit-tent" class="hit" data-index="3"></div>
+            <div id="hit-chair" class="hit" data-index="4"></div>
+            <div id="hit-ball" class="hit" data-index="5"></div>
+            <div id="hit-bike" class="hit" data-index="6"></div>
+        </div>
+        <div id="items"></div>
+        <div id="logo"></div>
+        <div id="cta" class="lazyLoad"></div>
+        <div id="global-cta" class="lazyLoad"></div>
+        <div id="global-cta-hit"></div>
+        <div id="logo-hit"></div>
+        <div id="legal">
+            <div id="legal-button"></div>
+            <div id="legal-popup">
+                <div id="legal-close"></div>
+            </div>
+        </div>
+        <div id="replay"></div>
+    </div>
+</div>
+<!-- the below block enables innervate params to be used in the creative which are exposed in the Innervate UI under "Html5 Params" -->
+<script>
+    /*
+      params=!{
+        "background": { "type": "asset", "default": "", "display_name": "Background Image" },
+        "adChoices": { "type": "boolean", "default": "true", "display_name": "Show Ad Choices Icon" }
+      }!
+    */
+    var innervateParams;
+    var localParams = {
+        'background': {
+            'url': '',
+            'element': '#adBox',
+        },
+        "adChoices": true
+    }
+    try {
+        innervateParams = JSON.parse('%html5vars%'); // prettier-ignore
+    } catch (e) {
+        console.log('error! innervate Html5 params not found! using default!');
+    }
+</script>
+<!-- #[[ -->
+<script>
+  innervateParams = $AD.Utilities.deepMerge(localParams, innervateParams);
+  var conf  = {
+        containerID: 'container',
+        adId: 'adBox',
+        breakpoints: [
+            /* lighthouse specs uses: 720x1280px or 1080x1920 */
+            { class:'lighthouse', ratio:'9:16' }
+        ],
+        scaleBetween: true,
+        center: false,
+        debounceTimer: 0,
+        resizeCallback: handleResize
+    }
+    /* include your external scripts like this */
+    var currState,sizeManager,prop,bgCssArray=[],configData={};for(prop in innervateParams)Object.hasOwn(innervateParams[prop],"element")&&Object.hasOwn(innervateParams[prop],"url")?bgCssArray.push(innervateParams[prop].element+"{background-image: url("+innervateParams[prop].url+");}"):Object.hasOwn(innervateParams[prop],"url")&&(configData[prop]=innervateParams[prop].url);var style=document.createElement("style");function initSizeManager(){document.getElementById("container").style.display="block",(sizeManager=new ACE.SIZEMANAGER(conf)).init()}function handleResize(state){currState=state}function init(){var adChoices=new ACE.ADCHOICES({parentNode:"container",label:"AdChoices",clickURL:"https://legal.yahoo.com/us/en/yahoo/privacy/adinfo/index.html",position:{top:0,right:0}});innervateParams.adChoices&&adChoices.init(),initSizeManager()}style.type="text/css",style.innerHTML=bgCssArray.join("\n"),document.getElementById("container").parentElement.appendChild(style),$AD.ready(init);
+    var timer,gameStarted=!1,spinTiming=.08,assetDirectory="assets-lighthouse/",tl=new TimelineMax,loadCount=0,carImages=[{img:"car-optimized-1.png",loaded:!1},{img:"car-optimized-2.png",loaded:!1},{img:"car-optimized-3.png",loaded:!1},{img:"car-optimized-4.png",loaded:!1},{img:"car-optimized-5.png",loaded:!1},{img:"car-optimized-6.png",loaded:!1},{img:"car-optimized-7.png",loaded:!1},{img:"car-optimized-overlay.png",loaded:!1}],gameItems=[{img:"item-guitar.png",id:"guitar",loaded:!1,placed:!1,draggable:!0,winningPosition:{rotation:0}},{img:"item-shoes.png",id:"shoes",loaded:!1,placed:!1,draggable:!0,winningPosition:{rotation:3}},{img:"item-cooler.png",id:"cooler",loaded:!1,placed:!1,draggable:!0,winningPosition:{rotation:0}},{img:"item-tent.png",id:"tent",loaded:!1,placed:!1,draggable:!0,winningPosition:{rotation:0}},{img:"item-chair.png",id:"chair",loaded:!1,placed:!1,draggable:!0,winningPosition:{rotation:3}},{img:"item-ball.png",id:"ball",loaded:!1,placed:!1,draggable:!0,winningPosition:{rotation:0}},{img:"item-bike.png",id:"bike",loaded:!1,placed:!1,draggable:!0,winningPosition:{rotation:2}}];function handleClick(e){switch(e.target.id){case"global-cta-hit":case"logo-hit":$AD.click("clickthrough.custom.4");break;case"play-button":startGame(),$AD.event("other.start");break;case"legal-button":gsap.set("#legal-popup",{display:"block"});break;case"legal-close":gsap.set("#legal-popup",{display:"none"});break;case"replay":replayGame(),$AD.event("other.restart")}}function replayGame(){gameItems.forEach(function(item,index){item.placed=!1}),tl.to("#text-3",.25,{opacity:0},"-=0.25"),tl.to("#win-message",.25,{opacity:0},"-=0.25"),tl.to("#cta",.25,{opacity:0},"-=0.25"),tl.to("#replay",.25,{opacity:0,display:"none"},"-=0.25"),tl.set("#car-0",{opacity:0}),tl.set("#car-1",{delay:spinTiming,opacity:1},"-="+spinTiming),tl.set("#car-1",{delay:spinTiming,opacity:0}),tl.set("#car-2",{delay:spinTiming,opacity:1},"-="+spinTiming),tl.set("#car-2",{delay:spinTiming,opacity:0}),tl.set("#car-3",{delay:spinTiming,opacity:1},"-="+spinTiming),tl.set("#car-3",{delay:spinTiming,opacity:0}),tl.set("#car-4",{delay:spinTiming,opacity:1},"-="+spinTiming),tl.set("#car-4",{delay:spinTiming,opacity:0}),tl.set("#car-5",{delay:spinTiming,opacity:1},"-="+spinTiming),tl.set("#car-5",{delay:spinTiming,opacity:0}),tl.set("#car-6",{delay:spinTiming,opacity:1},"-="+spinTiming),startGame(),document.getElementById("timer-value").innerText=0}function startGame(){gameStarted||(lazyLoad(),buildItems(gameItems)),tl.to("#text-2",.5,{opacity:0}),tl.set("#items",{display:"block",opacity:1}),tl.staggerFromTo(".item",.25,{y:-1e3},{y:0,ease:Back.easeOut},.1),tl.fromTo("#label-1",.5,{opacity:0},{opacity:1},"-=0.25"),tl.to("#label-1",.5,{opacity:0}),tl.to("#car-7",.5,{opacity:1}),tl.fromTo("#label-2",.5,{opacity:0},{opacity:1},"-=0.5"),tl.to("#label-2",.5,{opacity:0}),tl.fromTo("#timer",.5,{opacity:0},{opacity:1}),tl.fromTo("#label-3",.5,{opacity:0},{opacity:1,onComplete:startTimer}),tl.to("#label-3",.25,{delay:1,opacity:0}),Draggable.create(".draggable-container",{onClick:handleItemTap,onDragStart:handleDragStart,onDragEnd:handleDragEnd}),gameStarted=!0}function startAnimation(){tl.set("#adBox",{display:"block"}),tl.fromTo("#car",1,{x:-1e3,y:-200},{x:0,y:0,ease:Power2.easeOut}),tl.fromTo("#text-1",1,{opacity:0},{opacity:1},"-=0.5"),tl.to("#car",.25,{delay:2,scale:.7,ease:Back.easeOut}),tl.set("#car-0",{opacity:0}),tl.set("#car-1",{delay:spinTiming,opacity:1},"-="+spinTiming),tl.set("#car-1",{delay:spinTiming,opacity:0}),tl.set("#car-2",{delay:spinTiming,opacity:1},"-="+spinTiming),tl.set("#car-2",{delay:spinTiming,opacity:0}),tl.set("#car-3",{delay:spinTiming,opacity:1},"-="+spinTiming),tl.set("#car-3",{delay:spinTiming,opacity:0}),tl.set("#car-4",{delay:spinTiming,opacity:1},"-="+spinTiming),tl.set("#car-4",{delay:spinTiming,opacity:0}),tl.set("#car-5",{delay:spinTiming,opacity:1},"-="+spinTiming),tl.set("#car-5",{delay:spinTiming,opacity:0}),tl.set("#car-6",{delay:spinTiming,opacity:1},"-="+spinTiming),tl.to("#car",.25,{scale:.9,ease:Back.easeOut}),tl.to("#text-1",.5,{opacity:0}),tl.to("#text-2",.5,{opacity:1})}function handleImageLoad(e,obj){obj.loaded=!0,++loadCount===carImages.length&&startAnimation()}function buildImage(imgObj,index,className,parent){var img=new Image;img.src=assetDirectory+imgObj.img,img.className=className,img.id=parent.id+"-"+index,imgObj.draggable?((className=document.createElement("div")).className="draggable-container",className.setAttribute("data-index",index),className.setAttribute("data-rotation",0),className.setAttribute("id","item-"+imgObj.id),className.appendChild(img),parent.appendChild(className)):parent.appendChild(img),img.onload=function(e){handleImageLoad(e,imgObj)}}function buildCarRotator(imgArray){imgArray.forEach(function(imgObj,index){buildImage(imgObj,index,"car-image",document.getElementById("car"))})}function buildItems(imgArray){imgArray.forEach(function(imgObj,index){buildImage(imgObj,gameItems[index].index=index,"item",document.getElementById("items"))})}function checkWin(){var placedItems=0;return gameItems.forEach(function(item){!0===item.placed&&placedItems++}),placedItems===gameItems.length}function checkPosition(dragInstance,target){var hitTargetId,itemIndex=target.getAttribute("data-index");target.getAttribute("id");switch(itemIndex){case"0":hitTargetId="#hit-guitar";break;case"1":hitTargetId="#hit-shoes";break;case"2":hitTargetId="#hit-cooler";break;case"3":hitTargetId="#hit-tent";break;case"4":hitTargetId="#hit-chair";break;case"5":hitTargetId="#hit-ball";break;case"6":hitTargetId="#hit-bike"}dragInstance.hitTest(hitTargetId,0)&&target.getAttribute("data-rotation")==gameItems[itemIndex].winningPosition.rotation?(console.log("hit",hitTargetId),target.style.pointerEvents="none",gameItems[Number(target.getAttribute("data-index"))].placed=!0):(console.log(hitTargetId),console.log("did not hit"))}function handleDragStart(e){$AD.event("interaction.drag.start"),gsap.set(".draggable-container",{zIndex:1}),gsap.set(e.target,{zIndex:9999})}function handleDragEnd(e){$AD.event("interaction.drag.stop"),checkPosition(this,e.target),checkWin()&&(setWinScreen(),$AD.event("other.stop"))}function handleItemTap(e){var rotation=e.target.getAttribute("data-rotation"),rotation=Number(rotation)+1;e.target.setAttribute("data-rotation",rotation=3<rotation?0:rotation),gsap.to(e.target,0,{rotation:"+=90"})}function startTimer(){var value,valueNode=document.getElementById("timer-value"),winNode=document.getElementById("win-time");timer=setInterval(function(){value=(parseFloat(valueNode.innerText)+.01).toFixed(2),valueNode.innerText=value,winNode.innerText=value+" SECONDS",valueNode.innerText<10&&(valueNode.innerText="0"+value)},10)}function lazyLoad(){document.querySelectorAll(".lazyLoad").forEach(function(element){element.className=String(element.className.replace("lazyLoad","load"))})}function setWinScreen(){clearInterval(timer),document.getElementById("win-message").className="text win-message-"+Math.ceil(3*Math.random()),tl.to(["#car-7","#timer","#items"],.5,{opacity:0}),tl.set("#car-6",{opacity:0}),tl.set("#car-5",{delay:spinTiming,opacity:1},"-="+spinTiming),tl.set("#car-5",{delay:spinTiming,opacity:0}),tl.set("#car-4",{delay:spinTiming,opacity:1},"-="+spinTiming),tl.set("#car-4",{delay:spinTiming,opacity:0}),tl.set("#car-3",{delay:spinTiming,opacity:1},"-="+spinTiming),tl.set("#car-3",{delay:spinTiming,opacity:0}),tl.set("#car-2",{delay:spinTiming,opacity:1},"-="+spinTiming),tl.set("#car-2",{delay:spinTiming,opacity:0}),tl.set("#car-1",{delay:spinTiming,opacity:1},"-="+spinTiming),tl.set("#car-1",{delay:spinTiming,opacity:0}),tl.set("#car-0",{delay:spinTiming,opacity:1},"-="+spinTiming),tl.to("#text-3",.25,{opacity:1}),tl.to("#win-message",.25,{opacity:1}),tl.to("#cta",.25,{opacity:1}),tl.to("#replay",.25,{opacity:1,display:"block"}),tl.set(".draggable-container",{clearProps:"transform",attr:{"data-rotation":0},pointerEvents:"all"})}function initLighthouse(){gsap.registerPlugin(Draggable),buildCarRotator(carImages),document.getElementById("container").onclick=handleClick}initLighthouse();
+    var ACT;!function(ACE){function byId(id){return document.getElementById(id)}function getElementDimensions(element){var clientWidth=element.clientWidth;return{id:element.id,node:element,width:clientWidth,height:element.clientHeight}}function getComputedAspectRatio(width,height){return Math.round(width/height)}function SizeManager(config){var conf={containerID:"container",adId:"adBox",breakpoints:[{"class":"wide",ratio:"16:3"},{"class":"mid",ratio:"40:9"},{"class":"mobile",ratio:"16:9"}],scaleBetween:!0,center:!0,debounceTimer:100};!function merge(obj1,obj2){for(var p in obj2)try{obj2[p].constructor==Object?obj1[p]=merge(obj1[p],obj2[p]):obj1[p]=obj2[p]}catch(e){obj1[p]=obj2[p]}return obj1}(conf,config),this.config=conf,this.state=this.config.breakpoints[0],this.container=byId(this.config.containerID),this.container.style.width="100vw",this.container.style.height="100vh",this.adBox=byId(this.config.adId),this.adBox.style.transformOrigin="top left",this.adBox.style.position="relative",this.adBox.style.overflow="hidden"}SizeManager.prototype={scaleAdBox:function(state){var scaleWidthAmount=getElementDimensions(this.container).width/getElementDimensions(this.adBox).width,scaleHeightAmount=getElementDimensions(this.container).height/getElementDimensions(this.adBox).height,scaleWidthAmount=scaleWidthAmount<scaleHeightAmount?scaleWidthAmount:scaleHeightAmount;this.adBox.style.transform="scale("+scaleWidthAmount+")",this.state.scaleAmount=scaleWidthAmount,0!=this.config.center&&this.centerAdBox(scaleWidthAmount)},centerAdBox:function(scaleAmount){this.adBox.style.left=(getElementDimensions(this.container).width-getElementDimensions(this.adBox).width*scaleAmount)/2+"px",this.adBox.style.top=(getElementDimensions(this.container).height-getElementDimensions(this.adBox).height*scaleAmount)/2+"px"},checkState:function(item){var containerRatio=getComputedAspectRatio(getElementDimensions(this.container).width,getElementDimensions(this.container).height),ratio=item.ratio.split(":");getComputedAspectRatio(ratio[0],ratio[1])===this.getClosest(this.parseRatios(this.config.breakpoints),containerRatio)&&(this.container.className=item["class"],this.state=item)},update:function(){this.config.breakpoints.forEach(this.checkState.bind(this)),this.config.scaleBetween&&this.scaleAdBox(this.state),this.config.resizeCallback&&this.config.resizeCallback(this.state)},getClosest:function(array,num){var goal=num;return array.reduce(function(prev,curr){return Math.abs(curr-goal)<Math.abs(prev-goal)?curr:prev})},parseRatios:function(breakpoints){var array=[];return breakpoints.forEach(function(item){item=item.ratio.split(":");array.push(getComputedAspectRatio(item[0],item[1]))}),array},init:function(){var func,wait,immediate,timeout;window.onresize=(func=this.update.bind(this),wait=this.config.debounceTimer,function(){var context=this,args=arguments,callNow=immediate&&!timeout;clearTimeout(timeout),timeout=setTimeout(function(){timeout=null,immediate||func.apply(context,args)},wait),callNow&&func.apply(context,args)}),this.update()}},ACE.SIZEMANAGER=SizeManager,window.ACE=ACE}(window.ACE||{});
+    !function(ACE){function makeAdChoicesElement(parentNode,adChoicesText,clickURL,clickCallback){var logo=document.createElement("div"),label=document.createElement("span");logo.id="adchoices-logo",logo.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 15 15"><circle cx="6" cy="6" r="0.67"></circle><path d="M4.2,11.3Q3.3,11.8,3.3,10.75L3.3,4.1Q3.3,3.1,4.3,3.5L10.4,7.0Q12.0,7.5,10.4,8.0L6.65,10.0L6.65,7.75a0.65,0.65,0,1,0,-1.3,0L5.35,10.75a0.9,0.9,0,0,0,1.3,0.8L12.7,8.2Q13.7,7.5,12.7,6.7L3.3,1.6Q2.2,1.3,1.8,2.5L1.8,12.5Q2.2,13.9,3.3,13.3L4.8,12.5A0.3,0.3,0,1,0,4.2,11.3Z"></path></svg>',label.id="adchoices-label",label.innerText=adChoicesText,this.adChoicesContainer=document.createElement("div"),this.adChoicesContainer.id="adchoices-container",this.adChoicesContainer.appendChild(label),this.adChoicesContainer.appendChild(logo),this.adChoicesContainer.addEventListener("click",function(){window.open(clickURL,"_blank"),clickCallback&&clickCallback()}),document.getElementById(parentNode).appendChild(this.adChoicesContainer)}function adChoices(config){var prop,conf={};for(prop in config)config.hasOwnProperty(prop)&&(conf[prop]=config[prop]);this.config=conf}adChoices.prototype={constructor:adChoices,init:function(){var position,style;makeAdChoicesElement(this.config.parentNode,this.config.label,this.config.clickURL,this.config.clickCallback),position=this.config.position,(style=document.createElement("style")).innerHTML=`
+      #adchoices-container {
+        border-bottom-left-radius: 4px;
+        position: absolute;`+JSON.stringify(position).replaceAll('"',"").replaceAll("{","").replaceAll("}","").replaceAll(",",";")+`;
+        background-color: rgba(255, 255, 255, 0.7);
+        font-size: 11px;
+        font-weight: 400;
+        user-select: none;
+        display: flex;
+        align-items: center;
+        padding: 2px 4px;
+        cursor: pointer;
+      }
+      
+      #adchoices-container #adchoices-logo {
+        width: 15px;
+        height: 15px;
+      }
+      
+      #adchoices-container #adchoices-label {
+        margin-right: 2px;
+        display: none;
+        color: grey;
+      }
+      #adchoices-container:hover #adchoices-label {
+        display: inline-block;
+      }
+     
+      #adchoices-container svg {
+        fill: #00aecd;
+      }
+    `,document.body.appendChild(style)}},ACE.ADCHOICES=adChoices,window.ACE=ACE}(window.ACE||{});
+</script>
+<!-- ]]# -->
+</body>
+</html>

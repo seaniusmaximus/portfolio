@@ -1,0 +1,995 @@
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<meta name="ad.frame" content="child">
+<title>ACE - Ad Building Framework</title>
+<style>
+  /* include your CSS styles like this */
+  /* if you want to use separate CSS files, include into main CSS like this */
+*,
+*::after,
+*::before,
+html {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+  text-rendering: optimizeLegibility;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+@font-face {
+  font-family: "Univers LT Std Ultra Condensed";
+  src: url("assets/fonts/UniversLTStd-UltraCn.otf");
+}
+@font-face {
+  font-family: "Univers LT Std Bold Condensed";
+  src: url("assets/fonts/UniversLTStd-BoldCn.otf");
+}
+.active {
+  opacity: 1;
+}
+
+.inactive {
+  transform: translatex(-300%);
+  opacity: 0;
+}
+
+.btn {
+  display: inline-block;
+  border-radius: 129.434px;
+  background: #F07D00;
+  color: #fff;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  font-size: 41px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: -0.104px;
+  user-select: none;
+  pointer-events: all;
+}
+
+.btn:hover {
+  background-color: #fff;
+  color: #000;
+  cursor: pointer;
+}
+
+.pop-in {
+  animation-name: pop-in;
+  animation-duration: 0.75s;
+  animation-fill-mode: forwards;
+}
+
+.fade-in {
+  animation-name: fade-in;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+.bubble {
+  width: 422px;
+  height: 422px;
+  background-color: #00728F;
+  border-radius: 422px;
+  position: absolute;
+}
+
+.animal {
+  position: absolute;
+  background-size: contain;
+  background-repeat: no-repeat;
+  transform: scale(0);
+}
+
+#animal-1 {
+  animation-delay: 0.1s;
+  width: 405px;
+  height: 405px;
+  background-image: url("assets/african-elephant.png");
+  left: 20px;
+  top: -60px;
+}
+
+#animal-2 {
+  animation-delay: 0.2s;
+  width: 290px;
+  height: 290px;
+  background-image: url("assets/snowy-owl.png");
+  top: 100px;
+  left: -50px;
+}
+
+#animal-3 {
+  animation-delay: 0.4s;
+  width: 303px;
+  height: 303px;
+  background-image: url("assets/Blue-footed-booby.png");
+  top: 100px;
+  left: 235px;
+}
+
+#animal-4 {
+  animation-delay: 0.3s;
+  width: 350px;
+  height: 350px;
+  background-image: url("assets/red-fox.png");
+  left: 50px;
+  top: 180px;
+}
+
+#container {
+  width: 600px;
+  height: 1200px;
+  transform-origin: top left;
+  transform: scale(0.5);
+  background-color: rgba(0, 114, 143, 0.3019607843);
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
+}
+
+#logo {
+  width: 105px;
+  height: 140px;
+  position: absolute;
+  left: 247px;
+  top: 46px;
+  background: transparent url("assets/logo.png") top left no-repeat;
+  background-size: contain;
+}
+
+#intro-frame {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  pointer-events: none;
+}
+
+#headline {
+  width: 481px;
+  height: 231px;
+  color: #000;
+  font-family: "Univers LT Std Ultra Condensed", sans-serif;
+  font-size: 72px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%;
+  letter-spacing: -0.225px;
+  position: absolute;
+  top: 269px;
+  left: 60px;
+  pointer-events: none;
+  text-align: center;
+}
+
+#btn-start, #btn-adopt {
+  width: 265px;
+  height: 72px;
+  line-height: 72px;
+  padding: 0 22px;
+  position: absolute;
+  top: 1037px;
+  left: 167px;
+  pointer-events: all;
+}
+
+#animals {
+  width: 422px;
+  height: 422px;
+  position: absolute;
+  top: 541px;
+  left: 89px;
+  pointer-events: none;
+}
+
+#quiz {
+  width: 542px;
+  height: 942px;
+  border-radius: 30px;
+  position: absolute;
+  top: 227px;
+  left: 29px;
+  padding: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+.quiz-container, .quiz {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.question h2 {
+  opacity: 0;
+  margin: 320px 0 20px 0;
+  padding: 0;
+  color: #FFF;
+  font-family: "Univers LT Std Bold Condensed", sans-serif;
+  font-size: 45px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: -0.14px;
+  animation-name: fade-in;
+  animation-duration: 0.75s;
+  animation-fill-mode: forwards;
+  text-align: center;
+  white-space: pre-wrap;
+}
+
+.question {
+  width: 100%;
+  height: 100%;
+  padding: 65px 40px;
+  background-size: contain;
+}
+
+.question:nth-child(1) {
+  background-image: url("assets/quiz-1.png");
+}
+
+.question:nth-child(2) {
+  background-image: url("assets/quiz-2.png");
+}
+
+.question:nth-child(3) {
+  background-image: url("assets/quiz-3.png");
+}
+
+.option {
+  opacity: 0;
+  display: inline-block;
+  width: 459px;
+  padding: 20px 10px;
+  margin: 0 0 15px 0;
+  border-radius: 100px;
+  border: 3px solid #FFF;
+  color: #FFF;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 30px;
+  letter-spacing: -0.075px;
+  animation-name: fade-in;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+  pointer-events: all;
+  text-align: center;
+}
+
+.option:hover {
+  background-color: #F07D00;
+  border-color: #F07D00;
+}
+
+.option:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.option:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.option:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.option:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.option:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+.option:nth-child(6) {
+  animation-delay: 0.6s;
+}
+
+.option input {
+  display: none;
+}
+
+.option label {
+  cursor: pointer;
+  user-select: none;
+}
+
+.results {
+  text-align: center;
+}
+
+.results h2 {
+  color: #000;
+  font-family: "Univers LT Std Ultra Condensed", sans-serif;
+  font-size: 64px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 110%; /* 105.6px */
+  letter-spacing: -0.24px;
+  margin: 25px 0 0 0;
+  padding: 0;
+  text-align: center;
+}
+
+.results h2 span {
+  display: block;
+  font-size: 96px;
+  margin: 20px 0;
+}
+
+.results .image-container {
+  width: 427px;
+  height: 427px;
+  background-color: #00728F;
+  border-radius: 422px;
+  position: absolute;
+  top: 210px;
+  left: 60px;
+  transform: scale(0);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation-name: pop-in;
+  animation-duration: 0.75s;
+  animation-fill-mode: forwards;
+}
+
+.image-container img {
+  width: 497px;
+  height: 497px;
+  margin-top: -30px;
+  transform: scale(0);
+  animation-name: pop-in;
+  animation-duration: 0.75s;
+  animation-fill-mode: forwards;
+  animation-delay: 0.2s;
+}
+
+.results p {
+  display: block;
+  width: 402px;
+  height: 126px;
+  color: #000;
+  font-family: Arial, sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%; /* 28.8px */
+  letter-spacing: -0.06px;
+  margin: 480px auto 0 auto;
+  padding: 0;
+  text-align: left;
+}
+
+.results .btn {
+  font-size: 32px;
+  padding: 17px 43px;
+  margin: 20px auto;
+}
+
+.results .additional-cta {
+  width: 364px;
+  color: #00728F;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: -0.075px;
+  text-decoration-line: underline;
+  margin: 0 auto;
+  pointer-events: all;
+}
+
+.results .additional-cta:hover {
+  color: #F07D00;
+}
+
+#hit-btn {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes pop-in {
+  0% {
+    transform-origin: center center;
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes fade-in {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+};
+</style>
+<script src="/assets/libraries/AD.js"></script>
+</head>
+
+<body>
+  <div id="container">
+    <div id="logo"></div>
+    <div id="hit-btn" class="active"></div>
+    <div id="intro-frame" class="active">
+      <div id="headline" class="univers">Make a gift to wildlife and choose your perfect plush as a thank you!</div>
+      <div id="btn-start" class="btn active">Start Quiz</div>
+      <div id="btn-adopt" class="btn inactive">Adopt Now</div>
+      <div id="animals">
+        <div class="bubble pop-in"></div>
+        <div id="animal-1" class="animal pop-in"></div>
+        <div id="animal-2" class="animal pop-in"></div>
+        <div id="animal-3" class="animal pop-in"></div>
+        <div id="animal-4" class="animal pop-in"></div>
+      </div>
+    </div>
+    <div id="quiz" class="inactive"></div>
+  </div>
+
+  <!-- include your external scripts like this -->
+  <!-- #[[ -->
+  <script>
+const quizData = {
+    container: $AD.Utilities.byId("quiz"),
+    multiSelect: !1,
+    shuffle: !1,
+    questions: [
+        {
+            question: "What’s your \ndream vacation?",
+            options: [
+                {
+                    text: "Tropical beach escape",
+                    id: 1,
+                    value: "tropical-beach-escape",
+                    weight: ["Green Turtle", "Blue Footed Booby", "Sea Otter", "Orca", "Koala"],
+                },
+                {
+                    text: "Camping in the woods",
+                    id: 2,
+                    value: "camping-in-the-woods",
+                    weight: ["Three-toed sloth", "Red Fox", "Bald Eagle", "Grizzly Bear"],
+                },
+                { text: "Going on safari", id: 3, value: "going-on-safari", weight: ["Zebra", "African Elephant"] },
+                {
+                    text: "Hiking a glacier",
+                    id: 4,
+                    value: "hiking-a-glacier",
+                    weight: ["Snowy Owl", "Emperor Penguin Chick", "Arctic Wolf"],
+                },
+            ],
+        },
+        {
+            question: "How would your friends\n  describe you?",
+            options: [
+                {
+                    text: "Curious and cautious",
+                    id: 5,
+                    value: "curious-and-cautious",
+                    weight: ["Green Turtle", "Three-toed sloth", "Zebra", "Snowy Owl"],
+                },
+                {
+                    text: "Friendly and outgoing",
+                    id: 6,
+                    value: "friendly-and-outgoing",
+                    weight: ["Blue Footed Booby", "Sea Otter", "Red Fox", "Zebra", "Emperor Penguin Chick"],
+                },
+                {
+                    text: "Leader of the pack",
+                    id: 7,
+                    value: "leader-of-the-pack",
+                    weight: ["Orca", "Bald Eagle", "African Elephant", "Arctic Wolf"],
+                },
+                {
+                    text: "Quiet and strong",
+                    id: 8,
+                    value: "quiet-and-strong",
+                    weight: ["Koala", "Grizzly Bear", "African Elephant", "Arctic Wolf"],
+                },
+            ],
+        },
+        {
+            question: "You’re most\n passionate about:",
+            options: [
+                {
+                    text: "Climate change & sustainability",
+                    id: 9,
+                    value: "climate-change-sustainability",
+                    weight: [
+                        "Green Turtle",
+                        "Blue Footed Booby",
+                        "Sea Otter",
+                        "Orca",
+                        "Koala",
+                        "Three-toed sloth",
+                        "Red Fox",
+                        "Bald Eagle",
+                        "Grizzly Bear",
+                        "Zebra",
+                        "African Elephant",
+                        "Snowy Owl",
+                        "Emperor Penguin Chick",
+                        "Arctic Wolf",
+                    ],
+                },
+                {
+                    text: "Protecting endangered species",
+                    id: 10,
+                    value: "protecting-endangered-species",
+                    weight: [
+                        "Green Turtle",
+                        "Blue Footed Booby",
+                        "Sea Otter",
+                        "Orca",
+                        "Koala",
+                        "Three-toed sloth",
+                        "Red Fox",
+                        "Bald Eagle",
+                        "Grizzly Bear",
+                        "Zebra",
+                        "African Elephant",
+                        "Snowy Owl",
+                        "Emperor Penguin Chick",
+                        "Arctic Wolf",
+                    ],
+                },
+                {
+                    text: "Nature conservation",
+                    id: 11,
+                    value: "nature-conservation",
+                    weight: [
+                        "Green Turtle",
+                        "Blue Footed Booby",
+                        "Sea Otter",
+                        "Orca",
+                        "Koala",
+                        "Three-toed sloth",
+                        "Red Fox",
+                        "Bald Eagle",
+                        "Grizzly Bear",
+                        "Zebra",
+                        "African Elephant",
+                        "Snowy Owl",
+                        "Emperor Penguin Chick",
+                        "Arctic Wolf",
+                    ],
+                },
+                {
+                    text: "Community work & social policies",
+                    id: 12,
+                    value: "community-work-social-policies",
+                    weight: [
+                        "Green Turtle",
+                        "Blue Footed Booby",
+                        "Sea Otter",
+                        "Orca",
+                        "Koala",
+                        "Three-toed sloth",
+                        "Red Fox",
+                        "Bald Eagle",
+                        "Grizzly Bear",
+                        "Zebra",
+                        "African Elephant",
+                        "Snowy Owl",
+                        "Emperor Penguin Chick",
+                        "Arctic Wolf",
+                    ],
+                },
+            ],
+        },
+    ],
+    results: [
+        {
+            name: "Green Turtle",
+            id: 1,
+            count: 0,
+            headline: "Your Match:*Green Turtle*",
+            image: "assets/green-turtle.png",
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.",
+            cta: "Adopt a Green Turtle",
+            additionalCta: "See all adoptable animals",
+            url: "https://gifts.worldwildlife.org/gift-center/gifts/species-adoptions/green-turtle?&sc=AWY2407OQ19356A07652RX&utm_campaign=fy25mr&utm_source=Verizon&utm_medium=Display",
+        },
+        {
+            name: "Blue Footed Booby",
+            id: 2,
+            count: 0,
+            headline: "Your Match:*Blue Footed Booby*",
+            image: "assets/Blue-footed-booby.png",
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.",
+            cta: "Adopt a Blue Footed Booby",
+            additionalCta: "See all adoptable animals",
+            url: "https://gifts.worldwildlife.org/gift-center/gifts/species-adoptions/blue-footed-booby?&sc=AWY2407OQ19356A07652RX&utm_campaign=fy25mr&utm_source=Verizon&utm_medium=Display",
+        },
+        {
+            name: "Sea Otter",
+            id: 3,
+            count: 0,
+            headline: "Your Match:*Sea Otter*",
+            image: "assets/Sea-otter.png",
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.",
+            cta: "Adopt a Sea Otter",
+            additionalCta: "See all adoptable animals",
+            url: "https://gifts.worldwildlife.org/gift-center/gifts/species-adoptions/sea-otter?&sc=AWY2407OQ19356A07652RX&utm_campaign=fy25mr&utm_source=Verizon&utm_medium=Display",
+        },
+        {
+            name: "Orca",
+            id: 4,
+            count: 0,
+            headline: "Your Match:*Orca*",
+            image: "assets/Orca.png",
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.",
+            cta: "Adopt an Orca",
+            additionalCta: "See all adoptable animals",
+            url: "https://gifts.worldwildlife.org/gift-center/gifts/species-adoptions/orca-whale?&sc=AWY2407OQ19356A07652RX&utm_campaign=fy25mr&utm_source=Verizon&utm_medium=Display",
+        },
+        {
+            name: "Koala",
+            id: 5,
+            count: 0,
+            headline: "Your Match:*Koala*",
+            image: "assets/Koala.png",
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.",
+            cta: "Adopt a Koala",
+            additionalCta: "See all adoptable animals",
+            url: "https://gifts.worldwildlife.org/gift-center/gifts/species-adoptions/koala?&sc=AWY2407OQ19356A07652RX&utm_campaign=fy25mr&utm_source=Verizon&utm_medium=Display",
+        },
+        {
+            name: "Three-toed sloth",
+            id: 6,
+            count: 0,
+            headline: "Your Match:*Three-toed Sloth*",
+            image: "assets/three-toed-sloth.png",
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.",
+            cta: "Adopt a Three-toed Sloth",
+            additionalCta: "See all adoptable animals",
+            url: "https://gifts.worldwildlife.org/gift-center/gifts/species-adoptions/three-toed-sloth?bgc=101264?&sc=AWY2407OQ19356A07652RX&utm_campaign=fy25mr&utm_source=Verizon&utm_medium=Display",
+        },
+        {
+            name: "Red Fox",
+            id: 7,
+            count: 0,
+            headline: "Your Match:*Red Fox*",
+            image: "assets/red-fox.png",
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.",
+            cta: "Adopt a Red Fox",
+            additionalCta: "See all adoptable animals",
+            url: "https://gifts.worldwildlife.org/gift-center/gifts/species-adoptions/red-fox?bgc=100626?&sc=AWY2407OQ19356A07652RX&utm_campaign=fy25mr&utm_source=Verizon&utm_medium=Display",
+        },
+        {
+            name: "Bald Eagle",
+            id: 8,
+            count: 0,
+            headline: "Your Match:*Bald Eagle*",
+            image: "assets/bald-eagle.png",
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.",
+            cta: "Adopt a Bald Eagle",
+            additionalCta: "See all adoptable animals",
+            url: "https://gifts.worldwildlife.org/gift-center/gifts/species-adoptions/bald-eagle?bgc=101451?&sc=AWY2407OQ19356A07652RX&utm_campaign=fy25mr&utm_source=Verizon&utm_medium=Display",
+        },
+        {
+            name: "Grizzly Bear",
+            id: 9,
+            count: 0,
+            headline: "Your Match:*Grizzly Bear*",
+            image: "assets/grizzly-bear.png",
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.",
+            cta: "Adopt a Grizzly Bear",
+            additionalCta: "See all adoptable animals",
+            url: "https://gifts.worldwildlife.org/gift-center/gifts/species-adoptions/grizzly-bear?bgc=101234?&sc=AWY2407OQ19356A07652RX&utm_campaign=fy25mr&utm_source=Verizon&utm_medium=Display",
+        },
+        {
+            name: "Zebra",
+            id: 10,
+            count: 0,
+            headline: "Your Match:*Zebra*",
+            image: "assets/zebra.png",
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.",
+            cta: "Adopt a Zebra",
+            additionalCta: "See all adoptable animals",
+            url: "https://gifts.worldwildlife.org/gift-center/gifts/species-adoptions/zebra?bgc=101546?&sc=AWY2407OQ19356A07652RX&utm_campaign=fy25mr&utm_source=Verizon&utm_medium=Display",
+        },
+        {
+            name: "African Elephant",
+            id: 11,
+            count: 0,
+            headline: "Your Match:*African Elephant*",
+            image: "assets/african-elephant.png",
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.",
+            cta: "Adopt an African Elephant",
+            additionalCta: "See all adoptable animals",
+            url: "https://gifts.worldwildlife.org/gift-center/gifts/species-adoptions/african-elephant?&sc=AWY2407OQ19356A07652RX&utm_campaign=fy25mr&utm_source=Verizon&utm_medium=Display",
+        },
+        {
+            name: "Snowy Owl",
+            id: 12,
+            count: 0,
+            headline: "Your Match:*Snowy Owl*",
+            image: "assets/snowy-owl.png",
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.",
+            cta: "Adopt a Snowy Owl",
+            additionalCta: "See all adoptable animals",
+            url: "https://gifts.worldwildlife.org/gift-center/gifts/species-adoptions/snowy-owl?bgc=101243?&sc=AWY2407OQ19356A07652RX&utm_campaign=fy25mr&utm_source=Verizon&utm_medium=Display",
+        },
+        {
+            name: "Emperor Penguin Chick",
+            id: 13,
+            count: 0,
+            headline: "Your Match:*Emperor Penguin Chick*",
+            image: "assets/emperor-penguin.png",
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.",
+            cta: "Adopt an Emperor Penguin Chick",
+            additionalCta: "See all adoptable animals",
+            url: "https://gifts.worldwildlife.org/gift-center/gifts/species-adoptions/emperor-penguin-chick?&sc=AWY2407OQ19356A07652RX&utm_campaign=fy25mr&utm_source=Verizon&utm_medium=Display",
+        },
+        {
+            name: "Arctic Wolf",
+            id: 14,
+            count: 0,
+            headline: "Your Match:*Arctic Wolf*",
+            image: "assets/arctic-wolf.png",
+            text: "Every donation helps save endangered wildlife, protect fragile ecosystems, and build a future where people live in harmony with nature.",
+            cta: "Adopt an Arctic Wolf",
+            additionalCta: "See all adoptable animals",
+            url: "https://gifts.worldwildlife.org/gift-center/gifts/species-adoptions/arctic-wolf?bgc=102451?&sc=AWY2407OQ19356A07652RX&utm_campaign=fy25mr&utm_source=Verizon&utm_medium=Display",
+        },
+    ],
+};
+function handleClick(e) {
+    "btn-start" === e.target.id ? startQuiz() : (console.log("firing default clickthrough"), $AD.click("clickthrough"));
+}
+function handleCustomEvents(e) {
+    var data = e.detail;
+    switch (e.type) {
+        case "additional cta click":
+            showEndScreen();
+            break;
+        case "cta click":
+            $AD.click("clickthrough.panel." + data.result.id, { overrides: { url: data.result.url } });
+            break;
+        case "option selected":
+            $AD.event("interaction.custom." + data.id);
+            break;
+        case "results shown":
+            $AD.event("other.view." + data.result.id);
+            var h2 = document.querySelector(".results").querySelector("h2");
+            h2 && (h2.innerHTML = h2.innerHTML.replace(/\*([^*]+)\*/g, "<span>$1</span>"));
+    }
+}
+function toggleActive(element) {
+    element.classList.contains("active")
+        ? (element.classList.add("inactive"), element.classList.remove("active"))
+        : element.classList.contains("inactive") &&
+          (element.classList.add("active"), element.classList.remove("inactive"));
+}
+function showEndScreen() {
+    toggleActive($AD.Utilities.byId("quiz")),
+        toggleActive($AD.Utilities.byId("intro-frame")),
+        toggleActive($AD.Utilities.byId("btn-start")),
+        toggleActive($AD.Utilities.byId("btn-adopt")),
+        document
+            .getElementById("animals")
+            .querySelectorAll("div")
+            .forEach((div) => {
+                div.classList.remove("pop-in"), div.offsetWidth, div.classList.add("pop-in");
+            }),
+        $AD.event("other.endscreen");
+}
+function startQuiz() {
+    new QuizProfiler(quizData).init(),
+        toggleActive($AD.Utilities.byId("quiz")),
+        toggleActive($AD.Utilities.byId("intro-frame")),
+        document.addEventListener("additional cta click", handleCustomEvents),
+        document.addEventListener("cta click", handleCustomEvents),
+        document.addEventListener("option selected", handleCustomEvents),
+        document.addEventListener("results shown", handleCustomEvents),
+        $AD.event("other.start");
+}
+function init() {
+    ($AD.Utilities.byId("btn-start").onclick = handleClick),
+        ($AD.Utilities.byId("btn-adopt").onclick = handleClick),
+        ($AD.Utilities.byId("hit-btn").onclick = handleClick),
+        ($AD.Utilities.byId("animals").onclick = handleClick);
+}
+$AD.ready(init);
+function QuizProfiler(config) {
+    var conf = {
+        container: undefined,
+        multiSelect: undefined,
+        shuffle: undefined,
+        questions: undefined,
+        results: undefined,
+    };
+    (this.currentQuestionIndex = 0),
+        (this.config = $AD.Utilities.deepMerge(conf, config)),
+        (this.container = undefined);
+}
+function customEvent(name, meta) {
+    name = new CustomEvent(name, { detail: meta, bubbles: !0 });
+    document.dispatchEvent(name);
+}
+QuizProfiler.prototype = {
+    init: function () {
+        (this.container = this.config.container), this.createQuiz();
+    },
+    handleSubmit: function (currentQuestion) {
+        const selectedOptions = [];
+        currentQuestion.querySelectorAll("input:checked").forEach((input) => {
+            input = input.parentElement.option;
+            selectedOptions.push(input),
+                input.weight.forEach((name) => {
+                    var resultItem = this.config.results.find((result) => result.name === name);
+                    resultItem && (resultItem.count += 1);
+                });
+        }),
+            (currentQuestion.style.display = "none"),
+            this.currentQuestionIndex++,
+            this.currentQuestionIndex < this.config.questions.length ? this.showNextQuestion() : this.showResults();
+    },
+    showNextQuestion: function () {
+        var questionElements = this.container.querySelector(".quiz-container").querySelectorAll(".question");
+        questionElements[this.currentQuestionIndex] &&
+            (questionElements[this.currentQuestionIndex].style.display = "block");
+    },
+    showResults: function () {
+        const maxCount = Math.max(...this.config.results.map((result) => result.count));
+        var topResults = this.config.results.filter((result) => result.count === maxCount);
+        const highestResult = topResults[Math.floor(Math.random() * topResults.length)],
+            resultsDiv = document.createElement("div");
+        resultsDiv.classList.add("results");
+        var img,
+            topResults = () => {
+                var headlineElement = document.createElement("h2"),
+                    imageElement =
+                        ((headlineElement.textContent = highestResult.headline),
+                        resultsDiv.appendChild(headlineElement),
+                        highestResult.image &&
+                            ((headlineElement = document.createElement("div")).classList.add("image-container"),
+                            ((imageElement = document.createElement("img")).src = highestResult.image),
+                            (imageElement.alt = highestResult.name),
+                            headlineElement.appendChild(imageElement),
+                            resultsDiv.appendChild(headlineElement)),
+                        document.createElement("p")),
+                    headlineElement =
+                        ((imageElement.textContent = highestResult.text),
+                        resultsDiv.appendChild(imageElement),
+                        highestResult.cta &&
+                            ((headlineElement = document.createElement("div")).classList.add("btn"),
+                            (headlineElement.textContent = highestResult.cta),
+                            headlineElement.addEventListener("click", () => {
+                                customEvent("cta click", { result: highestResult });
+                            }),
+                            resultsDiv.appendChild(headlineElement)),
+                        highestResult.additionalCta &&
+                            ((imageElement = document.createElement("div")).classList.add("additional-cta"),
+                            (imageElement.textContent = highestResult.additionalCta),
+                            imageElement.addEventListener("click", (e) => {
+                                customEvent("additional cta click", { result: highestResult });
+                            }),
+                            resultsDiv.appendChild(imageElement)),
+                        this.container.appendChild(resultsDiv),
+                        customEvent("results shown", { result: highestResult }),
+                        this.container.querySelector(".quiz-container"));
+                headlineElement && (headlineElement.style.display = "none");
+            };
+        highestResult.image
+            ? (((img = new window.Image()).src = highestResult.image),
+              (img.onload = topResults),
+              (img.onerror = topResults))
+            : topResults();
+    },
+    createOption: function (option, question, isMultiSelect) {
+        const optionContainer = document.createElement("div"),
+            input =
+                (optionContainer.classList.add("option"),
+                (optionContainer.option = option),
+                document.createElement("input"));
+        (input.type = isMultiSelect ? "checkbox" : "radio"),
+            (input.name = isMultiSelect ? "" : "question-" + question.dataset.domIndex),
+            (input.id = "option-" + Math.random());
+        var label = document.createElement("label");
+        return (
+            (label.htmlFor = input.id),
+            (label.textContent = option.text),
+            (input.style.pointerEvents = "none"),
+            (label.style.pointerEvents = "none"),
+            optionContainer.appendChild(input),
+            optionContainer.appendChild(label),
+            optionContainer.addEventListener("click", (e) => {
+                optionContainer.classList.contains("selected")
+                    ? optionContainer.classList.remove("selected")
+                    : optionContainer.classList.add("selected"),
+                    isMultiSelect
+                        ? ((input.checked = !input.checked), this.updateSubmitButton(question))
+                        : ((input.checked = !0), this.handleSubmit(question)),
+                    customEvent("option selected", option);
+            }),
+            optionContainer
+        );
+    },
+    updateSubmitButton: function (question) {
+        var submitButton = question.querySelector(".submit-button"),
+            question = question.querySelectorAll("input:checked");
+        submitButton.disabled = 0 === question.length;
+    },
+    shuffleArray: function (array) {
+        var shuffled = [...array];
+        for (let i = shuffled.length - 1; 0 < i; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+    },
+    createQuestion: function (item, index) {
+        const question = document.createElement("div");
+        question.classList.add("question"), (question.style.display = 0 === index ? "block" : "none");
+        var questionText = document.createElement("h2");
+        (questionText.textContent = item.question), question.appendChild(questionText);
+        const optionsContainer = document.createElement("div");
+        return (
+            optionsContainer.classList.add("options-container"),
+            question.appendChild(optionsContainer),
+            (this.config.shuffle ? this.shuffleArray(item.options) : item.options).forEach((option) => {
+                option = this.createOption(option, question, this.config.multiSelect);
+                optionsContainer.appendChild(option);
+            }),
+            this.config.multiSelect &&
+                ((questionText = document.createElement("button")).classList.add("submit-button"),
+                (questionText.textContent =
+                    index === this.config.questions.length - 1 ? "See Results" : "Next Question"),
+                (questionText.disabled = !0),
+                questionText.addEventListener("click", () => this.handleSubmit(question)),
+                question.appendChild(questionText)),
+            question
+        );
+    },
+    createQuiz: function () {
+        var quizContainer = document.createElement("div");
+        quizContainer.classList.add("quiz-container"), this.container.appendChild(quizContainer);
+        const quiz = document.createElement("div");
+        quiz.classList.add("quiz"),
+            quizContainer.appendChild(quiz),
+            (this.config.shuffle ? this.shuffleArray(this.config.questions) : this.config.questions).forEach(
+                (item, index) => {
+                    item = this.createQuestion(item, index);
+                    quiz.appendChild(item);
+                }
+            );
+    },
+    ready: function () {
+        this.config && this.config.readyCallback && this.config.readyCallback();
+    },
+    destroy: function () {},
+};
+</script>
+
+
+
+</body></html>

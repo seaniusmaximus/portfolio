@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="ad.size" content="width=300,height=600">
+		<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+		<title>belVita</title>
+		<script type="text/javascript">var clickTag = "http://www.google.com";</script>
+		<link href="css/default.css" rel="stylesheet" media="all">
+		<link href="css/style.css" rel="stylesheet" media="all">
+	</head>
+	<body>
+		<div id="viewport" class="adSize posRel visHid clickTag overFlowHid">
+
+			<div id="f1-pack" class="f1 adSize posAb topLef bgDef"></div>
+			<div id="f1-stamp" class="f1 adSize posAb topLef bgDef"></div>
+			<div id="f2-packs" class="f2 adSize posAb topLef bgDef"></div>
+
+			<div id="f1-bb1" class="f1bg bb adSize posAb topLef bgDef"></div>
+			<div id="f1-bb2" class="f1bg bb adSize posAb topLef bgDef"></div>
+			<div id="f1-bb3" class="f1bg bb adSize posAb topLef bgDef"></div>
+			<div id="f1-seed1" class="f1bg seed adSize posAb topLef bgDef"></div>
+			<div id="f1-seed2" class="f1bg seed adSize posAb topLef bgDef"></div>
+			<div id="f1-seed3" class="f1bg seed adSize posAb topLef bgDef"></div>
+
+			<div id="f2-bb1" class="f2bg bb adSize posAb topLef bgDef"></div>
+			<div id="f2-bb2" class="f2bg bb adSize posAb topLef bgDef"></div>
+			<div id="f2-seed1" class="f2bg seed adSize posAb topLef bgDef"></div>
+			<div id="f2-seed2" class="f2bg seed adSize posAb topLef bgDef"></div>
+			<div id="f2-bite1" class="f2bg bite adSize posAb topLef bgDef"></div>
+			<div id="f2-bite2" class="f2bg bite adSize posAb topLef bgDef"></div>
+			<div id="f2-bite3" class="f2bg bite adSize posAb topLef bgDef"></div>
+
+			<div id="f2-copy" class="f2 adSize posAb topLef bgDef"></div>
+			<div id="f3-copy" class="f3 adSize posAb topLef bgDef"></div>
+			<div id="ef-copy" class="ef adSize posAb topLef bgDef"></div>
+
+			<div id="cta" class="adSize posAb topLef bgDef"></div>
+
+			<!-- defaults -->
+			<!-- <div id="tmp" class="adSize posAb topLef bgDef"></div> -->
+			<div id="border" class="adSize posAb topLef" ></div>
+			<a id="clickable" class="adSize posAb topLef" href="javascript:void(window.open(window.clickTag, 'blank'))"></a>
+		</div>
+		<script src="/assets/libraries/gsap.min.js"></script>
+		<script src="js/imagesloaded.pkgd.min.js"></script>
+		<script type="text/javascript"> var imgloads = document.querySelectorAll('*'); var viewportChildren = document.getElementById('viewport').children; var imgcount = 0; for (var i = 0; i < viewportChildren.length; i++) { viewportChildren[i].style.opacity = 0; } window.addEventListener("DOMContentLoaded", function () { for (var i = 0; i < imgloads.length; i++) { imagesLoaded(imgloads[i], { background: true }, function () { imgcount++; if (imgcount === imgloads.length) { init(); } }) } }, false); </script>
+		<script src="js/animation.js"></script>
+	</body>
+</html>
