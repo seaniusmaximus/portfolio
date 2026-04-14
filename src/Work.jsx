@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
+import PluginsSection, { pluginGithubUrl } from './Plugins'
 import './css/Work.css'
 
 /** Files in `src/assets/works/thumbnails/` are bundled; match filename stem to work `slug` (case-insensitive). */
@@ -92,6 +93,19 @@ const works = [
         mediaSrc: workHtmlSrc('Cinemark/index.html')
     },
     {
+        slug: 'cologuard',
+        title: 'Cologuard',
+        description: 'An animated banner that uses a custom GSAP animation to drive users to the Cologuard mobile game.',
+        thumbPosition: 'center center',
+        thumbSrc: new URL('./assets/works/Cologuard/assets/frame1bg.jpg', import.meta.url).href,
+        mediaType: 'html',
+        size: {
+            w: 640,
+            h: 960
+        },
+        mediaSrc: workHtmlSrc('Cologuard/index.html')
+    },
+    {
         slug: 'dominoes-stranger-things',
         title: 'Domino’s Stranger Things',
         description: 'A Stranger Things collaboration campaign translated into an interactive mini-experience, using layered assets, responsive scene composition, and reusable animation utilities to keep visual continuity across multiple ad placements.',
@@ -114,6 +128,32 @@ const works = [
             h: 1920
         },
         mediaSrc: workHtmlSrc('Dodge Ram Carousel/lighthouse.html')
+    },
+    {
+        slug: 'gm-onstar',
+        title: 'GM OnStar',
+        description: 'A GM OnStar banner utilizing a custom carousel UI to display product features and benefits.',
+        thumbPosition: '45% center',
+        thumbSrc: new URL('./assets/works/GM Onstar/assets/970x250_Background_Lowerres.jpg', import.meta.url).href,
+        mediaType: 'html',
+        size: {
+            w: 970,
+            h: 250
+        },
+        mediaSrc: workHtmlSrc('GM OnStar/index.html')
+    },
+    {
+        slug: 'healthcaregov',
+        title: 'Healthcare.gov',
+        description: 'A mobile full screen banner utilizing a slider to reveal effect.',
+        thumbPosition: '90% center',
+        thumbSrc: new URL('./assets/works/HealthcareGov/assets-lighthouse/Slider_-_Static_Image_720x1280_Week_1.jpg', import.meta.url).href,
+        mediaType: 'html',
+        size: {
+            w: 1080,
+            h: 1920
+        },
+        mediaSrc: workHtmlSrc('Healthcaregov/lighthouse.html')
     },
     {
         slug: 'home-depot-bathroom-game',
@@ -148,6 +188,19 @@ const works = [
             workHtmlSrc('Home Depot Game/300x600.html'),
             workHtmlSrc('Home Depot Game/320x480.html')
         ]
+    },
+    {
+        slug: 'kingsford-charcoal',
+        title: 'Kingsford Charcoal',
+        description: 'A dynamic weather-targeted banner that changes the messaging and image based on the weather conditions as well as specific user interest targeting.',
+        thumbPosition: 'center center',
+        thumbSrc: new URL('./assets/works/thumbnails/kingsford-charcoal.jpg', import.meta.url).href,
+        mediaType: 'image',
+        size: {
+            w: 800,
+            h: 800
+        },
+        mediaSrc: new URL('./assets/works/Kingsford Charcoal/Kingsford_Demo.jpg', import.meta.url).href
     },
     {
         slug: 'oceania-cruises',
@@ -335,10 +388,18 @@ function getRasterThumbSrc(item) {
 }
 
 function getSrcFolderThumbnailUrl(slug) {
-    const key = String(slug).toLowerCase()
+    const normalizeThumbKey = (value) =>
+        String(value)
+            .toLowerCase()
+            .replace(/[\s_-]+/g, '-')
+            .replace(/[^a-z0-9-]/g, '')
+            .replace(/-+/g, '-')
+            .replace(/^-|-$/g, '')
+
+    const key = normalizeThumbKey(slug)
     for (const [path, mod] of Object.entries(WORK_THUMBNAILS)) {
         const fileName = path.split('/').pop() ?? ''
-        const stem = fileName.replace(/\.[^.]+$/i, '').toLowerCase()
+        const stem = normalizeThumbKey(fileName.replace(/\.[^.]+$/i, ''))
         if (stem === key) {
             return typeof mod === 'string' ? mod : mod?.default
         }
@@ -348,6 +409,7 @@ function getSrcFolderThumbnailUrl(slug) {
 
 /** Raster media first, then `src/assets/works/thumbnails/{slug}.*`; else WorkThumb probes `public/assets/works/thumbnails/`. */
 function getCardThumbSrc(item) {
+    if (typeof item?.thumbSrc === 'string' && item.thumbSrc.length > 0) return item.thumbSrc
     return getRasterThumbSrc(item) ?? getSrcFolderThumbnailUrl(item.slug)
 }
 
@@ -486,6 +548,59 @@ function WorkModalIframe({ src, title, intrinsicW, intrinsicH }) {
     )
 }
 
+function WorkModalResizableIframe({ src, title, initialW = 970, initialH = 600 }) {
+    const wrapRef = useRef(null)
+    const boxRef = useRef(null)
+    const [frameSize, setFrameSize] = useState(null)
+
+    useLayoutEffect(() => {
+        const wrap = wrapRef.current
+        if (!wrap) return
+        const rect = wrap.getBoundingClientRect()
+        const maxW = Math.max(240, Math.floor(rect.width))
+        const maxH = Math.max(180, Math.floor(rect.height - 28))
+        setFrameSize({
+            w: Math.min(Math.max(320, Number(initialW) || 970), maxW),
+            h: Math.min(Math.max(240, Number(initialH) || 600), maxH)
+        })
+    }, [initialW, initialH])
+
+    useLayoutEffect(() => {
+        const el = boxRef.current
+        if (!el || typeof ResizeObserver === 'undefined') return undefined
+        const ro = new ResizeObserver((entries) => {
+            const next = entries[0]?.contentRect
+            if (!next) return
+            setFrameSize({
+                w: Math.max(240, Math.round(next.width)),
+                h: Math.max(180, Math.round(next.height))
+            })
+        })
+        ro.observe(el)
+        return () => ro.disconnect()
+    }, [])
+
+    return (
+        <div ref={wrapRef} className="work-modal-resizable-wrap">
+            <div className="work-modal-resizable-hint">Drag bottom-right corner to resize preview</div>
+            {frameSize ? (
+                <div
+                    ref={boxRef}
+                    className="work-modal-resizable-box"
+                    style={{ width: frameSize.w, height: frameSize.h }}
+                >
+                    <iframe
+                        className="work-modal-iframe work-modal-iframe--resizable"
+                        src={src}
+                        title={title}
+                        sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
+                    />
+                </div>
+            ) : null}
+        </div>
+    )
+}
+
 function WorkModalGallery({ work, urls }) {
     const { index, setIndex, pause, resume } = useGalleryAutoAdvance(urls.length, MODAL_GALLERY_MS)
     const n = urls.length
@@ -603,6 +718,14 @@ function WorkModalGallery({ work, urls }) {
 }
 
 function WorkModalMedia({ work }) {
+    if (work?.pluginName) {
+        const pluginKey = work.pluginName.toLowerCase()
+        const src = resolveHtmlWorkSrc(work)
+        if (pluginKey === 'sizemanager') {
+            return <WorkModalResizableIframe src={src} title={`${work.title} resizable preview`} initialW={970} initialH={600} />
+        }
+        return <WorkModalIframe src={src} title={`${work.title} index preview`} intrinsicW={970} intrinsicH={600} />
+    }
     const urls = normalizeMediaSrc(resolveHtmlWorkSrc(work))
     if (urls.length === 0) return null
     if (urls.length > 1) {
@@ -710,6 +833,18 @@ function WorkModal({ work, onClose }) {
                             {work.title}
                         </h3>
                         <p className="work-modal-description">{work.description}</p>
+                        {work?.pluginName ? (
+                            <p className="work-plugin-source-link-wrap">
+                                <a
+                                    className="work-plugin-source-link"
+                                    href={pluginGithubUrl(work.pluginName)}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    View plugin source on GitHub
+                                </a>
+                            </p>
+                        ) : null}
                     </aside>
                 </div>
             </div>
@@ -751,6 +886,12 @@ function Work() {
                         </li>
                     ))}
                 </ul>
+                <PluginsSection
+                    onOpenWork={setOpenWork}
+                    workCardCornerClass={workCardCornerClass}
+                    getCardThumbSrc={getCardThumbSrc}
+                    WorkThumb={WorkThumb}
+                />
             </div>
             {openWork ? (
                 <WorkModal work={openWork} onClose={() => setOpenWork(null)} />

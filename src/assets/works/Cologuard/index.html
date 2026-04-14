@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="ad.frame" content="child">
+<meta name="ad.size" content="width=640,height=960">
+<title>ACE - Ad Building Framework</title>
+<style>
+  /* include your CSS styles like this */
+  *,*::after,*::before,html{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;box-sizing:border-box;text-rendering:optimizeLegibility}html,body{width:100%;height:100%;margin:0;padding:0;overflow:hidden;box-sizing:border-box;font-family:"Open Sans",sans-serif}#container{width:640px;height:960px;position:relative;overflow:hidden;display:none}#logo{width:100%;height:100%;position:absolute;background:transparent url("assets/logo.png") top left no-repeat}#cta{width:353px;height:79px;position:absolute;left:143px;top:830px;background:transparent url("assets/cta.png") top left no-repeat}.frame{width:100%;height:100%;position:absolute}#frame1{background:white url("assets/frame1bg.jpg") top left no-repeat}#frame2{background:white url("assets/frame2bg.jpg") top left no-repeat}.shine{position:absolute;mix-blend-mode:screen;transform-origin:center center}#coins1{width:261px;height:960px;position:absolute;left:0;background:transparent url("assets/coins1.png") top left no-repeat}#shine1{width:849px;height:849px;background:transparent url("assets/shine2.png") top left no-repeat;left:-300px}#coins2{width:205px;height:960px;position:absolute;right:0;background:transparent url("assets/coins2.png") top left no-repeat}#shine2{width:849px;height:849px;bottom:-200px;right:-300px;background:transparent url("assets/shine2.png") top left no-repeat}.character{width:100%;height:100%;position:absolute}#lilc-gold{background:transparent url("assets/lilc-gold.png") top left no-repeat}#lilc-white{background:transparent url("assets/lilc-white.png") top left no-repeat}.headline{width:100%;height:100%;position:absolute;transform-origin:center 250px}#headline1{background:transparent url("assets/text1.png") top left no-repeat}#headline2{background:transparent url("assets/text2.png") top left no-repeat}#headline3{background:transparent url("assets/text3.png") top left no-repeat}#lilc-gif{width:258px;height:310px;background:transparent url("assets/LilCG_072522_Confetti.gif") top left no-repeat;position:absolute;top:315px;left:250px}
+;
+</style>
+<script src="/assets/libraries/gsap.min.js"></script>
+<script src="/assets/libraries/AD.js"></script>
+</head>
+
+<body>
+  <div id="container">
+
+    <div id="frame2" class="frame">
+      <div id="lilc-gif"></div>
+      <div id="headline3" class="headline"></div>
+    </div>
+
+    <div id="frame1" class="frame">
+      <div id="shine1" class="shine"></div>
+      <div id="coins1"></div>
+      <div id="lilc" class="character">
+        <div id="lilc-white" class="character"></div>
+        <div id="lilc-gold" class="character"></div>
+      </div>
+      <div id="shine2" class="shine"></div>
+      <div id="coins2"></div>
+
+      <div id="headline1" class="headline"></div>
+      <div id="headline2" class="headline"></div>
+    </div>
+    <div id="logo"></div>
+    <div id="cta"></div>
+  </div>
+
+  <!-- include your external scripts like this -->
+  <!-- #[[ -->
+  <script>
+    var backgroundTL=new TimelineMax,characterTL=new TimelineMax,headlineTL=new TimelineMax;function startAnimation(){TweenMax.set("#container",{display:"block"}),backgroundTL.to(["#shine1","#shine2"],15,{rotation:360,ease:"none"}),backgroundTL.fromTo("#coins1",1,{y:-5},{y:5,repeat:15,yoyo:!0,ease:"none"},"-=15"),backgroundTL.fromTo("#coins2",1,{y:5},{y:-5,repeat:15,yoyo:!0,ease:"none"},"-=16"),characterTL.fromTo("#lilc",1,{x:200,y:200,scale:0,webkitFilter:"blur(50px)"},{delay:1,x:0,y:0,scale:1,webkitFilter:"blur(0px)",ease:"Back.easeOut"}),characterTL.fromTo("#lilc-gold",.25,{opacity:0},{opacity:1,repeat:4,yoyo:!0},"-=0.5"),characterTL.to("#lilc-gold",.25,{opacity:0}),headlineTL.fromTo("#headline1",1,{opacity:0,scale:0},{opacity:1,scale:1,ease:"Bounce.easeOut"}),headlineTL.to("#headline1",.25,{delay:2,opacity:0}),headlineTL.fromTo("#headline2",1,{opacity:0,scale:0},{opacity:1,scale:1,ease:"Bounce.easeOut"}),headlineTL.fromTo("#frame1",{opacity:1,display:"block"},{opacity:0,display:"none",delay:2}),headlineTL.fromTo("#cta",.5,{scale:1},{scale:1.25,repeat:13,yoyo:!0})}function handleClick(e){"cta"===e.target.id?$AD.click("CTA"):$AD.click("Logo")}function init(){startAnimation(),document.getElementById("cta").addEventListener("click",handleClick),document.getElementById("logo").addEventListener("click",handleClick)}$AD.ready(init);
+  </script>
+  <!-- ]]# -->
+</body>
+
+</html>

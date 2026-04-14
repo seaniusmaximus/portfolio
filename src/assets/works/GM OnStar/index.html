@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="ad.frame" content="child">
+<meta name="ad.size" content="width=970,height=250">
+<title>ACE - Ad Building Framework</title>
+<style>
+  /* include your CSS styles like this */
+  *,*::after,*::before,html{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;box-sizing:border-box;text-rendering:optimizeLegibility}html,body{width:100%;height:100%;margin:0;padding:0;overflow:hidden;box-sizing:border-box;font-family:'Open Sans', sans-serif}#container{width:970px;height:250px;background:white url("assets/970x250_Background_Lowerres.jpg") top left no-repeat;position:relative;cursor:pointer}#gallery{width:292px;height:189px;position:absolute;bottom:30px;right:50px}.panel{width:100%;height:100%;position:absolute;display:none}.panel-text{width:235px;height:25px;position:absolute;bottom:55px;right:10px;pointer-events:none}#panel-1{background:transparent url("assets/Carousel-Group1.png") top left no-repeat}#panel-1 .panel-text{background:transparent url("assets/Remote-Key-Fob1.png") top center no-repeat}#panel-2{background:transparent url("assets/Carousel-Group2.png") top left no-repeat}#panel-2 .panel-text{background:transparent url("assets/Remote-Key-Fob2.png") top center no-repeat}#panel-3{background:transparent url("assets/Carousel-Group3.png") top left no-repeat}#panel-3 .panel-text{background:transparent url("assets/Remote-Key-Fob3.png") top center no-repeat}#nav{width:30px;height:100px;position:absolute;top:44px}.nav-button{width:30px;height:33px}
+;
+</style>
+<script src="/assets/libraries/AD.js"></script>
+</head>
+
+<body>
+  <div id="container">
+    <div id="gallery">
+      <div id="panel-1" class="panel">
+        <div class="panel-text"></div>
+      </div>
+      <div id="panel-2" class="panel">
+        <div class="panel-text"></div>
+      </div>
+      <div id="panel-3" class="panel">
+        <div class="panel-text"></div>
+      </div>
+
+      <div id="nav">
+        <div id="nav-1" class="nav-button"></div>
+        <div id="nav-2" class="nav-button"></div>
+        <div id="nav-3" class="nav-button"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- include your external scripts like this -->
+  <!-- #[[ -->
+  <script>
+    var autoPlay,currPanel=1;function byId(id){return document.getElementById(id)}function byClass(className){return[].slice.call(document.getElementsByClassName(className))}function showPanel(panel){byClass("panel").forEach(function(p){p.style.display="none"}),byId("panel-"+panel).style.display="block",$AD.event("Gallery.Slide "+panel+".View",{interaction:!1})}function handleClick(e){switch(e.target.id){case"nav-1":showPanel(1),$AD.event("Gallery.Bullet 1.Click"),clearInterval(autoPlay);break;case"nav-2":showPanel(2),$AD.event("Gallery.Bullet 2.Click"),clearInterval(autoPlay);break;case"nav-3":showPanel(3),$AD.event("Gallery.Bullet 3.Click"),clearInterval(autoPlay);break;case"panel-1":$AD.click("Gallery.Slide 1.Click");break;case"panel-2":$AD.click("Gallery.Slide 2.Click");break;case"panel-3":$AD.click("Gallery.Slide 3.Click");break;default:$AD.click("clickthrough")}}function autoRotate(kill){kill?clearInterval(autoPlay):showPanel(currPanel=3<(currPanel+=1)?1:currPanel)}function init(){byId("container").onclick=handleClick,showPanel(1),autoPlay=setInterval(autoRotate,3e3),setTimeout(autoRotate,15e3,!0)}$AD.ready(init);
+  </script>
+  <!-- ]]# -->
+</body>
+
+</html>

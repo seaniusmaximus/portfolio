@@ -294,6 +294,7 @@ class SizeManager {
     if (breakpointRatio === closestRatio) {
       // Update container class
       this.adBox.className = breakpoint.class;
+      this.applyBreakpointRatioHeight(breakpoint);
 
       // Update state
       this.state = {
@@ -304,6 +305,38 @@ class SizeManager {
       this.debug(
         `Matched breakpoint: ${breakpoint.class} (ratio: ${breakpoint.ratio})`
       );
+    }
+  }
+
+  /**
+   * When scaleBetween is enabled, normalize ad-box height to breakpoint ratio.
+   * This prevents `height: 100%` demo styles from forcing scale to 1.
+   * @param {Object} breakpoint - Active breakpoint with ratio (W:H)
+   * @private
+   */
+  applyBreakpointRatioHeight(breakpoint) {
+    if (!this.config.scaleBetween || !breakpoint || !breakpoint.ratio) {
+      this.adBox.style.height = '';
+      return;
+    }
+
+    const [ratioW, ratioH] = breakpoint.ratio.split(':').map(Number);
+    if (!ratioW || !ratioH) {
+      this.adBox.style.height = '';
+      return;
+    }
+
+    const adWidth = this.adBox.clientWidth;
+    if (!adWidth) {
+      this.adBox.style.height = '';
+      return;
+    }
+
+    const nextHeight = (adWidth * ratioH) / ratioW;
+    if (isFinite(nextHeight) && nextHeight > 0) {
+      this.adBox.style.height = `${nextHeight}px`;
+    } else {
+      this.adBox.style.height = '';
     }
   }
 

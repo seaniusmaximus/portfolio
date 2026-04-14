@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plugin Playground</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        font-family: Inter, Arial, sans-serif;
+        background: #0f1318;
+        color: #f4faff;
+      }
+      body {
+        display: flex;
+        align-items: stretch;
+        justify-content: stretch;
+        padding: 12px;
+      }
+      #root {
+        width: 100%;
+        height: 100%;
+      }
+      .panel {
+        width: 100%;
+        height: 100%;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 10px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.03);
+      }
+      .panel-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.03);
+      }
+      .panel-body {
+        width: 100%;
+        height: calc(100% - 44px);
+        position: relative;
+      }
+      .hint {
+        opacity: 0.8;
+        font-size: 12px;
+      }
+      ace-size-manager,
+      ace-profiler,
+      ace-particle {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+    <script src="/assets/libraries/AD.js"></script>
+  </head>
+  <body>
+    <main id="root"></main>
+    <script type="module">
+      import Particle from './Particle/Particle.js'
+      import Profiler from './Profiler/Profiler.js'
+      import SizeManager from './SizeManager/SizeManager.js'
+
+      function parseJson(value, fallback) {
+        if (!value) return fallback
+        try {
+          return JSON.parse(value)
+        } catch (_error) {
+          return fallback
+        }
+      }
+
+      function deepClone(value) {
+        return JSON.parse(JSON.stringify(value))
+      }
+
+      function debounce(fn, wait) {
+        let t
+        return (...args) => {
+          clearTimeout(t)
+          t = setTimeout(() => fn(...args), wait)
+        }
+      }
+
+      class AceParticle extends HTMLElement {
+        connectedCallback() {
+          this.render()
+          this.mount()
+        }
+        disconnectedCallback() {
+          if (this.instance && typeof this.instance.destroy === 'function') this.instance.destroy()
+        }
+        static get observedAttributes() {
+          return ['config']
+        }
+        attributeChangedCallback() {
+          this.mount()
+        }
+        render() {
+          this.innerHTML = ''
+          const emitter = document.createElement('div')
+          emitter.id = 'particle-emitter'
+          emitter.style.width = '100%'
+          emitter.style.height = '100%'
+          emitter.style.display = 'flex'
+          emitter.style.alignItems = 'center'
+          emitter.style.justifyContent = 'center'
+          emitter.style.position = 'relative'
+          emitter.style.overflow = 'hidden'
+          emitter.style.background = 'linear-gradient(135deg, #111827, #1f2937)'
+          const label = document.createElement('button')
+          label.type = 'button'
+          label.textContent = 'Click to launch particles'
+          label.style.cursor = 'pointer'
+          label.style.padding = '10px 14px'
+          label.style.border = '1px solid rgba(255,255,255,0.25)'
+          label.style.borderRadius = '8px'
+          label.style.background = 'rgba(255,255,255,0.08)'
+          label.style.color = '#f4faff'
+          emitter.appendChild(label)
+          this.appendChild(emitter)
+          this.trigger = label
+        }
+        mount() {
+          const raw = this.getAttribute('config')
+          const userConfig = parseJson(raw, {})
+          const config = {
+            container: '#particle-emitter',
+            count: 32,
+            images: ['../WWF Butterflies/images/butterfly1.png'],
+            size: [14, 22],
+            physics: { velocity: [220, 420], angle: [-45, -130], gravity: 500, friction: 0.05 },
+            delay: [0, 0.4],
+            duration: 3,
+            repeat: 0,
+            ...userConfig
+          }
+          if (this.instance && typeof this.instance.destroy === 'function') this.instance.destroy()
+          this.instance = new Particle(config)
+          this.instance.init()
+          this.trigger.onclick = () => {
+            this.instance.createParticles()
+            this.instance.animateParticles()
+          }
+        }
+      }
+
+      class AceProfiler extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = ''
+          const target = document.createElement('div')
+          target.id = 'profiler-target'
+          target.style.width = '100%'
+          target.style.height = '100%'
+          target.style.background = '#fff'
+          target.style.color = '#111'
+          target.style.overflow = 'auto'
+          target.style.padding = '16px'
+          this.appendChild(target)
+          this.mount()
+        }
+        disconnectedCallback() {
+          if (this.instance && typeof this.instance.destroy === 'function') this.instance.destroy()
+        }
+        static get observedAttributes() {
+          return ['config']
+        }
+        attributeChangedCallback() {
+          this.mount()
+        }
+        mount() {
+          const raw = this.getAttribute('config')
+          const userConfig = parseJson(raw, {})
+          const baseConfig = {
+            container: this.querySelector('#profiler-target'),
+            multiSelect: false,
+            shuffle: false,
+            showNextButton: true,
+            showPreviousButton: false,
+            questions: [
+              {
+                question: 'Preferred workflow?',
+                options: [
+                  { text: 'Fast prototyping', weight: ['Builder'] },
+                  { text: 'Safe and tested', weight: ['Architect'] }
+                ]
+              },
+              {
+                question: 'Team style?',
+                options: [
+                  { text: 'Ship often', weight: ['Builder'] },
+                  { text: 'Document deeply', weight: ['Architect'] }
+                ]
+              }
+            ],
+            results: [
+              { name: 'Builder', headline: 'You are a Builder', text: 'You bias to speed and iteration.' },
+              { name: 'Architect', headline: 'You are an Architect', text: 'You bias to systems and reliability.' }
+            ]
+          }
+          const merged = {
+            ...baseConfig,
+            ...userConfig,
+            container: this.querySelector('#profiler-target')
+          }
+          if (this.instance && typeof this.instance.destroy === 'function') this.instance.destroy()
+          this.instance = new Profiler(merged)
+          this.instance.init()
+        }
+      }
+
+      class AceSizeManager extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = ''
+          const container = document.createElement('div')
+          container.id = 'size-manager-container'
+          container.style.width = '100%'
+          container.style.height = '100%'
+          container.style.position = 'relative'
+          container.style.overflow = 'hidden'
+          container.style.background = '#0b1220'
+          const ad = document.createElement('div')
+          ad.id = 'size-manager-ad'
+          ad.style.width = '100%'
+          ad.style.height = '100%'
+          ad.style.display = 'flex'
+          ad.style.alignItems = 'center'
+          ad.style.justifyContent = 'center'
+          ad.style.color = '#fff'
+          ad.style.fontWeight = '700'
+          ad.style.background = 'linear-gradient(135deg, #2563eb, #7c3aed)'
+          ad.textContent = 'Resize window to test breakpoints'
+          container.appendChild(ad)
+          this.appendChild(container)
+          this.mount()
+        }
+        disconnectedCallback() {
+          if (this.instance && typeof this.instance.destroy === 'function') this.instance.destroy()
+        }
+        static get observedAttributes() {
+          return ['config']
+        }
+        attributeChangedCallback() {
+          this.mount()
+        }
+        mount() {
+          const raw = this.getAttribute('config')
+          const userConfig = parseJson(raw, {})
+          const config = {
+            containerID: 'size-manager-container',
+            adId: 'size-manager-ad',
+            scaleBetween: true,
+            center: true,
+            breakpoints: [
+              { class: 'wide', ratio: '16:9' },
+              { class: 'mid', ratio: '4:3' },
+              { class: 'mobile', ratio: '9:16' }
+            ],
+            ...userConfig
+          }
+          const adBox = this.querySelector('#size-manager-ad')
+          if (adBox) {
+            adBox.className = ''
+            if (config.breakpoints?.[0]?.class) adBox.classList.add(config.breakpoints[0].class)
+          }
+          if (this.instance && typeof this.instance.destroy === 'function') this.instance.destroy()
+          this.instance = new SizeManager(config)
+          this.instance.init()
+        }
+      }
+
+      customElements.define('ace-particle', AceParticle)
+      customElements.define('ace-profiler', AceProfiler)
+      customElements.define('ace-size-manager', AceSizeManager)
+
+      const params = new URLSearchParams(window.location.search)
+      const plugin = (params.get('plugin') || 'Particle').toLowerCase()
+      const config = params.get('config') || '{}'
+      const root = document.getElementById('root')
+      const panel = document.createElement('section')
+      panel.className = 'panel'
+      const head = document.createElement('header')
+      head.className = 'panel-head'
+      head.innerHTML = `<strong>${plugin}</strong><span class="hint">Custom element + editable config</span>`
+      const body = document.createElement('div')
+      body.className = 'panel-body'
+      panel.appendChild(head)
+      panel.appendChild(body)
+      root.appendChild(panel)
+
+      const pluginEl = document.createElement(
+        plugin === 'sizemanager'
+          ? 'ace-size-manager'
+          : plugin === 'profiler'
+            ? 'ace-profiler'
+            : 'ace-particle'
+      )
+      pluginEl.setAttribute('config', config)
+      body.appendChild(pluginEl)
+
+      // If parent updates URL without full reload, react to changes.
+      window.addEventListener(
+        'message',
+        debounce((event) => {
+          if (!event?.data || event.data.type !== 'plugin-config-update') return
+          pluginEl.setAttribute('config', JSON.stringify(deepClone(event.data.config || {})))
+        }, 50)
+      )
+    </script>
+  </body>
+</html>

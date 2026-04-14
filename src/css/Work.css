@@ -26,24 +26,25 @@
 .work-inner {
     width: 70vw;
     margin: 0 auto;
-    padding: 20px;
+    padding: 0 20px 20px 20px;
 }
 
 .work-heading {
-    display: inline;
+    display: inline-block;
     padding: 5px;
     font-weight: 900;
     color: white;
     background-color: black;
     box-decoration-break: clone;
     line-height: 1.75em;
+    margin-top: 34px;
 }
 
 .work-intro {
     line-height: 1.5em;
     padding-top: 1em;
     font-style: italic;
-    max-width: 42em;
+    max-width: 70em;
 }
 
 .work-grid {
@@ -411,6 +412,41 @@
     border: none;
 }
 
+.work-modal-resizable-wrap {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.work-modal-resizable-hint {
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.work-modal-resizable-box {
+    min-width: 240px;
+    min-height: 180px;
+    max-width: 100%;
+    max-height: calc(100% - 28px);
+    resize: both;
+    overflow: auto;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: #ffffff;
+}
+
+.work-modal-iframe--resizable {
+    width: 100%;
+    height: 100%;
+    min-width: 240px;
+    min-height: 180px;
+}
+
 .work-modal-video--scaled,
 .work-modal-image--scaled {
     display: block;
@@ -444,6 +480,22 @@
     line-height: 1.55;
     color: #3a4550;
     font-style: italic;
+}
+
+.work-plugin-source-link-wrap {
+    margin-top: 14px;
+}
+
+.work-plugin-source-link {
+    display: inline-block;
+    color: #0b4f8a;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.work-plugin-source-link:hover,
+.work-plugin-source-link:focus-visible {
+    text-decoration: underline;
 }
 
 @media screen and (max-width: 800px) {
