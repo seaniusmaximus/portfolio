@@ -13,9 +13,18 @@ function App() {
     const markRevealed = (node) => {
       node.dataset.revealed = 'true'
     }
+    const revealAll = () => {
+      getNodes().forEach(markRevealed)
+    }
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      getNodes().forEach(markRevealed)
+      revealAll()
+      return undefined
+    }
+
+    // Fallback for older/in-app mobile browsers where IntersectionObserver is missing.
+    if (typeof window.IntersectionObserver !== 'function') {
+      revealAll()
       return undefined
     }
 
@@ -43,12 +52,14 @@ function App() {
     }
 
     registerNodes()
+    const failSafeTimer = window.setTimeout(revealAll, 3000)
 
     const mutationObserver = new MutationObserver(registerNodes)
     mutationObserver.observe(document.body, { childList: true, subtree: true })
     window.addEventListener('resize', registerNodes)
 
     return () => {
+      window.clearTimeout(failSafeTimer)
       mutationObserver.disconnect()
       window.removeEventListener('resize', registerNodes)
       observer.disconnect()

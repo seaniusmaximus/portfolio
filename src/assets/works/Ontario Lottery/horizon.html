@@ -1,0 +1,134 @@
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<meta name="ad.frame" content="child">
+<title>ACE - Ad Building Framework</title>
+<style>
+  /* include your CSS styles like this */
+  @import"https://use.typekit.net/ujw6rbn.css";*,*::after,*::before,html{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;box-sizing:border-box;text-rendering:optimizeLegibility}html,body{width:100%;height:100%;margin:0;padding:0;overflow:hidden;box-sizing:border-box;font-family:"Open Sans",sans-serif}.full-size{position:relative !important;width:100% !important;height:auto !important}#revjet_container{width:100% !important;height:auto !important}#revjet_container>div{width:100% !important;height:auto !important}[data-revjet-role^=STAGE]{position:relative !important;width:100% !important;height:auto !important}[data-revjet-role^=STAGE]:not([data-revjet-role*=BACKGROUND]){top:auto !important}#adBox{cursor:pointer;position:relative;background-color:#000;background-position:top left;background-repeat:no-repeat;background-size:contain}#video{position:absolute;right:0;background-color:#000}#click{width:100%;height:100%;position:absolute}#bigReplay circle{fill:#000 !important;opacity:.75 !important}
+  .horizon-desktop-wide #adBox{width:2160px;height:405px}.horizon-desktop-wide #dynamic-lotto{width:1440px;height:405px;position:absolute;background:rgba(0,0,0,0) url("assets-horizon/text-start-wide.png") top left no-repeat}.horizon-desktop-mid #adBox{width:1400px;height:315px}.horizon-desktop-mid #dynamic-lotto{width:840px;height:315px;position:absolute;background:rgba(0,0,0,0) url("assets-horizon/text-start-mid.png") top left no-repeat}.horizon-mobile #adBox{width:720px;height:405px}.horizon-desktop-wide #video{width:720px;height:405px}.horizon-desktop-mid #video{width:560px;height:315px}.horizon-mobile #video,.horizon-mobile #controls{width:720px;height:405px;bottom:0}.videoOverlay{width:100%;height:100%;background:rgba(0,0,0,0) top left no-repeat;background-size:contain;pointer-events:none;position:absolute;display:none}.horizon-desktop-mid .videoOverlay,.horizon-desktop-wide .videoOverlay{display:none !important}#dynamic-lotto{color:#fff;line-height:180px;letter-spacing:-2px;font-weight:800}#text-1{font-size:150px}#plus{font-size:75px;padding:0 20px}#text-2{display:flex;flex-direction:row;align-items:center}#text-2 .number{font-size:110px}#text-2 .label{font-size:50px;line-height:18px;padding-top:42px;padding-left:5px}#text-2 .label .est{font-size:20px;font-weight:500;letter-spacing:0}#skewed-text{width:1440px;height:405px;position:absolute;left:210px;top:0;display:flex;flex-direction:row;align-items:center;transform:rotate(-5deg) skew(-10deg);-webkit-font-smoothing:antialiased}.horizon-desktop-mid #skewed-text{top:75px;left:90px;transform:rotate(-5deg) skew(-10deg) scale(0.7);transform-origin:top left}
+  #banner-video-controls-tray{display:block !important;opacity:1 !important;background-color:rgba(0,0,0,0) !important;height:48px !important;overflow:visible !important}#banner-video-controls-tray svg,#videoposter-replay-svg svg{display:none}#banner-video-controls-time,#banner-video-controls-progress,#banner-video-controls-bigPlay{display:none !important}#banner-video-controls-unmuteButton,#banner-video-controls-muteButton{float:right !important;margin-right:20px !important;transform-origin:bottom right}#banner-video-controls-unmuteButton,#banner-video-controls-muteButton,#banner-video-controls-playButton,#banner-video-controls-pauseButton{border-radius:50%;width:37px !important;height:37px !important;margin-top:-10px !important}#banner-video-controls-playButton,#banner-video-controls-pauseButton{margin-left:20px !important;transform-origin:bottom left}#banner-video-controls-playButton{background-image:url("https://s.yimg.com/cv/apiv2/ACT-ACE/video/ui/play.svg") !important}#banner-video-controls-pauseButton{background-image:url("https://s.yimg.com/cv/apiv2/ACT-ACE/video/ui/pause.svg") !important}#banner-video-controls-muteButton{background-image:url("https://s.yimg.com/cv/apiv2/ACT-ACE/video/ui/sound-on.svg") !important}#banner-video-controls-unmuteButton{background-image:url("https://s.yimg.com/cv/apiv2/ACT-ACE/video/ui/sound-off.svg") !important}#banner-video-controls-playButton,#banner-video-controls-pauseButton,#banner-video-controls-muteButton,#banner-video-controls-unmuteButton{background-size:contain !important;background-repeat:no-repeat !important;background-position:center !important}#banner-replayButtonPosterSprite,#banner-smallReplayButtonPosterSprite{opacity:1 !important}#videoposter-replay-svg{background:rgba(0,0,0,0) url("https://s.yimg.com/cv/apiv2/ACT-ACE/video/ui/replay.svg") center center no-repeat !important;background-size:contain !important;opacity:.8 !important;filter:none !important}#banner-smallReplayButtonPosterSprite{margin-left:-25px;margin-top:-25px}#banner-video-controls-playButton,#banner-video-controls-pauseButton,#banner-video-controls-muteButton,#banner-video-controls-unmuteButton{opacity:.8 !important}.horizon-mobile #banner-smallReplayButtonPosterSprite{inset:auto !important;bottom:20px !important;right:20px !important;margin:0 !important}#video.fullbleed{width:100% !important;height:100% !important}
+</style>
+<script src="/assets/libraries/AD.js"></script>
+</head>
+
+<body>
+  <div id="container">
+    <div id="adBox">
+      <div id="dynamic-lotto" class="tk-barlow-semi-condensed">
+        <div id="skewed-text">
+          <div id="text-1" class="lotto"><span id="lmax-jackpot" class="number">60</span> <span class="label">MILLION</span></div>
+          <div id="plus" class="lotto">+</div>
+          <div id="text-2" class="lotto"><span id="max-millions" class="number">60</span> <span class="label">MAXMILLIONS <br><span class="est">EST.</span></span></div>
+        </div>
+      </div>
+      <div id="click"></div>
+      <div id="video"></div>
+    </div>
+  </div>
+  <!-- the below block enables innervate params to be used in the creative which are exposed in the Innervate UI under "Html5 Params" -->
+  <script>
+    /*
+      params=!{
+        "desktop-wide": { "type": "asset", "default": "", "display_name": "Desktop Wide Image" },
+        "desktop-mid": { "type": "asset", "default": "", "display_name": "Desktop Mid Image" },
+        "video": { "type": "asset", "default": "", "display_name": "Video File" },
+        "poster": { "type": "asset", "default": "", "display_name": "Video Poster Image" },
+        "mobile-poster": { "type": "asset", "default": "", "display_name": "Mobile Video Poster Image" },
+        "mobile-video-overlay": { "type": "asset", "default": "", "display_name": "Mobile Video Overlay Image" },
+        "includeMobile": {"type": "boolean", "default": "", "display_name": "Include Mobile"},
+        "adChoices": { "type": "boolean", "default": "", "display_name": "Show Ad Choices Icon" }
+      }!
+    */
+    var innervateParams;
+    var urlPath = "";
+    var localPath = true;
+    var localParams = {
+      'desktop-wide': {
+        'url': 'bg-wide.png',
+        "element": ".horizon-desktop-wide #adBox",
+      },
+      'desktop-mid': {
+        'url': 'bg-mid.png',
+        'element': '.horizon-desktop-mid #adBox',
+      },
+      'video': { 'url':'OH47523E15_0_5mbps.mp4' },
+      'poster': { 'url':'' },
+      // you can define a separate poster image and video overlay for mobile, but it is not required
+      'mobile-poster': { 'url': 'bg-mobile.png', },
+      'mobile-video-overlay': {
+        'url':'',
+        'element': '.videoOverlay'
+      },
+      'includeMobile': false,
+      "adChoices": false
+    }
+    try {
+      innervateParams = JSON.parse('%html5vars%'); // prettier-ignore
+    } catch (e) {
+      console.log('error! innervate Html5 params not found! using default!');
+    }
+  </script>
+
+  <!-- include your external scripts like this -->
+  <!-- #[[ -->
+  <script>
+  innervateParams = $AD.Utilities.deepMerge(localParams, innervateParams);
+  var conf = {
+      containerID: 'container',
+      adId: 'adBox',
+      breakpoints: innervateParams.includeMobile ?
+      [
+        {class:'horizon-desktop-wide', ratio:'16:3'},
+        {class:'horizon-desktop-mid', ratio:'40:9'},
+        {class:'horizon-mobile', ratio:'16:9'}
+      ] :
+      [
+        {class:'horizon-desktop-wide', ratio:'16:3'},
+        {class:'horizon-desktop-mid', ratio:'40:9'}
+      ],
+      scaleBetween: true,
+      debounceTimer: 0,
+      resizeCallback: handleHorizonResize
+    }
+    var currState,videoPlayer,videoOverlay,sizeManager,prop,bgCssArray=[],configData={},uniqueSizes=["horizon","lighthouse","spotlight","vista"];function pathify(params,prop){var myPath,str=params[prop].url,i=0;if(!str||-1!==str.indexOf("//"))return str;if(localPath)for(myPath="assets/",i=0;i<uniqueSizes.length;i++)if(Object.hasOwn(params[prop],"element")){if(params[prop].element&&-1!==params[prop].element.indexOf(uniqueSizes[i])){myPath="assets-"+uniqueSizes[i]+"/";break}}else if(-1!==str.toLowerCase().indexOf(uniqueSizes[i])){myPath="assets-"+uniqueSizes[i]+"/";break}return(myPath||urlPath)+str}for(prop in innervateParams)Object.hasOwn(innervateParams[prop],"element")&&Object.hasOwn(innervateParams[prop],"url")?0<innervateParams[prop].url.length?bgCssArray.push(innervateParams[prop].element+"{background-image: url("+pathify(innervateParams,prop)+");}"):""===innervateParams[prop].url&&bgCssArray.push(innervateParams[prop].element+"{background-image: none;}"):Object.hasOwn(innervateParams[prop],"url")&&(configData[prop]=pathify(innervateParams,prop));var style=document.createElement("style");function initSizeManager(){(sizeManager=new ACE.SIZEMANAGER(conf)).init()}function init(){innervateParams["video-fullbleed"]&&(document.getElementById("video").className="fullbleed"),initSizeManager(),initCreative();var adChoices=new ACE.ADCHOICES({parentNode:"container",label:"AdChoices",clickURL:"https://legal.yahoo.com/us/en/yahoo/privacy/adinfo/index.html",position:{top:0,right:0}});innervateParams.adChoices&&adChoices.init()}style.type="text/css",style.innerHTML=bgCssArray.join("\n"),document.getElementById("container").parentElement.appendChild(style),$AD.ready(init);
+    var ACT;!function(ACE){function byId(id){return document.getElementById(id)}function getElementDimensions(element){var clientWidth=element.clientWidth;return{id:element.id,node:element,width:clientWidth,height:element.clientHeight}}function getComputedAspectRatio(width,height){return Math.round(width/height)}function SizeManager(config){var conf={containerID:"container",adId:"adBox",breakpoints:[{"class":"wide",ratio:"16:3"},{"class":"mid",ratio:"40:9"},{"class":"mobile",ratio:"16:9"}],scaleBetween:!0,center:!0,debounceTimer:100};!function merge(obj1,obj2){for(var p in obj2)try{obj2[p].constructor==Object?obj1[p]=merge(obj1[p],obj2[p]):obj1[p]=obj2[p]}catch(e){obj1[p]=obj2[p]}return obj1}(conf,config),this.config=conf,this.state=this.config.breakpoints[0],this.container=byId(this.config.containerID),this.container.style.width="100vw",this.container.style.height="100vh",this.adBox=byId(this.config.adId),this.adBox.style.transformOrigin="top left",this.adBox.style.position="relative",this.adBox.style.overflow="hidden"}SizeManager.prototype={scaleAdBox:function(state){var scaleWidthAmount=getElementDimensions(this.container).width/getElementDimensions(this.adBox).width,scaleHeightAmount=getElementDimensions(this.container).height/getElementDimensions(this.adBox).height,scaleWidthAmount=scaleWidthAmount<scaleHeightAmount?scaleWidthAmount:scaleHeightAmount;this.adBox.style.transform="scale("+scaleWidthAmount+")",this.state.scaleAmount=scaleWidthAmount,0!=this.config.center&&this.centerAdBox(scaleWidthAmount)},centerAdBox:function(scaleAmount){this.adBox.style.left=(getElementDimensions(this.container).width-getElementDimensions(this.adBox).width*scaleAmount)/2+"px",this.adBox.style.top=(getElementDimensions(this.container).height-getElementDimensions(this.adBox).height*scaleAmount)/2+"px"},checkState:function(item){var containerRatio=getComputedAspectRatio(getElementDimensions(this.container).width,getElementDimensions(this.container).height),ratio=item.ratio.split(":");getComputedAspectRatio(ratio[0],ratio[1])===this.getClosest(this.parseRatios(this.config.breakpoints),containerRatio)&&(this.container.className=item["class"],this.state=item)},update:function(){this.config.breakpoints.forEach(this.checkState.bind(this)),this.config.scaleBetween&&this.scaleAdBox(this.state),this.config.resizeCallback&&this.config.resizeCallback(this.state)},getClosest:function(array,num){var goal=num;return array.reduce(function(prev,curr){return Math.abs(curr-goal)<Math.abs(prev-goal)?curr:prev})},parseRatios:function(breakpoints){var array=[];return breakpoints.forEach(function(item){item=item.ratio.split(":");array.push(getComputedAspectRatio(item[0],item[1]))}),array},init:function(){var func,wait,immediate,timeout;window.onresize=(func=this.update.bind(this),wait=this.config.debounceTimer,function(){var context=this,args=arguments,callNow=immediate&&!timeout;clearTimeout(timeout),timeout=setTimeout(function(){timeout=null,immediate||func.apply(context,args)},wait),callNow&&func.apply(context,args)}),this.update()}},ACE.SIZEMANAGER=SizeManager,window.ACE=ACE}(window.ACE||{});
+    function buildVideo(videoConfig){var container=document.getElementById(videoConfig.containerID),video=document.createElement("video");return container.innerHTML="",video.id=videoConfig.id+"-native-video",video.src="assets-horizon/OH47523E15_0_5mbps.mp4"||"",video.poster=videoConfig.poster||"",video.muted=videoConfig.muted!==!1,video.autoplay=videoConfig.autoplay!==!1,video.playsInline=!0,video.preload=videoConfig.preload||"auto",video.controls=!0,video.style.width=videoConfig.width||"100%",video.style.height=videoConfig.height||"100%",video.style.display="block",video.style.background="#000",video.style.objectFit="cover",video.addEventListener("play",function(){videoEvents(null,"Video Start")}),video.addEventListener("ended",function(){videoEvents(null,"Video Complete")}),video.addEventListener("click",function(e){e.stopPropagation(),handleVideoClick("Video Click Redirect")}),container.appendChild(video),videoOverlay||((videoOverlay=document.createElement("div")).className="videoOverlay",document.getElementById("adBox").appendChild(videoOverlay)),videoPlayer={element:video,config:videoConfig,pause:function(){video.pause()},play:function(){video.play().catch(function(){})}},videoPlayer}function videoEvents(type,e){switch(e){case"Video Start":videoOverlay&&(videoOverlay.style.display="block");break;case"Video Complete":videoOverlay&&(videoOverlay.style.display="none");break;case"Video Click Redirect":case"Video Poster Redirect":handleVideoClick(e)}}
+    function loadLottoData(url,callback){var xhr=new XMLHttpRequest;xhr.open("GET",url,!0),xhr.responseType="json",xhr.onload=function(){var status=xhr.status;callback(status,xhr.response)},xhr.send()}function parseLottoData(status,data){var lmax;200===status?(lmax=Math.round(data.LMAX.jackpot/1e6),document.getElementById("lmax-jackpot").innerHTML=lmax,lmax=Math.round(data.LMAX.bonusDraws),document.getElementById("max-millions").innerHTML=lmax):console.warn("Failed to load lotto data",status,data)}function handleClick(e){switch(currState["class"]){case"horizon-desktop-wide":$AD.click("clickthrough.custom.1");break;case"horizon-desktop-mid":$AD.click("clickthrough.custom.2");break;case"horizon-mobile":$AD.click("clickthrough.custom.3")}}function handleVideoClick(e){switch(e){case"Video Click Redirect":switch(currState["class"]){case"horizon-desktop-wide":$AD.click("clickthrough.video.1",{url:"https://www.example.com/"});break;case"horizon-desktop-mid":$AD.click("clickthrough.video.2",{url:"https://www.example.com/"});break;case"horizon-mobile":$AD.click("clickthrough.video.3",{url:"https://www.example.com/"})}break;case"Video Poster Redirect":switch(currState["class"]){case"horizon-desktop-wide":$AD.click("clickthrough.videoposter.1",{url:"https://www.example.com/"});break;case"horizon-desktop-mid":$AD.click("clickthrough.videoposter.2",{url:"https://www.example.com/"});break;case"horizon-mobile":$AD.click("clickthrough.videoposter.3",{url:"https://www.example.com/"})}}}function trackStateChange(prevState,newState){if(prevState&&prevState["class"]!==newState["class"]){switch(newState["class"]){case"horizon-desktop-wide":$AD.event("other.custom.1");break;case"horizon-desktop-mid":$AD.event("other.custom.2");break;case"horizon-mobile":$AD.event("other.custom.3")}"undefined"!=typeof fullbleed&&updateVideoPlayer(newState)}}function updateVideoPlayer(state){var newConfig=videoPlayer.config;switch(videoPlayer.pause(),document.getElementById("video").innerHTML="",state["class"]){case"horizon-desktop-wide":newConfig.src=configData["desktop-wide-video"],newConfig.poster=configData["desktop-wide-poster"];break;case"horizon-desktop-mid":newConfig.src=configData["desktop-mid-video"],newConfig.poster=configData["desktop-mid-poster"];break;case"horizon-mobile":newConfig.src=configData["mobile-video"],newConfig.poster=configData["mobile-poster"]}newConfig.preload="none",newConfig.autoplay=!1,buildVideo(newConfig)}function handleHorizonResize(state){trackStateChange(currState,state),currState=state}function initCreative(){var videoUrl,posterUrl;if("undefined"!=typeof fullbleed)switch(currState["class"]){case"horizon-desktop-wide":videoUrl=configData["desktop-wide-video"],posterUrl=configData["desktop-wide-poster"];break;case"horizon-desktop-mid":videoUrl=configData["desktop-mid-video"],posterUrl=configData["desktop-mid-poster"];break;case"horizon-mobile":videoUrl=configData["mobile-video"],posterUrl=configData["mobile-poster"]}else videoUrl=configData.video,posterUrl=Object.hasOwn(configData,"mobile-poster")&&0<configData["mobile-poster"].length&&"horizon-mobile"===currState["class"]?configData["mobile-poster"]:configData.poster;var config={id:"banner",containerID:"video",src:videoUrl,x:0,y:0,width:"100%",height:"100%",muted:!0,autoplay:!0,highlight:"#777777",background:"none",preload:"auto",poster:posterUrl,endFrame:{enabled:!0,redirect:!0,replayButton:!0,replayButtonStyle:{left:"50%",top:"50%",width:"75px",height:"75px"}},controls:{showFullscreenButton:!1}};ACE.VIDEOFIXER?new ACE.VIDEOFIXER(buildVideo(config),buildVideo,ACE.VIDEOFIXER.INNERVATE):buildVideo(config),document.getElementById("click").onclick=handleClick,loadLottoData("https://s.yimg.com/cv/apiv2/cache/cache/simple_397/cached_397.json",parseLottoData)}
+    !function(ACE){function makeAdChoicesElement(parentNode,adChoicesText,clickURL,clickCallback){var logo=document.createElement("div"),label=document.createElement("span");logo.id="adchoices-logo",logo.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 15 15"><circle cx="6" cy="6" r="0.67"></circle><path d="M4.2,11.3Q3.3,11.8,3.3,10.75L3.3,4.1Q3.3,3.1,4.3,3.5L10.4,7.0Q12.0,7.5,10.4,8.0L6.65,10.0L6.65,7.75a0.65,0.65,0,1,0,-1.3,0L5.35,10.75a0.9,0.9,0,0,0,1.3,0.8L12.7,8.2Q13.7,7.5,12.7,6.7L3.3,1.6Q2.2,1.3,1.8,2.5L1.8,12.5Q2.2,13.9,3.3,13.3L4.8,12.5A0.3,0.3,0,1,0,4.2,11.3Z"></path></svg>',label.id="adchoices-label",label.innerText=adChoicesText,this.adChoicesContainer=document.createElement("div"),this.adChoicesContainer.id="adchoices-container",this.adChoicesContainer.appendChild(label),this.adChoicesContainer.appendChild(logo),this.adChoicesContainer.addEventListener("click",function(){window.open(clickURL,"_blank"),clickCallback&&clickCallback()}),document.getElementById(parentNode).appendChild(this.adChoicesContainer)}function adChoices(config){var prop,conf={};for(prop in config)config.hasOwnProperty(prop)&&(conf[prop]=config[prop]);this.config=conf}adChoices.prototype={constructor:adChoices,init:function(){var position,style;makeAdChoicesElement(this.config.parentNode,this.config.label,this.config.clickURL,this.config.clickCallback),position=this.config.position,(style=document.createElement("style")).innerHTML=`
+      #adchoices-container {
+        border-bottom-left-radius: 4px;
+        position: absolute;`+JSON.stringify(position).replaceAll('"',"").replaceAll("{","").replaceAll("}","").replaceAll(",",";")+`;
+        background-color: rgba(255, 255, 255, 0.7);
+        font-size: 11px;
+        font-weight: 400;
+        user-select: none;
+        display: flex;
+        align-items: center;
+        padding: 2px 4px;
+        cursor: pointer;
+      }
+      
+      #adchoices-container #adchoices-logo {
+        width: 15px;
+        height: 15px;
+      }
+      
+      #adchoices-container #adchoices-label {
+        margin-right: 2px;
+        display: none;
+        color: grey;
+      }
+      #adchoices-container:hover #adchoices-label {
+        display: inline-block;
+      }
+     
+      #adchoices-container svg {
+        fill: #00aecd;
+      }
+    `,document.body.appendChild(style)}},ACE.ADCHOICES=adChoices,window.ACE=ACE}(window.ACE||{});
+  </script>
+  <!-- ]]# -->
+
+
+
+</body></html>

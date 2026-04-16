@@ -69,6 +69,32 @@ function resolveHtmlWorkSrc(work) {
 
 const works = [
     {
+        slug: 'afeela',
+        title: 'Afeela',
+        description: 'Branding campaign for Afeela, a new electric vehicle company.',
+        thumbPosition: 'center center',
+        thumbSrc: new URL('./assets/works/Afeela/assets-horizon-desktop/v75_1440x405_learnmore_E2E_sci_24_exp.png', import.meta.url).href,
+        mediaType: 'html',
+        size: {
+            w: 1400,
+            h: 315
+        },
+        mediaSrc: workHtmlSrc('Afeela/horizon-single.html')
+    },
+    {
+        slug: 'aspca',
+        title: 'ASPCA',
+        description: 'Awareness campaign for the ASPCA.',
+        thumbPosition: 'center center',
+        thumbSrc: new URL('./assets/works/ASPCA/bg.jpg', import.meta.url).href,
+        mediaType: 'image',
+        size: {
+            w: 1440,
+            h: 1024
+        },
+        mediaSrc: new URL('./assets/works/ASPCA/bg.jpg', import.meta.url).href
+    },
+    {
         slug: 'belvita-animated-banners',
         title: 'Belvita Animated Banners',
         description: 'A belVita awareness campaign built as lightweight HTML5 rich media, with timeline-based animation, sprite optimization, and staged preloading so each panel starts fast while still supporting branded motion and polished transitions.',
@@ -128,6 +154,19 @@ const works = [
             h: 1920
         },
         mediaSrc: workHtmlSrc('Dodge Ram Carousel/lighthouse.html')
+    },
+    {
+        slug: 'fairlife',
+        title: 'Coca-Cola Fairlife',
+        description: 'An awareness campaign for Coca-Cola Fairlife. Utilizing a custom video animation and interactive elements to engage users.',
+        thumbPosition: 'center center',
+        thumbSrc: new URL('./assets/works/Fairlife/assets/milk-chocolate.png', import.meta.url).href,
+        mediaType: 'html',
+        size: {
+            w: 1080,
+            h: 1920
+        },
+        mediaSrc: workHtmlSrc('Fairlife/index.html')
     },
     {
         slug: 'gm-onstar',
@@ -203,6 +242,19 @@ const works = [
         mediaSrc: new URL('./assets/works/Kingsford Charcoal/Kingsford_Demo.jpg', import.meta.url).href
     },
     {
+        slug: 'nordstrom',
+        title: 'Nordstrom',
+        description: 'A high-impact display campaign for Nordstrom. Utilizing a custom carousel UI to display products from their summer line.',
+        thumbPosition: 'center 20%',
+        thumbSrc: new URL('./assets/works/Nordstrom/assets/slide1.jpg', import.meta.url).href,
+        mediaType: 'html',  
+        size: {
+            w: 970,
+            h: 250
+        },
+        mediaSrc: workHtmlSrc('Nordstrom/index.html')
+    },
+    {
         slug: 'oceania-cruises',
         title: 'Oceania Cruises',
         description: 'A premium travel display concept for Oceania Cruises, developed as a modular HTML5 build with cinematic motion timing, compressed imagery, and timeline orchestration tuned for smooth playback in constrained ad environments.',
@@ -215,6 +267,19 @@ const works = [
         mediaSrc: workHtmlSrc('Oceania Cruises - 970x250/index.html')
     },
     {
+        slug: 'ontario-lottery',
+        title: 'Ontario Lottery',
+        description: 'An animated banner that uses a custom GSAP animation to drive users to the Ontario Lottery. It also utilizes an API to show the current jackpot amount.',
+        thumbPosition: '80% center',
+        thumbSrc: new URL('./assets/works/Ontario Lottery/assets-horizon/bg-mobile.png', import.meta.url).href,
+        mediaType: 'html',  
+        size: {
+            w: 1400,
+            h: 315
+        },
+        mediaSrc: workHtmlSrc('Ontario Lottery/horizon.html')
+    },
+    {
         slug: 'seadoo-pins',
         title: 'Sea-Doo Pins',
         description: 'An interactive Sea-Doo hotspot experience that lets users explore feature callouts through pin-based interactions, implemented with explicit state mapping, layered click targets, and performance-first animation sequencing.',
@@ -225,6 +290,19 @@ const works = [
             h: 250
         },
         mediaSrc: workHtmlSrc('SeaDoo Pins/index.html')
+    },
+    {
+        slug: 'tourism-charlevoix',
+        title: 'Tourism Charlevoix',
+        description: 'A Tourism Charlevoix awareness campaign. Utilized dynamically targeted imagery to showcase the beauty of the region.',
+        thumbPosition: 'center center',
+        thumbSrc: new URL('./assets/works/Tourism Charlevoix/images/hiking-01-300x600.jpg', import.meta.url).href,
+        mediaType: 'html',
+        size: {
+            w: 300,
+            h: 600
+        },
+        mediaSrc: workHtmlSrc('Tourism Charlevoix/index.html')
     },
     {
         slug: 'toyota-game',
@@ -413,7 +491,7 @@ function getCardThumbSrc(item) {
     return getRasterThumbSrc(item) ?? getSrcFolderThumbnailUrl(item.slug)
 }
 
-function WorkThumb({ slug, title, description, thumbSrc, thumbPosition }) {
+function WorkThumb({ slug, title, thumbSrc, thumbPosition, overlayTheme = 'default' }) {
     const bundled = typeof thumbSrc === 'string' ? thumbSrc : undefined
     const [bundledFailed, setBundledFailed] = useState(false)
     const [publicThumbUrl, setPublicThumbUrl] = useState(null)
@@ -470,9 +548,8 @@ function WorkThumb({ slug, title, description, thumbSrc, thumbPosition }) {
             <span className="work-thumb-initial" aria-hidden="true">
                 {title.replace(/[^A-Za-z]/g, '').charAt(0) || '?'}
             </span>
-            <div className="work-thumb-overlay">
+            <div className={`work-thumb-overlay${overlayTheme === 'plugin' ? ' work-thumb-overlay--plugin' : ''}`}>
                 <h4 className="work-card-title">{title}</h4>
-                <p className="work-card-desc">{description}</p>
             </div>
         </div>
     )
@@ -878,7 +955,6 @@ function Work() {
                                 <WorkThumb
                                     slug={item.slug}
                                     title={item.title}
-                                    description={item.description}
                                     thumbSrc={getCardThumbSrc(item)}
                                     thumbPosition={item.thumbPosition}
                                 />

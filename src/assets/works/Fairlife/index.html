@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="ad.frame" content="child">
+<meta name="ad.size" content="width=1080,height=1920">
+<title>ACE - Ad Building Framework</title>
+<style>
+  *,
+  *::after,
+  *::before,
+  html {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+    text-rendering: optimizeLegibility;
+  }
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+    font-family: "Open Sans", sans-serif;
+  }
+  #container {
+    width: 1080px;
+    height: 1920px;
+    background: white url("assets/background.png") top left no-repeat;
+  }
+  #intro-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+  }
+  #headline-container,
+  .headline {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+  }
+  #headline-sugar {
+    background: transparent url("assets/headline-sugar.png") top left no-repeat;
+    opacity: 0;
+  }
+  #headline-protein {
+    background: transparent url("assets/headline-protein.png") top left no-repeat;
+    opacity: 0;
+  }
+  #headline-go {
+    background: transparent url("assets/headline-go.png") top left no-repeat;
+    opacity: 0;
+  }
+  #cow-head {
+    width: 209px;
+    height: 199px;
+    background: transparent url("assets/cow-head.png") top left no-repeat;
+    opacity: 0;
+    position: absolute;
+    top: 288px;
+    right: 20px;
+    transform-origin: center center;
+  }
+  #banner-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
+  #sideelements {
+    width: 100%;
+    height: 100%;
+    background: transparent url("assets/sideelements.png") top left no-repeat;
+    position: absolute;
+    opacity: 0;
+  }
+  #ui {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: transparent url("assets/ui.png") top left no-repeat;
+    opacity: 0;
+    pointer-events: none;
+  }
+  #hotspot {
+    width: 95px;
+    height: 95px;
+    border-radius: 95px;
+    background-color: #3f1518;
+    color: #ffffff;
+    line-height: 100px;
+    font-size: 125px;
+    text-align: center;
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: 100;
+    position: absolute;
+    top: 579px;
+    left: 734px;
+    pointer-events: all;
+  }
+  #gallery-container {
+    position: absolute;
+    opacity: 0;
+  }
+  .arrow {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    top: 870px;
+    pointer-events: all;
+  }
+  #arrow-right {
+    right: 0;
+  }
+  #module {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
+  .module-1 {
+    background: transparent url("assets/module-chocolate.png") top left no-repeat;
+  }
+  .module-2 {
+    background: transparent url("assets/module-strawberry.png") top left no-repeat;
+  }
+  .module-3 {
+    background: transparent url("assets/module-cookies.png") top left no-repeat;
+  }
+  .module-4 {
+    background: transparent url("assets/module-plain.png") top left no-repeat;
+  }
+  #module-close {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
+  #module-hit {
+    width: 926px;
+    height: 1292px;
+    position: absolute;
+    left: 87px;
+    top: 300px;
+  }
+</style>
+<script src="/assets/libraries/AD.js"></script>
+<script src="/assets/libraries/gsap.min.js"></script>
+</head>
+
+<body>
+  <div id="container">
+    <div id="intro-container">
+      <video id="intro-video" muted preload="auto" width="1080" height="1920">
+        <source src="assets/new-vid-2023.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div id="banner-container">
+      <div id="sideelements"></div>
+      <div id="gallery-container"></div>
+      <div id="ui">
+        <div id="arrow-left" class="arrow"></div>
+        <div id="arrow-right" class="arrow"></div>
+        <div id="cta"></div>
+        <div id="hotspot">+</div>
+      </div>
+    </div>
+    <div id="headline-container">
+      <div id="headline-sugar" class="headline"></div>
+      <div id="headline-protein" class="headline"></div>
+      <div id="headline-go" class="headline"></div>
+      <div id="cow-head"></div>
+    </div>
+    <div id="module">
+      <div id="module-close"></div>
+      <div id="module-hit"></div>
+    </div>
+  </div>
+
+  <!-- include your external scripts like this -->
+  <script>
+    var currIndex,
+            mainGallery,
+            firstView = !0;
+    function byId(string) {
+      return document.getElementById(string);
+    }
+    function hideVideo() {
+      byId("intro-video").style.display = "none";
+    }
+    function trackMainGalleryEvent(e, galleryConfId) {
+      switch (e) {
+        case "slide1":
+          (currIndex = 1), $AD.event("Gallery.ViewPanel.Chocolate", { overrides: { interaction: !1 } }), TweenMax.to("#hotspot", 0.25, { backgroundColor: "#563031" });
+          break;
+        case "slide2":
+          (currIndex = 2),
+          firstView && (TweenMax.set("#sideelements", { opacity: 1 }), TweenMax.set("#gallery-container", { opactiy: 1 }), TweenMax.to("#intro-container", 0.5, { opacity: 0 })),
+                  TweenMax.to("#hotspot", 0.25, { backgroundColor: "#ae2f35" }),
+                  $AD.event("Gallery.ViewPanel.Strawberry", { overrides: { interaction: !1 } });
+          break;
+        case "slide3":
+          (currIndex = 3), TweenMax.to("#hotspot", 0.25, { backgroundColor: "#035e9d" }), $AD.event("Gallery.ViewPanel.Plain", { overrides: { interaction: !1 } });
+          break;
+        case "slideNext":
+          $AD.event("Gallery.SlideNext");
+          break;
+        case "slidePrev":
+          $AD.event("Gallery.SlidePrev");
+          break;
+        case "swipeNext":
+          $AD.event("Gallery.SwipeNext");
+          break;
+        case "swipePrev":
+          $AD.event("Gallery.SwipePrev");
+      }
+    }
+    function trackMainGalleryClick(e) {
+      switch (e) {
+        case "slide1":
+          $AD.click("Gallery.Chocolate.Clickthrough");
+          break;
+        case "slide2":
+          $AD.click("Gallery.Strawberry.Clickthrough");
+          break;
+        case "slide3":
+          $AD.click("Gallery.Cookies and Cream.Clickthrough");
+          break;
+        case "slide4":
+          $AD.click("Gallery.Plain.Clickthrough");
+      }
+    }
+    function setupGallery() {
+      (mainGallery = new ACE.GALLERY({
+        id: "1",
+        imgArr: ["assets/milk-chocolate.png", "assets/milk-strawberry.png", "assets/milk-plain.png"],
+        w: 1080,
+        h: 1920,
+        slideAnimSpeed: 0,
+        parentId: "gallery-container",
+        trackingFunc: trackMainGalleryEvent,
+        redirectFunc: trackMainGalleryClick,
+      })).init(),
+              byId("arrow-left").addEventListener("click", mainGallery.goPrevSlide),
+              byId("arrow-right").addEventListener("click", mainGallery.goNextSlide);
+    }
+    function showModule() {
+      switch (((byId("module").style.display = "block"), currIndex)) {
+        case 1:
+          $AD.event("Gallery.Modal.Chocolate.Show"), (byId("module").className = "module-1");
+          break;
+        case 2:
+          $AD.event("Gallery.Modal.Strawberry.Show"), (byId("module").className = "module-2");
+          break;
+        case 3:
+          $AD.event("Gallery.Modal.Plain.Show"), (byId("module").className = "module-4");
+          break;
+      }
+    }
+    function hideModule() {
+      switch (((byId("module").style.display = "none"), currIndex)) {
+        case 1:
+          $AD.event("Gallery.Modal.Chocolate.Hide", { overrides: { interaction: !1 } });
+          break;
+        case 2:
+          $AD.event("Gallery.Modal.Strawberry.Hide", { overrides: { interaction: !1 } });
+          break;
+        case 3:
+          $AD.event("Gallery.Modal.Plain.Hide", { overrides: { interaction: !1 } });
+          break;
+      }
+    }
+    function handleModuleClick() {
+      switch (currIndex) {
+        case 1:
+          $AD.click("Gallery.Modal.Chocolate.Clickthrough");
+          break;
+        case 2:
+          $AD.click("Gallery.Modal.Strawberry.Clickthrough");
+          break;
+        case 3:
+          $AD.click("Gallery.Modal.Plain.Clickthrough");
+          break;
+      }
+    }
+    function startAnimation(e) {
+      var tl = new TimelineMax();
+      tl.to("#headline-protein", 0.5, { opacity: 1 }),
+              tl.to("#headline-protein", 0.5, { opacity: 0, delay: 2.5 }),
+              tl.to("#headline-sugar", 0.5, { opacity: 1 }, "-=0.5"),
+              tl.to("#headline-sugar", 0.5, { opacity: 0, delay: 1.5 }),
+              tl.to("#headline-go", 0.5, { opacity: 1 }, "-=0.5"),
+              tl.to(["#ui", "#cow-head"], 0.5, { opacity: 1 }),
+              tl.to("#cow-head", 0.35, { scale: 1.25 }),
+              tl.to("#cow-head", 0.35, {
+                scale: 1,
+                onComplete: function () {
+                  mainGallery.autoplaySlides();
+                },
+              });
+    }
+    function init() {
+      byId("intro-video").play(), (byId("intro-video").onplay = startAnimation), (byId("hotspot").onclick = showModule), (byId("module-close").onclick = hideModule), (byId("module-hit").onclick = handleModuleClick), setupGallery();
+    }
+    $AD.ready(init);
+    var ACT;!function(ACE){var Video,videoPlayer,VIDEO_BOX_TAG="_galleryId_-videoBox_id_",VIDEO_SLIDE_TAG="_galleryId_-videoSlide_id_",CSS_CLASS_SLIDE_ID="slide_id_",TRACKING_LABEL_VIDEO_SLIDE_PLAY="playVideoSlide_id_",TRACKING_LABEL_SLIDE="slide_id_";function byId(id){return document.getElementById(id)}function insertAfter(referenceNode,newNode){referenceNode.parentNode.insertBefore(newNode,referenceNode.nextSibling)}function addStyleCSS(parentId,cssArr){for(var j,cssStylesArr,elmStyleArr,css,style,finalCSSArr=[],i=0;i<cssArr.length;i++){for(elmStyleArr=[],cssStylesArr=cssArr[i].style,j=0;j<cssStylesArr.length;j++)elmStyleArr.push(cssStylesArr[j].join(":"));finalCSSArr.push(cssArr[i].elm,"{",elmStyleArr.join(";"),"}")}parentId=parentId,css=finalCSSArr.join(""),parentId=byId(parentId),(style=document.createElement("style")).type="text/css",style.appendChild(document.createTextNode(css)),parentId.appendChild(style)}function cssTransition(id,transDur){byId(id).style.transitionDuration=transDur+"ms"}function getPoint(e){return{x:e.pageX||e.touches[0].clientX,y:e.pageY||e.touches[0].clientY}}function setDataAttr(id,dataId,val){byId(id).setAttribute("data-"+dataId,val)}function getDataset(element,dataId){return element&&element.dataset?element.dataset[dataId]:(element.className||"").toString().match(/slide\d+/)}function Gallery(config){var prop,conf={step:0,activePanel:1,isAnimating:!1,isAutoplaying:!1,imgArr:[],vidArr:[],vidAutoplay:!1,w:void 0,h:void 0,numPanlsInView:1,viewW:void 0,autoplay:!1,autoplayDuration:15e3,slideAnimSpeed:500,slideDir:"horizontal",desktopSwipe:!1,parentId:void 0,bullets:{parentId:void 0,style:"disc",color:void 0,activeColor:"db0006",radius:10},customElmsArr:[],trackingFunc:function(){},redirectFunc:function(){},callbackFunc:function(){}};for(prop in config)config.hasOwnProperty(prop)&&(conf[prop]=config[prop]);this.config=conf,this.pointDown={x:null,y:null},this.imgsLoaded=0,this.swipeDistance=0}Gallery.prototype={getGalleryID:function(){return"gallery"+this.config.id},getContainerID:function(){return this.getGalleryID()+"-container"},getBulletsID:function(){return this.getGalleryID()+"-bullets"},getSlideID:function(id){return this.getGalleryID()+"-"+CSS_CLASS_SLIDE_ID.replace("_id_",id)},getPanelsNum:function(){return this.config.imgArr.length},preloadImgs:function(adImgs,callback){for(var img,imgsCount=adImgs.length,i=0;i<imgsCount;i++)(img=new Image).src=adImgs[i],img.onload=this.onImgLoaded(imgsCount,callback)},onImgLoaded:function(imgsCount,callback){this.imgsLoaded++,this.imgsLoaded>=imgsCount&&callback&&callback()},stopGalleryAutoplay:function(){clearInterval(this.autoplayIntervalRef),this.config.isAutoplaying=!1},checkAutoplay:function(){this.config.isAutoplaying&&this.stopGalleryAutoplay()},swichPanels:function(panelPos){var containerID=this.getContainerID(),conf=this.config;cssTransition(containerID,0),conf="horizontal"===conf.slideDir?"translateX("+-panelPos+"px)":"translateY("+-panelPos+"px)",byId(containerID).style.transform=conf},animation:function(){var transformStyle,conf=this.config,root=this,containerID=this.getContainerID(),tl=new TimelineMax;tl.to("#gallery-container",.5,{opacity:0,onComplete:function(){cssTransition(containerID,conf.slideAnimSpeed),transformStyle="horizontal"===conf.slideDir?"translateX("+(conf.step*-conf.w-conf.w)+"px)":"translateY("+(conf.step*-conf.h-conf.h)+"px)",byId(containerID).style.transform=transformStyle,setTimeout(function(){root.config.isAnimating=!1},conf.slideAnimSpeed)}}),tl.to("#gallery-container",.5,{opacity:1})},autoplaySlides:function(){var conf=this.config,root=this,numberPanels=this.getPanelsNum(),interval=conf.autoplayDuration/numberPanels;conf.isAutoplaying=!0,this.autoplayIntervalRef=setInterval(function(){root.slideNext("autoplay")},interval),setTimeout(function(){conf.activePanel===numberPanels&&conf.isAutoplaying&&root.slideNext("autoplay"),root.stopGalleryAutoplay()},conf.autoplayDuration)},goPrevSlide:function(){var conf=this.config;this.slidePrev(),this.config.trackingFunc("slidePrev",conf.id)},goNextSlide:function(){var conf=this.config;this.slideNext(),this.config.trackingFunc("slideNext",conf.id)},slideNext:function(e){var root=this,conf=this.config,numberPanels=this.getPanelsNum();conf.isAnimating||("autoplay"!==e&&this.checkAutoplay(),conf.isAnimating=!0,conf.step+=1,this.animation(),conf.activePanel===numberPanels?(setTimeout(function(){"horizontal"===root.config.slideDir?root.swichPanels(root.config.w):root.swichPanels(root.config.h)},conf.slideAnimSpeed),conf.step=0,conf.activePanel=1):conf.activePanel+=1,conf.bullets.parentId&&this.setActiveBullet(),conf.trackingFunc(TRACKING_LABEL_SLIDE.replace("_id_",conf.activePanel),conf.id),0!==conf.vidArr.length&&(this.destroyVideo(),conf.vidAutoplay&&this.autoplayVideoSlide(conf.activePanel)))},slidePrev:function(){var root=this,conf=this.config,numberPanels=this.getPanelsNum();conf.isAnimating||(this.checkAutoplay(),conf.isAnimating=!0,1===conf.activePanel?("horizontal"===conf.slideDir?this.swichPanels(conf.w*(numberPanels+1)):this.swichPanels(conf.h*(numberPanels+1)),conf.step=numberPanels-1,setTimeout(function(){root.animation()},50),conf.activePanel=numberPanels):(--conf.step,this.animation(),--conf.activePanel),conf.bullets.parentId&&this.setActiveBullet(),conf.trackingFunc(TRACKING_LABEL_SLIDE.replace("_id_",conf.activePanel),conf.id),0!==conf.vidArr.length&&(this.destroyVideo(),conf.vidAutoplay&&this.autoplayVideoSlide(conf.activePanel)))},showSlide:function(num){var conf=this.config;this.checkAutoplay(),1===num?(conf.activePanel=2,conf.step=1,this.slidePrev()):(conf.activePanel=num-1,conf.step=conf.activePanel-1,this.slideNext())},addGalleryStyle:function(){var conf=this.config,galleryID=this.getGalleryID();addStyleCSS(galleryID,[{elm:"#"+galleryID+".gallery",style:[["overflow","hidden"],["position","relative"],["cursor","pointer"],["width",conf.viewW+"px"]]},{elm:"#"+galleryID+".gallery ul",style:[["margin","0"],["padding","0"]]},{elm:"#"+galleryID+".gallery li",style:[["position","relative"],["list-style","none"],["float","left"]]},{elm:"#"+galleryID+".gallery .panel-img",style:[["background-repeat","no-repeat"],["background-size","cover"],["background-position","center"]]},{elm:"#"+galleryID+", #"+galleryID+" .panel-img",style:[["height",conf.h+"px"],["width",conf.w+"px"]]}])},buildBullets:function(){var i,bulletWidth,cssArr,cssArrElm,nodeLI,conf=this.config,bulletsId=this.getBulletsID(),numberPanels=this.getPanelsNum(),bulletRadius=conf.bullets.radius,nodeUL=document.createElement("ul");for(nodeUL.setAttribute("id",bulletsId),i=1;i<numberPanels+1;i++)(nodeLI=document.createElement("li")).setAttribute("class","nav-circle-"+i),nodeLI.setAttribute("data-id",i),nodeUL.appendChild(nodeLI);for(byId(conf.bullets.parentId).appendChild(nodeUL),void 0===conf.bullets.color&&(bulletRadius-=4),cssArr=[{elm:"#"+bulletsId+" li",style:[["padding","0"],["list-style","none"],["float","left"],["margin","0 "+bulletRadius/2+"px"],["border-radius",bulletRadius+"px"],["width",(bulletWidth="bar"===conf.bullets.style?conf.viewW/numberPanels-bulletRadius:bulletRadius)+"px"],["height",bulletRadius+"px"]]}],void 0===conf.bullets.color?cssArr.push({elm:"#"+bulletsId+" li",style:[["border","2px solid #"+conf.bullets.activeColor]]}):cssArr.push({elm:"#"+bulletsId+" li",style:[["background","#"+conf.bullets.color]]}),i=1;i<numberPanels+1;i++)cssArrElm={elm:"#"+bulletsId+".show-panel-"+i+" li.nav-circle-"+i,style:[["border-radius",bulletRadius+"px"],["background","#"+conf.bullets.activeColor],["width",bulletWidth+"px"],["height",bulletRadius+"px"]]},cssArr.push(cssArrElm);"bar"===conf.bullets.style&&cssArr.push({elm:"#"+bulletsId,style:[["width",conf.viewW+"px"]]}),addStyleCSS(conf.bullets.parentId,cssArr),byId(bulletsId).addEventListener("click",this.onBulletClick.bind(this)),this.setActiveBullet()},onBulletClick:function(e){var conf=this.config,e=parseInt(getDataset(e.target,"id"),10);e!==conf.activePanel&&(this.showSlide(e),this.config.trackingFunc("bulletClick",conf.id))},setActiveBullet:function(){var bulletsId=this.getBulletsID(),conf=this.config;conf="show-panel-"+conf.activePanel,byId(bulletsId).className=conf},getActivePanelID:function(){return this.config.activePanel},setupCustomElms:function(){var key,elm,slideID,conf=this.config,galleryID=this.getGalleryID(),elmArr=conf.customElmsArr,cssArr=[];for(key in elmArr)elmArr.hasOwnProperty(key)&&(slideID=(elm=elmArr[key]).id,function(elm,parentId,attrs){var attr,tag=document.createElement(elm);for(attr in attrs)attrs.hasOwnProperty(attr)&&tag.setAttribute(attr,attrs[attr]);byId(parentId).appendChild(tag)}(elm.node,this.getSlideID(elm.slide),{id:slideID}),elm.type?(setDataAttr(slideID,"id",elm.slide),setDataAttr(slideID,"type",elm.type)):setDataAttr(slideID,"id",slideID),cssArr.push({elm:"#"+slideID,style:elm.style}));addStyleCSS(galleryID,cssArr)},buildContent:function(){for(var nodeDiv,lastPanel,firstPanel,panelID,conf=this.config,productSet=conf.imgArr,fragment=document.createDocumentFragment(),containerID=this.getContainerID(),additionalPanls=[],i=0;i<productSet.length;i++)panelID=i+1,(nodeDiv=document.createElement("div")).setAttribute("class","panel-img slide"+panelID),nodeDiv.setAttribute("id",this.getSlideID(panelID)),nodeDiv.setAttribute("data-id",TRACKING_LABEL_SLIDE.replace("_id_",panelID)),nodeDiv.setAttribute("style","background-image:url("+productSet[i]+")"),panelID=document.createElement("li"),fragment.appendChild(panelID),fragment.lastChild.appendChild(nodeDiv);if((lastPanel=fragment.lastChild.cloneNode(!0)).firstChild.removeAttribute("id"),(firstPanel=fragment.firstChild.cloneNode(!0)).firstChild.removeAttribute("id"),1<conf.numPanlsInView)for(i=1;i<conf.numPanlsInView;i++)additionalPanls[i]=fragment.childNodes[i].cloneNode(!0);if(fragment.insertBefore(lastPanel,fragment.firstChild),insertAfter(fragment.lastChild,firstPanel),1<conf.numPanlsInView)for(i=1;i<conf.numPanlsInView;i++)insertAfter(fragment.lastChild,additionalPanls[i]);byId(containerID).appendChild(fragment),0!==conf.customElmsArr.length&&this.setupCustomElms(),conf.callbackFunc(conf.id),conf.trackingFunc(TRACKING_LABEL_SLIDE.replace("_id_",1),conf.id),conf.autoplay&&!conf.vidAutoplay&&this.autoplaySlides(),0!==conf.vidArr.length&&conf.vidAutoplay&&this.autoplayVideoSlide(1)},setupMainBox:function(){var conf=this.config,galleryID=this.getGalleryID(),containerID=this.getContainerID(),numberPanels=this.getPanelsNum(),mainNode=document.createElement("div"),nodeUL=document.createElement("ul");mainNode.setAttribute("id",galleryID),mainNode.setAttribute("class","gallery"),byId(conf.parentId).appendChild(mainNode),nodeUL.setAttribute("id",containerID),byId(galleryID).appendChild(nodeUL),mainNode=byId(containerID),"horizontal"===conf.slideDir?(mainNode.style.width=(numberPanels+2*conf.numPanlsInView)*conf.w+"px",mainNode.style.transform="translateX("+-conf.w+"px)"):(mainNode.style.height=(numberPanels+2*conf.numPanlsInView)*conf.h+"px",mainNode.style.transform="translateY("+-conf.h+"px)"),this.addGalleryStyle(),conf.bullets.parentId&&this.buildBullets(),this.buildContent()},getVideoBoxTagID:function(id){return VIDEO_BOX_TAG.replace("_galleryId_",this.getGalleryID()).replace("_id_",id)},getVideoSlideTagID:function(id){return VIDEO_SLIDE_TAG.replace("_galleryId_",this.getGalleryID()).replace("_id_",id)},onGalleryClick:function(eTarget){var id=getDataset(eTarget,"id"),eTarget=getDataset(eTarget,"type"),conf=this.config;this.checkAutoplay(),eTarget&&"video"===eTarget?(this.buildVideo(this.getVideoBoxTagID(id),this.getVideoUrl(id),id),this.config.trackingFunc(TRACKING_LABEL_VIDEO_SLIDE_PLAY.replace("_id_",id.replace("slide","")))):0===this.swipeDistance&&this.config.redirectFunc(id,conf.id)},handleTouchMove:function(e){var xDiff,conf=this.config;this.pointDown.x&&this.pointDown.y&&(e=getPoint(e),xDiff=this.pointDown.x-e.x,e=this.pointDown.y-e.y,Math.abs(xDiff)>Math.abs(e)?"horizontal"===conf.slideDir&&(0<xDiff?(this.slideNext(),this.config.trackingFunc("swipeNext",conf.id)):(this.slidePrev(),this.config.trackingFunc("swipePrev",conf.id))):Math.abs(xDiff)<Math.abs(e)&&"vertical"===conf.slideDir&&(0<e?(this.slideNext(),this.config.trackingFunc("swipeNext",conf.id)):(this.slidePrev(),this.config.trackingFunc("swipePrev",conf.id))),this.swipeDistance=function(xDiff,yDiff){return Math.sqrt(Math.pow(xDiff,2)+Math.pow(yDiff,2))}(xDiff,e),this.pointDown={x:null,y:null})},handleTouchStart:function(e){this.pointDown=getPoint(e),this.swipeDistance=0},setupGallery:function(){var galleryID=this.getGalleryID(),containerID=this.getContainerID(),root=this;this.setupMainBox(),byId(containerID).addEventListener("click",function(e){root.onGalleryClick(e.target)}),containerID=byId(galleryID),this.config.desktopSwipe&&(containerID.addEventListener("mousedown",this.handleTouchStart.bind(this)),containerID.addEventListener("mouseup",this.handleTouchMove.bind(this))),containerID.addEventListener("touchstart",this.handleTouchStart.bind(this)),containerID.addEventListener("touchmove",this.handleTouchMove.bind(this))},destroyVideo:function(){var videoBoxTagID,i,j,conf=this.config,vids=byId(this.getGalleryID()).getElementsByTagName("video");if(0!==vids.length){for(i=0;i<vids.length;i++)vids.item(i).src="";for(j=0;j<conf.vidArr.length;j++)byId(videoBoxTagID=this.getVideoBoxTagID(conf.vidArr[j].slide)).hasChildNodes()&&byId(videoBoxTagID).removeChild(byId(videoBoxTagID).childNodes[0])}},videoEvents:function(arg1,arg2){var conf=this.config;-1!==arg2.indexOf("Click Redirect")&&this.config.redirectFunc(TRACKING_LABEL_SLIDE.replace("_id_",this.getActivePanelID()),conf.id),-1!==arg2.indexOf("Video Complete")&&this.destroyVideo()},getVideoUrl:function(slide){for(var vidUrl,conf=this.config,i=0;i<conf.vidArr.length;i++)conf.vidArr[i].slide===String(slide)&&(vidUrl=conf.vidArr[i].file);return vidUrl},buildVideo:function(videoBoxId,videoFile,videoId){var conf=this.config,videoId={id:this.getVideoSlideTagID(videoId),src:videoFile,x:0,y:0,width:conf.w,height:conf.h,muted:void 0===videoPlayer&&conf.vidAutoplay,autoplay:!0,highlight:"#777777",background:"none",preload:"auto",controls:{showFullscreenButton:!1},externalCallback:this.videoEvents.bind(this)};if(void 0!==videoPlayer)videoPlayer.update(videoId),byId(videoBoxId).appendChild(videoPlayer.div);else{try{Video=ACT.espresso.Plugin.VideoPlugin.Video}catch(e){console.log("espresso.Plugin.VideoPlugin is missing")}videoPlayer=new Video(videoId),byId(videoBoxId).appendChild(videoPlayer.div)}},autoplayVideoSlide:function(slide){for(var conf=this.config,i=0;i<conf.vidArr.length;i++)conf.vidArr[i].slide===String(slide)&&this.buildVideo(this.getVideoBoxTagID(slide),this.getVideoUrl(slide),slide)},addVideoSlides:function(){for(var elm,conf=this.config,i=0;i<conf.vidArr.length;i++)elm={id:this.getVideoBoxTagID(conf.vidArr[i].slide),slide:conf.vidArr[i].slide,node:"div",type:"video",style:[["position","absolute"],["width",conf.w+"px"],["height",conf.h+"px"],["top","0"],["left","0"]]},conf.customElmsArr.push(elm)},init:function(){var conf=this.config;conf.id&&""!==conf.id||(conf.id=Math.floor(1e4*Math.random())+1),conf.viewW||(conf.viewW=conf.w),0!==conf.vidArr.length&&this.addVideoSlides(),this.preloadImgs(conf.imgArr,this.setupGallery()),this.goPrevSlide=this.goPrevSlide.bind(this),this.goNextSlide=this.goNextSlide.bind(this)}},ACE.GALLERY=Gallery,window.ACE=ACE}(window.ACE||{});
+  </script>
+
+</body>
+
+</html>

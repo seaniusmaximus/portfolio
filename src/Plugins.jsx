@@ -149,9 +149,9 @@ function PluginsSection({ onOpenWork, workCardCornerClass, getCardThumbSrc, Work
                             <WorkThumb
                                 slug={item.slug}
                                 title={item.title}
-                                description={item.description}
                                 thumbSrc={item.thumbSrc ?? getCardThumbSrc(item)}
                                 thumbPosition={item.thumbPosition}
+                                overlayTheme="plugin"
                             />
                         </button>
                     </li>
