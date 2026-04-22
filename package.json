@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run normalize-ui-ux-paths && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "normalize-ui-ux-paths": "node scripts/normalize-ui-ux-index-paths.mjs",
     "capture-thumbnails": "node scripts/capture-work-thumbnails.mjs",
     "trim-thumbnails": "node scripts/trim-work-thumbnails.mjs"
   },

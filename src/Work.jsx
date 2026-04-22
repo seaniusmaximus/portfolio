@@ -2,6 +2,7 @@ import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from
 import { createPortal } from 'react-dom'
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 import PluginsSection, { pluginGithubUrl } from './Plugins'
+import UiUxExamplesSection from './UiUxExamplesSection'
 import './css/Work.css'
 
 /** Files in `src/assets/works/thumbnails/` are bundled; match filename stem to work `slug` (case-insensitive). */
@@ -625,6 +626,19 @@ function WorkModalIframe({ src, title, intrinsicW, intrinsicH }) {
     )
 }
 
+function WorkModalFillIframe({ src, title }) {
+    return (
+        <div className="work-modal-iframe-slot">
+            <iframe
+                className="work-modal-iframe work-modal-iframe--fill"
+                src={src}
+                title={title}
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
+            />
+        </div>
+    )
+}
+
 function WorkModalResizableIframe({ src, title, initialW = 970, initialH = 600 }) {
     const wrapRef = useRef(null)
     const boxRef = useRef(null)
@@ -813,6 +827,9 @@ function WorkModalMedia({ work }) {
     const { w, h } = getSlideSize(work, 0)
 
     if (work.mediaType === 'html') {
+        if (work?.modalFill) {
+            return <WorkModalFillIframe src={src} title={work.title} />
+        }
         return <WorkModalIframe src={src} title={work.title} intrinsicW={w} intrinsicH={h} />
     }
     if (work.mediaType === 'video') {
@@ -962,6 +979,12 @@ function Work() {
                         </li>
                     ))}
                 </ul>
+                <UiUxExamplesSection
+                    onOpenWork={setOpenWork}
+                    workCardCornerClass={workCardCornerClass}
+                    getCardThumbSrc={getCardThumbSrc}
+                    WorkThumb={WorkThumb}
+                />
                 <PluginsSection
                     onOpenWork={setOpenWork}
                     workCardCornerClass={workCardCornerClass}
