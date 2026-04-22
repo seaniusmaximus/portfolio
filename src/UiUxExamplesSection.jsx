@@ -1,4 +1,5 @@
 const UI_UX_ASSET_FILES = import.meta.glob('./assets/works/ui-ux/*/assets/*')
+const UI_UX_GITHUB_BASE_URL = 'https://github.com/seaniusmaximus/ui-ux/tree/main'
 const UI_UX_EXAMPLE_META = {
     'mortgage-calculator': {
         description: 'Interactive mortgage calculator with a clean, guided UI for testing payment scenarios. This was built for a big bank client to advertise their mortgage products. Initially the mortgage rates were set via an API to show real time rates. For this example rates are set statically via the slider UI.'
@@ -28,6 +29,10 @@ function titleFromFolder(value) {
         .replace(/\b\w/g, (char) => char.toUpperCase())
 }
 
+function uiUxGithubUrl(folder) {
+    return `${UI_UX_GITHUB_BASE_URL}/${encodeURIComponent(folder)}`
+}
+
 function buildUiUxWorks() {
     const seen = new Map()
     for (const key of Object.keys(UI_UX_ASSET_FILES)) {
@@ -47,6 +52,7 @@ function buildUiUxWorks() {
             thumbSrc: workHtmlSrc(`ui-ux/${folder}/thumb.png`),
             mediaType: 'html',
             modalFill: true,
+            githubUrl: customMeta.githubUrl ?? uiUxGithubUrl(folder),
             size: { w: 1440, h: 900 },
             mediaSrc: workHtmlSrc(`ui-ux/${folder}/index.html`)
         })
