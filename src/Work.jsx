@@ -938,6 +938,17 @@ function WorkModal({ work, onClose }) {
                                     View plugin source on GitHub
                                 </a>
                             </p>
+                        ) : work?.githubUrl ? (
+                            <p className="work-plugin-source-link-wrap">
+                                <a
+                                    className="work-plugin-source-link"
+                                    href={work.githubUrl}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    View UI/UX source on GitHub
+                                </a>
+                            </p>
                         ) : null}
                     </aside>
                 </div>
